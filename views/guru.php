@@ -61,13 +61,13 @@ $_SESSION['page-url'] = "guru";
                           <th scope="col">Tahun Lulus</th>
                           <th scope="col">Tgl Buat</th>
                           <th scope="col">Tgl Ubah</th>
-                          <th scope="col" colspan="3">Aksi</th>
+                          <th scope="col" colspan="2">Aksi</th>
                         </tr>
                       </thead>
                       <tbody id="search-page">
                         <?php if (mysqli_num_rows($guru) == 0) { ?>
                           <tr>
-                            <th scope="row" colspan="14">belum ada data guru</th>
+                            <th scope="row" colspan="13">belum ada data guru</th>
                           </tr>
                           <?php } else if (mysqli_num_rows($guru) > 0) {
                           $no = 1;
@@ -95,24 +95,6 @@ $_SESSION['page-url'] = "guru";
                                 <div class="badge badge-opacity-warning">
                                   <?php $dateUpdate = date_create($row['updated_at']);
                                   echo date_format($dateUpdate, "l, d M Y h:i a"); ?>
-                                </div>
-                              </td>
-                              <td>
-                                <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#info-ijasah<?= $row['id_guru'] ?>">
-                                  <i class="bi bi-info-square"></i> Ijasah
-                                </button>
-                                <div class="modal fade" id="info-ijasah<?= $row['id_guru'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                  <div class="modal-dialog modal-lg">
-                                    <div class="modal-content">
-                                      <div class="modal-header border-bottom-0 shadow">
-                                        <h5 class="modal-title" id="exampleModalLabel">Ijasah <?= $row['nama'] ?></h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                      </div>
-                                      <div class="modal-body text-center">
-                                        <embed type="application/pdf" src="../assets/file/ijasah/<?= $row['ijasah'] ?>" style="width: 100%;height: 450px;"></embed>
-                                      </div>
-                                    </div>
-                                  </div>
                                 </div>
                               </td>
                               <td>
@@ -165,17 +147,11 @@ $_SESSION['page-url'] = "guru";
                                             <input type="month" name="thn-lulus" class="form-control" id="thn-lulus" minlength="3" placeholder="Tahun Lulus" required>
                                             <small class="text-danger">Input yang di ambil hanya tahun!</small>
                                           </div>
-                                          <div class="mb-3">
-                                            <label for="ijasah" class="form-label">Upload Ijasah <small class="text-danger">*</small></label>
-                                            <input type="file" name="ijasah" class="form-control mb-2" id="ijasah" minlength="3" placeholder="Ijasah">
-                                            <small class="text-danger"><span class="badge bg-danger text-dark rounded-1">Perhatian!</span> File jadwal dalam bentuk pdf.</small>
-                                          </div>
                                         </div>
                                         <div class="modal-footer justify-content-center border-top-0">
                                           <input type="hidden" name="id-guru" value="<?= $row['id_guru'] ?>">
                                           <input type="hidden" name="nama" value="<?= $row['nama'] ?>">
                                           <input type="hidden" name="nipOld" value="<?= $row['nip'] ?>">
-                                          <input type="hidden" name="fileOld" value="<?= $row['ijasah'] ?>">
                                           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
                                           <button type="submit" name="ubah-guru" class="btn btn-warning">Ubah</button>
                                         </div>
@@ -203,7 +179,6 @@ $_SESSION['page-url'] = "guru";
                                         <form action="" method="POST">
                                           <input type="hidden" name="id-guru" value="<?= $row['id_guru'] ?>">
                                           <input type="hidden" name="nama" value="<?= $row['nama'] ?>">
-                                          <input type="hidden" name="fileOld" value="<?= $row['ijasah'] ?>">
                                           <button type="submit" name="hapus-guru" class="btn btn-danger">Hapus</button>
                                         </form>
                                       </div>
@@ -280,7 +255,7 @@ $_SESSION['page-url'] = "guru";
                 <h5 class="modal-title" id="exampleModalLabel">Tambah guru</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
-              <form action="" method="post" enctype="multipart/form-data">
+              <form action="" method="post">
                 <div class="modal-body text-center">
                   <div class="mb-3">
                     <label for="nip" class="form-label">NIP <small class="text-danger">*</small></label>
@@ -318,11 +293,6 @@ $_SESSION['page-url'] = "guru";
                     <label for="thn-lulus" class="form-label">Tahun Lulus <small class="text-danger">*</small></label>
                     <input type="month" name="thn-lulus" class="form-control" id="thn-lulus" minlength="3" placeholder="Tahun Lulus" required>
                     <small class="text-danger">Input yang di ambil hanya tahun!</small>
-                  </div>
-                  <div class="mb-3">
-                    <label for="ijasah" class="form-label">Upload Ijasah <small class="text-danger">*</small></label>
-                    <input type="file" name="ijasah" class="form-control mb-2" id="ijasah" minlength="3" placeholder="Ijasah" required>
-                    <small class="text-danger"><span class="badge bg-danger text-dark rounded-1">Perhatian!</span> File jadwal dalam bentuk pdf.</small>
                   </div>
                 </div>
                 <div class="modal-footer border-top-0 justify-content-center">

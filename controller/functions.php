@@ -85,18 +85,32 @@ if (isset($_SESSION['data-user'])) {
   {
     global $conn;
     $judul = htmlspecialchars(addslashes(trim(mysqli_real_escape_string($conn, $data['judul']))));
+    $rombel_ipa10 = htmlspecialchars(addslashes(trim(mysqli_real_escape_string($conn, $data['rombel-ipa10']))));
+    $rombel_ips10 = htmlspecialchars(addslashes(trim(mysqli_real_escape_string($conn, $data['rombel-ips10']))));
+    $rombel_ipa11 = htmlspecialchars(addslashes(trim(mysqli_real_escape_string($conn, $data['rombel-ipa11']))));
+    $rombel_ips11 = htmlspecialchars(addslashes(trim(mysqli_real_escape_string($conn, $data['rombel-ips11']))));
+    $rombel_ipa12 = htmlspecialchars(addslashes(trim(mysqli_real_escape_string($conn, $data['rombel-ipa12']))));
+    $rombel_ips12 = htmlspecialchars(addslashes(trim(mysqli_real_escape_string($conn, $data['rombel-ips12']))));
+    $fasilitas = htmlspecialchars(addslashes(trim(mysqli_real_escape_string($conn, $data['fasilitas']))));
     $deskripsi = $data['deskripsi'];
-    mysqli_query($conn, "INSERT INTO profil_sekolah(judul,isi) VALUES('$judul','$deskripsi')");
+    mysqli_query($conn, "INSERT INTO profil_sekolah(judul,rombel_ipa10,rombel_ipa11,rombel_ipa12,rombel_ips10,rombel_ips11,rombel_ips12,fasilitas,isi) VALUES('$judul','$rombel_ipa10','$rombel_ipa11','$rombel_ipa12','$rombel_ips10','$rombel_ips11','$rombel_ips12','$fasilitas','$deskripsi')");
     return mysqli_affected_rows($conn);
   }
   function ubah_prosek($data)
   {
     global $conn, $time;
     $id_profil = htmlspecialchars(addslashes(trim(mysqli_real_escape_string($conn, $data['id-profil']))));
+    $rombel_ipa10 = htmlspecialchars(addslashes(trim(mysqli_real_escape_string($conn, $data['rombel-ipa10']))));
+    $rombel_ips10 = htmlspecialchars(addslashes(trim(mysqli_real_escape_string($conn, $data['rombel-ips10']))));
+    $rombel_ipa11 = htmlspecialchars(addslashes(trim(mysqli_real_escape_string($conn, $data['rombel-ipa11']))));
+    $rombel_ips11 = htmlspecialchars(addslashes(trim(mysqli_real_escape_string($conn, $data['rombel-ips11']))));
+    $rombel_ipa12 = htmlspecialchars(addslashes(trim(mysqli_real_escape_string($conn, $data['rombel-ipa12']))));
+    $rombel_ips12 = htmlspecialchars(addslashes(trim(mysqli_real_escape_string($conn, $data['rombel-ips12']))));
+    $fasilitas = htmlspecialchars(addslashes(trim(mysqli_real_escape_string($conn, $data['fasilitas']))));
     $judul = htmlspecialchars(addslashes(trim(mysqli_real_escape_string($conn, $data['judul']))));
     $deskripsi = $data['deskripsi'];
     $updated_at = date("Y-m-d " . $time);
-    mysqli_query($conn, "UPDATE profil_sekolah SET judul='$judul', isi='$deskripsi', updated_at='$updated_at' WHERE id_profil='$id_profil'");
+    mysqli_query($conn, "UPDATE profil_sekolah SET judul='$judul', rombel_ipa10='$rombel_ipa10', rombel_ipa11='$rombel_ipa11', rombel_ipa12='$rombel_ipa12', rombel_ips10='$rombel_ips10', rombel_ips11='$rombel_ips11', rombel_ips12='$rombel_ips12', fasilitas='$fasilitas', isi='$deskripsi', updated_at='$updated_at' WHERE id_profil='$id_profil'");
     return mysqli_affected_rows($conn);
   }
   function hapus_prosek($data)
@@ -181,35 +195,6 @@ if (isset($_SESSION['data-user'])) {
     mysqli_query($conn, "DELETE FROM jadwal WHERE id_jadwal='$id_jadwal'");
     return mysqli_affected_rows($conn);
   }
-  function fileIjasah()
-  {
-    $namaFile = $_FILES["ijasah"]["name"];
-    $ukuranFile = $_FILES["ijasah"]["size"];
-    $error = $_FILES["ijasah"]["error"];
-    $tmpName = $_FILES["ijasah"]["tmp_name"];
-    if ($error === 4) {
-      $_SESSION['message-danger'] = "Pilih file terlebih dahulu!";
-      $_SESSION['time-message'] = time();
-      return false;
-    }
-    $ekstensiGambarValid = ['pdf'];
-    $ekstensiGambar = explode('.', $namaFile);
-    $ekstensiGambar = strtolower(end($ekstensiGambar));
-    if (!in_array($ekstensiGambar, $ekstensiGambarValid)) {
-      $_SESSION['message-danger'] = "Maaf, file kamu bukan pdf!";
-      $_SESSION['time-message'] = time();
-      return false;
-    }
-    if ($ukuranFile > 2000000) {
-      $_SESSION['message-danger'] = "Maaf, ukuran file terlalu besar! (2 MB)";
-      $_SESSION['time-message'] = time();
-      return false;
-    }
-    $namaFile_encrypt = crc32($namaFile);
-    $encrypt = $namaFile_encrypt . "." . $ekstensiGambar;
-    move_uploaded_file($tmpName, '../assets/file/ijasah/' . $encrypt);
-    return $encrypt;
-  }
   function tambah_guru($data)
   {
     global $conn;
@@ -232,11 +217,7 @@ if (isset($_SESSION['data-user'])) {
     $tahun = htmlspecialchars(addslashes(trim(mysqli_real_escape_string($conn, $data['thn-lulus']))));
     $tahun = date_create($tahun);
     $tahun = date_format($tahun, "Y");
-    $file = fileIjasah();
-    if (!$file) {
-      return false;
-    }
-    mysqli_query($conn, "INSERT INTO guru(nip,nama,tempat_lahir,tgl_lahir,gol,tmt,jabatan,gelar,thn_lulus,ijasah) VALUES('$nip','$nama','$tempat_lahir','$tgl_lahir','$gol','$tmt','$jabatan','$gelar','$tahun','$file')");
+    mysqli_query($conn, "INSERT INTO guru(nip,nama,tempat_lahir,tgl_lahir,gol,tmt,jabatan,gelar,thn_lulus) VALUES('$nip','$nama','$tempat_lahir','$tgl_lahir','$gol','$tmt','$jabatan','$gelar','$tahun')");
     return mysqli_affected_rows($conn);
   }
   function ubah_guru($data)
@@ -265,27 +246,14 @@ if (isset($_SESSION['data-user'])) {
     $tahun = htmlspecialchars(addslashes(trim(mysqli_real_escape_string($conn, $data['thn-lulus']))));
     $tahun = date_create($tahun);
     $tahun = date_format($tahun, "Y");
-    $fileOld = htmlspecialchars(addslashes(trim(mysqli_real_escape_string($conn, $data['fileOld']))));
-    if (!empty($_FILES['ijasah']['name'])) {
-      $file = fileIjasah();
-      if (!$file) {
-        return false;
-      } else {
-        unlink('../assets/file/ijasah/' . $fileOld);
-      }
-    } else {
-      $file = $fileOld;
-    }
     $updated_at = date("Y-m-d " . $time);
-    mysqli_query($conn, "UPDATE guru SET nip='$nip', nama='$nama', tempat_lahir='$tempat_lahir', tgl_lahir='$tgl_lahir', gol='$gol', tmt='$tmt', jabatan='$jabatan', gelar='$gelar', thn_lulus='$tahun', ijasah='$file', updated_at='$updated_at' WHERE id_guru='$id_guru'");
+    mysqli_query($conn, "UPDATE guru SET nip='$nip', nama='$nama', tempat_lahir='$tempat_lahir', tgl_lahir='$tgl_lahir', gol='$gol', tmt='$tmt', jabatan='$jabatan', gelar='$gelar', thn_lulus='$tahun', updated_at='$updated_at' WHERE id_guru='$id_guru'");
     return mysqli_affected_rows($conn);
   }
   function hapus_guru($data)
   {
     global $conn;
     $id_guru = htmlspecialchars(addslashes(trim(mysqli_real_escape_string($conn, $data['id-guru']))));
-    $fileOld = htmlspecialchars(addslashes(trim(mysqli_real_escape_string($conn, $data['fileOld']))));
-    unlink('../assets/file/ijasah/' . $fileOld);
     mysqli_query($conn, "DELETE FROM guru WHERE id_guru='$id_guru'");
     return mysqli_affected_rows($conn);
   }

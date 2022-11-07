@@ -49,6 +49,42 @@ $_SESSION['page-url'] = "profil-sekolah";
                           <label for="judul" class="form-label">Judul <small class="text-danger">*</small></label>
                           <input type="text" name="judul" class="form-control" id="judul" placeholder="Judul" minlength="5" required>
                         </div>
+                        <div class="row">
+                          <div class="col-lg-4">
+                            <div class="d-flex flex-wrap mb-3">
+                              <label for="rombel-ipa10" class="form-label">Rombel Kelas 10 IPA <small class="text-danger">*</small></label>
+                              <input type="number" name="rombel-ipa10" class="form-control" id="rombel-ipa10" placeholder="Rombel Kelas 10" required>
+                            </div>
+                            <div class="d-flex flex-wrap mb-3">
+                              <label for="rombel-10" class="form-label">Rombel Kelas 10 IPS <small class="text-danger">*</small></label>
+                              <input type="number" name="rombel-ips10" class="form-control" id="rombel-10" placeholder="Rombel Kelas 10 IPS" required>
+                            </div>
+                          </div>
+                          <div class="col-lg-4">
+                            <div class="d-flex flex-wrap mb-3">
+                              <label for="rombel-ipa11" class="form-label">Rombel Kelas 11 IPA<small class="text-danger">*</small></label>
+                              <input type="number" name="rombel-ipa11" class="form-control" id="rombel-ipa11" placeholder="Rombel Kelas 11 IPA" required>
+                            </div>
+                            <div class="d-flex flex-wrap mb-3">
+                              <label for="rombel-ips11" class="form-label">Rombel Kelas 11 IPS<small class="text-danger">*</small></label>
+                              <input type="number" name="rombel-ips11" class="form-control" id="rombel-ips11" placeholder="Rombel Kelas 11 IPS" required>
+                            </div>
+                          </div>
+                          <div class="col-lg-4">
+                            <div class="d-flex flex-wrap mb-3">
+                              <label for="rombel-ipa12" class="form-label">Rombel Kelas 12 IPA<small class="text-danger">*</small></label>
+                              <input type="number" name="rombel-ipa12" class="form-control" id="rombel-ipa12" placeholder="Rombel Kelas 12 IPA" required>
+                            </div>
+                            <div class="d-flex flex-wrap mb-3">
+                              <label for="rombel-ips12" class="form-label">Rombel Kelas 12 IPS<small class="text-danger">*</small></label>
+                              <input type="number" name="rombel-ips12" class="form-control" id="rombel-ips12" placeholder="Rombel Kelas 12 IPS" required>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="mb-3">
+                          <label for="fasilitas" class="form-label">Fasilitas <small class="text-danger">*</small></label>
+                          <input type="text" name="fasilitas" class="form-control" id="fasilitas" placeholder="Fasilitas" minlength="5" required>
+                        </div>
                         <div class="mb-3">
                           <label for="deskripsi">Deskripsi <small class="text-danger">*</small></label>
                           <textarea name="deskripsi" id="deskripsi" cols="30" rows="25" style="line-height: 20px;" class="form-control shadow" required></textarea>
@@ -61,6 +97,42 @@ $_SESSION['page-url'] = "profil-sekolah";
                           <div class="mb-3">
                             <label for="judul" class="form-label">Judul <small class="text-danger">*</small></label>
                             <input type="text" name="judul" value="<?= $row['judul'] ?>" class="form-control" id="judul" placeholder="Judul" minlength="5" required>
+                          </div>
+                        <div class="row">
+                          <div class="col-lg-4">
+                            <div class="d-flex flex-wrap mb-3">
+                              <label for="rombel-ipa10" class="form-label">Rombel Kelas 10 IPA <small class="text-danger">*</small></label>
+                              <input type="number" name="rombel-ipa10" value="<?= $row['rombel_ipa10'] ?>" class="form-control" id="rombel-ipa10" placeholder="Rombel Kelas 10" required>
+                            </div>
+                            <div class="d-flex flex-wrap mb-3">
+                              <label for="rombel-10" class="form-label">Rombel Kelas 10 IPS <small class="text-danger">*</small></label>
+                              <input type="number" name="rombel-ips10" value="<?= $row['rombel_ips10'] ?>" class="form-control" id="rombel-10" placeholder="Rombel Kelas 10 IPS" required>
+                            </div>
+                          </div>
+                          <div class="col-lg-4">
+                            <div class="d-flex flex-wrap mb-3">
+                              <label for="rombel-ipa11" class="form-label">Rombel Kelas 11 IPA<small class="text-danger">*</small></label>
+                              <input type="number" name="rombel-ipa11" value="<?= $row['rombel_ipa11'] ?>" class="form-control" id="rombel-ipa11" placeholder="Rombel Kelas 11 IPA" required>
+                            </div>
+                            <div class="d-flex flex-wrap mb-3">
+                              <label for="rombel-ips11" class="form-label">Rombel Kelas 11 IPS<small class="text-danger">*</small></label>
+                              <input type="number" name="rombel-ips11" value="<?= $row['rombel_ips11'] ?>" class="form-control" id="rombel-ips11" placeholder="Rombel Kelas 11 IPS" required>
+                            </div>
+                          </div>
+                          <div class="col-lg-4">
+                            <div class="d-flex flex-wrap mb-3">
+                              <label for="rombel-ipa12" class="form-label">Rombel Kelas 12 IPA<small class="text-danger">*</small></label>
+                              <input type="number" name="rombel-ipa12" value="<?= $row['rombel_ipa12'] ?>" class="form-control" id="rombel-ipa12" placeholder="Rombel Kelas 12 IPA" required>
+                            </div>
+                            <div class="d-flex flex-wrap mb-3">
+                              <label for="rombel-ips12" class="form-label">Rombel Kelas 12 IPS<small class="text-danger">*</small></label>
+                              <input type="number" name="rombel-ips12" value="<?= $row['rombel_ips12'] ?>" class="form-control" id="rombel-ips12" placeholder="Rombel Kelas 12 IPS" required>
+                            </div>
+                          </div>
+                        </div>
+                          <div class="mb-3">
+                            <label for="fasilitas" class="form-label">Fasilitas <small class="text-danger">*</small></label>
+                            <input type="text" name="fasilitas" value="<?= $row['fasilitas'] ?>" class="form-control" id="fasilitas" placeholder="Fasilitas" minlength="5" required>
                           </div>
                           <div class="mb-3">
                             <label for="deskripsi">Deskripsi <small class="text-danger">*</small></label>
