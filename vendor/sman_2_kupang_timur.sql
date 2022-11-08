@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 29 Okt 2022 pada 10.22
+-- Waktu pembuatan: 07 Nov 2022 pada 07.50
 -- Versi server: 10.4.22-MariaDB
 -- Versi PHP: 7.4.27
 
@@ -38,7 +38,6 @@ CREATE TABLE `guru` (
   `jabatan` varchar(35) NOT NULL,
   `gelar` varchar(35) NOT NULL,
   `thn_lulus` int(11) NOT NULL,
-  `ijasah` varchar(50) NOT NULL,
   `created_at` datetime NOT NULL DEFAULT current_timestamp(),
   `updated_at` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -67,6 +66,13 @@ CREATE TABLE `jadwal` (
 CREATE TABLE `profil_sekolah` (
   `id_profil` int(11) NOT NULL,
   `judul` varchar(100) NOT NULL,
+  `rombel_ipa10` char(20) NOT NULL,
+  `rombel_ipa11` char(20) NOT NULL,
+  `rombel_ipa12` char(20) NOT NULL,
+  `rombel_ips10` char(20) NOT NULL,
+  `rombel_ips11` char(20) NOT NULL,
+  `rombel_ips12` char(20) NOT NULL,
+  `fasilitas` text NOT NULL,
   `isi` text NOT NULL,
   `created_at` datetime NOT NULL DEFAULT current_timestamp(),
   `updated_at` datetime NOT NULL DEFAULT current_timestamp()
@@ -76,8 +82,8 @@ CREATE TABLE `profil_sekolah` (
 -- Dumping data untuk tabel `profil_sekolah`
 --
 
-INSERT INTO `profil_sekolah` (`id_profil`, `judul`, `isi`, `created_at`, `updated_at`) VALUES
-(2, 'SMA Negeri 2 Kupang Timur', 'SMA Negeri 2 Kupang, merupakan salah satu Sekolah Menengah Atas Negeri yang ada di Provinsi Nusa Tenggara Timur, Indonesia. Sama dengan SMA pada umumnya di Indonesia masa pendidikan sekolah di SMAN 2 Kupang ditempuh dalam waktu tiga tahun pelajaran, mulai dari Kelas X sampai Kelas XII.', '2022-10-28 19:43:00', '2022-10-28 19:43:49');
+INSERT INTO `profil_sekolah` (`id_profil`, `judul`, `rombel_ipa10`, `rombel_ipa11`, `rombel_ipa12`, `rombel_ips10`, `rombel_ips11`, `rombel_ips12`, `fasilitas`, `isi`, `created_at`, `updated_at`) VALUES
+(2, 'SMA Negeri 2 Kupang Timur', '3', '3', '3', '3', '4', '3', 'Ruang kelas, laoratorium, perpustakaan, toilet siswa dan guru', '<p>SMA Negeri 2 Kupang, merupakan salah satu Sekolah Menengah Atas Negeri yang ada di Provinsi Nusa Tenggara Timur, Indonesia. Sama dengan SMA pada umumnya di Indonesia masa pendidikan sekolah di SMAN 2 Kupang ditempuh dalam waktu tiga tahun pelajaran, mulai dari Kelas X sampai Kelas XII.</p>\r\n', '2022-10-28 19:43:00', '2022-11-07 14:41:21');
 
 -- --------------------------------------------------------
 
@@ -162,7 +168,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT untuk tabel `guru`
 --
 ALTER TABLE `guru`
-  MODIFY `id_guru` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_guru` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT untuk tabel `jadwal`
