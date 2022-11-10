@@ -6,20 +6,20 @@
       </button>
     </div>
     <div>
-      <a class="navbar-brand brand-logo" href="<?= $baseURL; ?>views/">
-        <img src="<?= $baseURL; ?>assets/images/logo.png" alt="logo" style="width: 60px;height: 60px;" />
+      <a class="navbar-brand brand-logo" href="./">
+        <img src="../assets/images/logo.png" alt="logo" style="width: 60px;height: 60px;" />
       </a>
       <a class="nav-link navbar-brand brand-logo-mini" id="UserDropdown" href="#" data-bs-toggle="dropdown" aria-expanded="false">
-        <img class="img-xs rounded-circle" src="<?= $baseURL; ?>assets/images/user.png" style="width: 40px;height: 40px;" alt="Profile image" />
+        <img class="img-xs rounded-circle" src="../assets/images/user.png" style="width: 40px;height: 40px;" alt="Profile image" />
       </a>
       <div class="dropdown-menu dropdown-menu-right navbar-dropdown p-4" style="width: 200px;" aria-labelledby="UserDropdown">
         <div class="dropdown-header text-center">
-          <img class="img-md rounded-circle" src="<?= $baseURL; ?>assets/images/user.png" style="width: 50px;" alt="Profile image">
+          <img class="img-md rounded-circle" src="../assets/images/user.png" style="width: 50px;" alt="Profile image">
           <p class="mb-1 mt-3 font-weight-semibold"><?= $_SESSION['data-user']['username'] ?><br><?= $_SESSION['data-user']['email'] ?></p>
         </div>
-        <a style="cursor: pointer;" onclick="window.location.href='<?= $baseURL; ?>views/profil'" class="dropdown-item pb-3">
+        <a style="cursor: pointer;" onclick="window.location.href='profil'" class="dropdown-item pb-3">
           <i class="bi bi-person me-2"></i> Profil Saya</a>
-        <a style="cursor: pointer;" onclick="window.location.href='<?= $baseURL; ?>auth/signout'" class="dropdown-item border-bottom-0">
+        <a style="cursor: pointer;" onclick="window.location.href='../auth/signout'" class="dropdown-item border-bottom-0">
           <i class="bi bi-box-arrow-right me-2"></i> Keluar</a>
       </div>
     </div>
@@ -30,7 +30,7 @@
         <h1 class="welcome-text">Selamat datang, <span class="text-black fw-bold"><?= $_SESSION['data-user']['username'] ?></span></h1>
         <p class="">
           <i class="bi bi-speedometer2"></i>
-          <a href="<?= $baseURL; ?>views/" class="text-decoration-none text-dark">Dashboard</a>
+          <a href="./" class="text-decoration-none text-dark">Dashboard</a>
           <?php if ($_SESSION['page-name'] != "Dashboard") {
             echo " / " . $_SESSION['page-name'];
           } ?>
@@ -48,15 +48,15 @@
       <?php } ?>
       <li class="nav-item dropdown d-none d-lg-block user-dropdown">
         <a class="nav-link" id="UserDropdown" href="#" data-bs-toggle="dropdown" aria-expanded="false">
-          <img class="img-xs rounded-circle" src="<?= $baseURL; ?>assets/images/user.png" alt="Profile image"> </a>
+          <img class="img-xs rounded-circle" src="../assets/images/user.png" alt="Profile image"> </a>
         <div class="dropdown-menu dropdown-menu-right navbar-dropdown p-4" style="width: 200px;" aria-labelledby="UserDropdown">
           <div class="dropdown-header text-center">
-            <img class="img-md rounded-circle" src="<?= $baseURL; ?>assets/images/user.png" style="width: 50px;" alt="Profile image">
+            <img class="img-md rounded-circle" src="../assets/images/user.png" style="width: 50px;" alt="Profile image">
             <p class="mb-1 mt-3 font-weight-semibold"><?= $_SESSION['data-user']['username'] ?><br><?= $_SESSION['data-user']['email'] ?></p>
           </div>
-          <a style="cursor: pointer;" onclick="window.location.href='<?= $baseURL; ?>views/profil'" class="dropdown-item p-3">
+          <a style="cursor: pointer;" onclick="window.location.href='profil'" class="dropdown-item p-3">
             <i class="bi bi-person text-primary me-2"></i> Profil Saya</a>
-          <a style="cursor: pointer;" onclick="window.location.href='<?= $baseURL; ?>auth/signout'" class="dropdown-item border-bottom-0 p-3">
+          <a style="cursor: pointer;" onclick="window.location.href='../auth/signout'" class="dropdown-item border-bottom-0 p-3">
             <i class="bi bi-box-arrow-right text-primary me-2"></i> Keluar</a>
         </div>
       </li>

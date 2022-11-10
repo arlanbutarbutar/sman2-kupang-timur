@@ -108,7 +108,7 @@ if ($_SESSION['page-url'] == "jadwal") {
     $quer = "";
     foreach ($keys as $no => $data) {
       $data = strtolower($data);
-      $quer .= "rombel LIKE '%$data%' OR tahun LIKE '%$data%'";
+      $quer .= "kelas LIKE '%$data%' OR mapel LIKE '%$data%'";
       if ($no + 1 < count($keys)) {
         $quer .= " OR ";
       }
@@ -118,15 +118,17 @@ if ($_SESSION['page-url'] == "jadwal") {
   }
   if (mysqli_num_rows($jadwal) == 0) { ?>
     <tr>
-      <th scope="row" colspan="6">belum ada data jadwal</th>
+      <th scope="row" colspan="9">belum ada data jadwal</th>
     </tr>
     <?php } else if (mysqli_num_rows($jadwal) > 0) {
     $no = 1;
     while ($row = mysqli_fetch_assoc($jadwal)) { ?>
       <tr>
         <th scope="row"><?= $no; ?></th>
-        <td><?= $row['rombel'] ?></td>
-        <td><?= $row['tahun'] ?></td>
+        <td><?= $row['kelas'] ?></td>
+        <td><?= $row['mapel'] ?></td>
+        <td><?= $row['jam_mulai'] . " - " . $row['jam_selesai'] ?></td>
+        <td><?= $row['hari'] ?></td>
         <td>
           <div class="badge badge-opacity-success">
             <?php $dateCreate = date_create($row['created_at']);
@@ -140,46 +142,6 @@ if ($_SESSION['page-url'] == "jadwal") {
           </div>
         </td>
         <td>
-          <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#info-jadwal<?= $row['id_jadwal'] ?>">
-            <i class="bi bi-info-square"></i>
-          </button>
-          <?php
-          $namaFile = $row['file'];
-          $ekstensiGambarValid = ['jpg', 'png', 'jpeg', 'heic'];
-          $ekstensiGambar = explode('.', $namaFile);
-          $ekstensiGambar = strtolower(end($ekstensiGambar));
-          if (!in_array($ekstensiGambar, $ekstensiGambarValid)) {
-          ?>
-            <div class="modal fade" id="info-jadwal<?= $row['id_jadwal'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-              <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                  <div class="modal-header border-bottom-0 shadow">
-                    <h5 class="modal-title" id="exampleModalLabel">Jadwal rombel <?= $row['rombel'] ?> pada tahun <?= $row['tahun'] ?></h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                  </div>
-                  <div class="modal-body text-center">
-                    <embed type="application/pdf" src="../assets/file/jadwal/<?= $row['file'] ?>" style="width: 100%;height: 450px;"></embed>
-                  </div>
-                </div>
-              </div>
-            </div>
-          <?php } else { ?>
-            <div class="modal fade" id="info-jadwal<?= $row['id_jadwal'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-              <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                  <div class="modal-header border-bottom-0 shadow">
-                    <h5 class="modal-title" id="exampleModalLabel">Jadwal rombel <?= $row['rombel'] ?> pada tahun <?= $row['tahun'] ?></h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                  </div>
-                  <div class="modal-body text-center">
-                    <img src="../assets/file/jadwal/<?= $row['file'] ?>" class="img-fluid rounded-0" style="width: 100%;height: auto;" alt="">
-                  </div>
-                </div>
-              </div>
-            </div>
-          <?php } ?>
-        </td>
-        <td>
           <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#ubah<?= $row['id_jadwal'] ?>">
             <i class="bi bi-pencil-square"></i>
           </button>
@@ -187,30 +149,79 @@ if ($_SESSION['page-url'] == "jadwal") {
             <div class="modal-dialog">
               <div class="modal-content">
                 <div class="modal-header border-bottom-0 shadow">
-                  <h5 class="modal-title" id="exampleModalLabel">Ubah data rombel <?= $row['rombel'] ?> tahun <?= $row['tahun'] ?></h5>
+                  <h5 class="modal-title" id="exampleModalLabel">Ubah <?= $row['mapel'] ?></h5>
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form action="" method="POST" enctype="multipart/form-data">
+                <form action="" method="POST">
                   <div class="modal-body">
                     <div class="mb-3">
-                      <label for="rombel" class="form-label">Rombel <small>(Rombongan Belajar)</small></label>
-                      <input type="number" name="rombel" value="<?= $row['rombel'] ?>" class="form-control" id="rombel" minlength="3" placeholder="Rombel" required>
+                      <label for="kelas" class="form-label">Kelas <small class="text-danger">*</small></label>
+                      <select name="kelas" class="form-select" aria-label="Default select example" required>
+                        <option selected value="">Pilih kelas</option>
+                        <?php if (mysqli_num_rows($ubah_ipa10) > 0) {
+                          while ($row_ipa10 = mysqli_fetch_assoc($ubah_ipa10)) {
+                            for ($xipa10 = 1; $xipa10 <= $row_ipa10['rombel_ipa10']; $xipa10++) { ?>
+                              <option value="10 IPA <?= $xipa10; ?>">10 IPA <?= $xipa10; ?></option>
+                            <?php }
+                          }
+                        }
+                        if (mysqli_num_rows($ubah_ips10) > 0) {
+                          while ($row_ips10 = mysqli_fetch_assoc($ubah_ips10)) {
+                            for ($xips10 = 1; $xips10 <= $row_ips10['rombel_ips10']; $xips10++) { ?>
+                              <option value="10 IPS <?= $xips10; ?>">10 IPS <?= $xips10; ?></option>
+                            <?php }
+                          }
+                        }
+                        if (mysqli_num_rows($ubah_ipa11) > 0) {
+                          while ($row_ipa11 = mysqli_fetch_assoc($ubah_ipa11)) {
+                            for ($xipa11 = 1; $xipa11 <= $row_ipa11['rombel_ipa11']; $xipa11++) { ?>
+                              <option value="11 IPA <?= $xipa11; ?>">11 IPA <?= $xipa11; ?></option>
+                            <?php }
+                          }
+                        }
+                        if (mysqli_num_rows($ubah_ips11) > 0) {
+                          while ($row_ips11 = mysqli_fetch_assoc($ubah_ips11)) {
+                            for ($xips11 = 1; $xips11 <= $row_ips11['rombel_ips11']; $xips11++) { ?>
+                              <option value="11 IPS <?= $xips11; ?>">11 IPS <?= $xips11; ?></option>
+                            <?php }
+                          }
+                        }
+                        if (mysqli_num_rows($ubah_ipa12) > 0) {
+                          while ($row_ipa12 = mysqli_fetch_assoc($ubah_ipa12)) {
+                            for ($xipa12 = 1; $xipa12 <= $row_ipa12['rombel_ipa12']; $xipa12++) { ?>
+                              <option value="12 IPA <?= $xipa12; ?>">12 IPA <?= $xipa12; ?></option>
+                            <?php }
+                          }
+                        }
+                        if (mysqli_num_rows($ubah_ips12) > 0) {
+                          while ($row_ips12 = mysqli_fetch_assoc($ubah_ips12)) {
+                            for ($xips12 = 1; $xips12 <= $row_ips12['rombel_ips12']; $xips12++) { ?>
+                              <option value="12 IPS <?= $xips12; ?>">12 IPS <?= $xips12; ?></option>
+                        <?php }
+                          }
+                        } ?>
+                      </select>
                     </div>
                     <div class="mb-3">
-                      <label for="tahun" class="form-label">Tahun</label>
-                      <input type="month" name="tahun" value="<?= $row['tahun'] ?>" class="form-control" id="tahun" minlength="3" placeholder="tahun" required>
-                      <small class="text-danger">Input yang di ambil hanya tahun!</small>
+                      <label for="mapel" class="form-label">Mapel <small class="text-danger">*</small></label>
+                      <input type="text" name="mapel" value="<?= $row['mapel'] ?>" class="form-control" id="mapel" placeholder="Mapel" required>
                     </div>
                     <div class="mb-3">
-                      <label for="jadwal" class="form-label">Upload Jadwal</label>
-                      <input class="form-control mb-2" type="file" name="jadwal" id="jadwal">
-                      <small class="text-danger"><span class="badge bg-danger text-dark rounded-1">Perhatian!</span> File jadwal dalam bentuk gambar atau pdf.</small>
+                      <label for="jam-mulai" class="form-label">Jam Mulai <small class="text-danger">*</small></label>
+                      <input type="time" name="jam-mulai" value="<?= $row['jam_mulai'] ?>" class="form-control" id="jam-mulai" placeholder="Jam Mulai" required>
+                    </div>
+                    <div class="mb-3">
+                      <label for="jam-selesai" class="form-label">Jam Selesai <small class="text-danger">*</small></label>
+                      <input type="time" name="jam-selesai" value="<?= $row['jam_selesai'] ?>" class="form-control" id="jam-selesai" placeholder="Jam Selesai" required>
+                    </div>
+                    <div class="mb-3">
+                      <label for="tgl" class="form-label">Tanggal <small class="text-danger">*</small></label>
+                      <input type="date" name="tgl" value="<?= $row['tgl'] ?>" class="form-control" id="tgl" placeholder="Tanggal" required>
                     </div>
                   </div>
                   <div class="modal-footer justify-content-center border-top-0">
                     <input type="hidden" name="id-jadwal" value="<?= $row['id_jadwal'] ?>">
-                    <input type="hidden" name="nama-jadwal" value="rombel <?= $row['rombel'] ?> pada tahun <?= $row['tahun'] ?>">
-                    <input type="hidden" name="fileOld" value="<?= $row['file'] ?>">
+                    <input type="hidden" name="nama-jadwal" value="<?= $row['mapel'] ?>">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
                     <button type="submit" name="ubah-jadwal" class="btn btn-warning">Ubah</button>
                   </div>
@@ -227,18 +238,17 @@ if ($_SESSION['page-url'] == "jadwal") {
             <div class="modal-dialog">
               <div class="modal-content">
                 <div class="modal-header border-bottom-0 shadow">
-                  <h5 class="modal-title" id="exampleModalLabel">Hapus data rombel <?= $row['rombel'] ?> tahun <?= $row['tahun'] ?></h5>
+                  <h5 class="modal-title" id="exampleModalLabel">Hapus <?= $row['mapel'] ?></h5>
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                  Anda yakin ingin menghapus rombel <?= $row['rombel'] ?> tahun <?= $row['tahun'] ?> ini?
+                  Anda yakin ingin menghapus mapel <?= $row['mapel'] ?>?
                 </div>
                 <div class="modal-footer justify-content-center border-top-0">
                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
                   <form action="" method="POST">
                     <input type="hidden" name="id-jadwal" value="<?= $row['id_jadwal'] ?>">
-                    <input type="hidden" name="nama-jadwal" value="rombel <?= $row['rombel'] ?> tahun <?= $row['tahun'] ?>">
-                    <input type="hidden" name="fileOld" value="<?= $row['file'] ?>">
+                    <input type="hidden" name="nama-jadwal" value="<?= $row['mapel'] ?>">
                     <button type="submit" name="hapus-jadwal" class="btn btn-danger">Hapus</button>
                   </form>
                 </div>
@@ -268,7 +278,7 @@ if ($_SESSION['page-url'] == "guru") {
   }
   if (mysqli_num_rows($guru) == 0) { ?>
     <tr>
-      <th scope="row" colspan="14">belum ada data pengguna</th>
+      <th scope="row" colspan="12">belum ada data guru</th>
     </tr>
     <?php } else if (mysqli_num_rows($guru) > 0) {
     $no = 1;
@@ -278,14 +288,10 @@ if ($_SESSION['page-url'] == "guru") {
         <td><?= $row['nip'] ?></td>
         <td><?= $row['nama'] ?></td>
         <td><?= $row['tempat_lahir'] . ", " . $row['tgl_lahir'] ?></td>
-        <td><?= $row['gol'] ?></td>
-        <td>
-          <?php $tmt = date_create($row['tmt']);
-          echo date_format($tmt, "l, d M Y"); ?>
-        </td>
+        <td><?= $row['status'] ?></td>
+        <td><?= $row['jenis_kelamin'] ?></td>
         <td><?= $row['jabatan'] ?></td>
         <td><?= $row['gelar'] ?></td>
-        <td><?= $row['thn_lulus'] ?></td>
         <td>
           <div class="badge badge-opacity-success">
             <?php $dateCreate = date_create($row['created_at']);
@@ -296,24 +302,6 @@ if ($_SESSION['page-url'] == "guru") {
           <div class="badge badge-opacity-warning">
             <?php $dateUpdate = date_create($row['updated_at']);
             echo date_format($dateUpdate, "l, d M Y h:i a"); ?>
-          </div>
-        </td>
-        <td>
-          <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#info-ijasah<?= $row['id_guru'] ?>">
-            <i class="bi bi-info-square"></i> Ijasah
-          </button>
-          <div class="modal fade" id="info-ijasah<?= $row['id_guru'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg">
-              <div class="modal-content">
-                <div class="modal-header border-bottom-0 shadow">
-                  <h5 class="modal-title" id="exampleModalLabel">Ijasah <?= $row['nama'] ?></h5>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body text-center">
-                  <embed type="application/pdf" src="../assets/file/ijasah/<?= $row['ijasah'] ?>" style="width: 100%;height: 450px;"></embed>
-                </div>
-              </div>
-            </div>
           </div>
         </td>
         <td>
@@ -346,12 +334,16 @@ if ($_SESSION['page-url'] == "guru") {
                       <input type="date" name="tgl-lahir" value="<?= $row['tgl_lahir'] ?>" class="form-control" id="tgl-lahir" placeholder="Tgl Lahir" required>
                     </div>
                     <div class="mb-3">
-                      <label for="gol" class="form-label">Golongan <small class="text-danger">*</small></label>
-                      <input type="text" name="gol" value="<?= $row['gol'] ?>" class="form-control" id="gol" placeholder="Golongan" required>
+                      <label for="status" class="form-label">Status <small class="text-danger">*</small></label>
+                      <input type="text" name="status" value="<?= $row['status'] ?>" class="form-control" id="status" placeholder="Status" required>
                     </div>
                     <div class="mb-3">
-                      <label for="tmt" class="form-label">Terhitung mulai tanggal <small class="text-danger">*</small></label>
-                      <input type="date" name="tmt" value="<?= $row['tmt'] ?>" class="form-control" id="tmt" placeholder="" required>
+                      <label for="jenis-kelamin" class="form-label">Jenis Kelamin <small class="text-danger">*</small></label>
+                      <select name="jenis-kelamin" id="jenis-kelamin" class="form-select" aria-label="Default select example" required>
+                        <option selected value="">Pilih Jenis Kelamin</option>
+                        <option value="Laki-Laki">Laki-Laki</option>
+                        <option value="Perempuan">Perempuan</option>
+                      </select>
                     </div>
                     <div class="mb-3">
                       <label for="jabatan" class="form-label">Jabatan <small class="text-danger">*</small></label>
@@ -361,22 +353,11 @@ if ($_SESSION['page-url'] == "guru") {
                       <label for="gelar" class="form-label">Gelar <small class="text-danger">*</small></label>
                       <input type="text" name="gelar" value="<?= $row['gelar'] ?>" class="form-control" id="gelar" minlength="3" placeholder="Gelar" required>
                     </div>
-                    <div class="mb-3">
-                      <label for="thn-lulus" class="form-label">Tahun Lulus <small class="text-danger">*</small></label>
-                      <input type="month" name="thn-lulus" class="form-control" id="thn-lulus" minlength="3" placeholder="Tahun Lulus" required>
-                      <small class="text-danger">Input yang di ambil hanya tahun!</small>
-                    </div>
-                    <div class="mb-3">
-                      <label for="ijasah" class="form-label">Upload Ijasah <small class="text-danger">*</small></label>
-                      <input type="file" name="ijasah" class="form-control mb-2" id="ijasah" minlength="3" placeholder="Ijasah">
-                      <small class="text-danger"><span class="badge bg-danger text-dark rounded-1">Perhatian!</span> File jadwal dalam bentuk pdf.</small>
-                    </div>
                   </div>
                   <div class="modal-footer justify-content-center border-top-0">
                     <input type="hidden" name="id-guru" value="<?= $row['id_guru'] ?>">
-                    <input type="hidden" name="nama" value="<?= $row['nama'] ?>">
+                    <input type="hidden" name="namaOld" value="<?= $row['nama'] ?>">
                     <input type="hidden" name="nipOld" value="<?= $row['nip'] ?>">
-                    <input type="hidden" name="fileOld" value="<?= $row['ijasah'] ?>">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
                     <button type="submit" name="ubah-guru" class="btn btn-warning">Ubah</button>
                   </div>
@@ -404,7 +385,6 @@ if ($_SESSION['page-url'] == "guru") {
                   <form action="" method="POST">
                     <input type="hidden" name="id-guru" value="<?= $row['id_guru'] ?>">
                     <input type="hidden" name="nama" value="<?= $row['nama'] ?>">
-                    <input type="hidden" name="fileOld" value="<?= $row['ijasah'] ?>">
                     <button type="submit" name="hapus-guru" class="btn btn-danger">Hapus</button>
                   </form>
                 </div>
@@ -500,7 +480,51 @@ if ($_SESSION['page-url'] == "siswa") {
                     </div>
                     <div class="mb-3">
                       <label for="kelas" class="form-label">Kelas <small class="text-danger">*</small></label>
-                      <input type="number" name="kelas" value="<?= $row['kelas'] ?>" class="form-control" id="kelas" minlength="2" placeholder="Kelas" required>
+                      <select name="kelas" class="form-select" aria-label="Default select example" required>
+                        <option selected value="">Pilih kelas</option>
+                        <?php if (mysqli_num_rows($ipa10) > 0) {
+                          while ($row_ipa10 = mysqli_fetch_assoc($ipa10)) {
+                            for ($xipa10 = 1; $xipa10 <= $row_ipa10['rombel_ipa10']; $xipa10++) { ?>
+                              <option value="10 IPA <?= $xipa10; ?>">10 IPA <?= $xipa10; ?></option>
+                            <?php }
+                          }
+                        }
+                        if (mysqli_num_rows($ips10) > 0) {
+                          while ($row_ips10 = mysqli_fetch_assoc($ips10)) {
+                            for ($xips10 = 1; $xips10 <= $row_ips10['rombel_ips10']; $xips10++) { ?>
+                              <option value="10 IPS <?= $xips10; ?>">10 IPS <?= $xips10; ?></option>
+                            <?php }
+                          }
+                        }
+                        if (mysqli_num_rows($ipa11) > 0) {
+                          while ($row_ipa11 = mysqli_fetch_assoc($ipa11)) {
+                            for ($xipa11 = 1; $xipa11 <= $row_ipa11['rombel_ipa11']; $xipa11++) { ?>
+                              <option value="11 IPA <?= $xipa11; ?>">11 IPA <?= $xipa11; ?></option>
+                            <?php }
+                          }
+                        }
+                        if (mysqli_num_rows($ips11) > 0) {
+                          while ($row_ips11 = mysqli_fetch_assoc($ips11)) {
+                            for ($xips11 = 1; $xips11 <= $row_ips11['rombel_ips11']; $xips11++) { ?>
+                              <option value="11 IPS <?= $xips11; ?>">11 IPS <?= $xips11; ?></option>
+                            <?php }
+                          }
+                        }
+                        if (mysqli_num_rows($ipa12) > 0) {
+                          while ($row_ipa12 = mysqli_fetch_assoc($ipa12)) {
+                            for ($xipa12 = 1; $xipa12 <= $row_ipa12['rombel_ipa12']; $xipa12++) { ?>
+                              <option value="12 IPA <?= $xipa12; ?>">12 IPA <?= $xipa12; ?></option>
+                            <?php }
+                          }
+                        }
+                        if (mysqli_num_rows($ips12) > 0) {
+                          while ($row_ips12 = mysqli_fetch_assoc($ips12)) {
+                            for ($xips12 = 1; $xips12 <= $row_ips12['rombel_ips12']; $xips12++) { ?>
+                              <option value="12 IPS <?= $xips12; ?>">12 IPS <?= $xips12; ?></option>
+                        <?php }
+                          }
+                        } ?>
+                      </select>
                     </div>
                   </div>
                   <div class="modal-footer justify-content-center border-top-0">

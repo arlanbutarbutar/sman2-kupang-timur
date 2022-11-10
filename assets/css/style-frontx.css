@@ -1164,19 +1164,19 @@ margin-right: 10px;
     text-align: left;
     
 }
- .about .about-box h2 {
+ .about .about-box h2, .about-box h4 {
      padding: 0;
      font-weight: bold;
      color: #f4b328;
      line-height: 50px;
-     font-size: 50px;
+     font-size: 32px;
 
  }
  .about .about-box p {
      font-size: 17px;
      line-height: 28px;
      color: #000;
-     padding: 40px 0px;
+     padding: 10px 0px;
 }
 
  .about .about-box a {

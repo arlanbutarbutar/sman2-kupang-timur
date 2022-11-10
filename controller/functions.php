@@ -1,33 +1,33 @@
 <?php
-// if (!isset($_SESSION['data-user'])) {
-function masuk($data)
-{
-  global $conn;
-  $email = htmlspecialchars(addslashes(trim(mysqli_real_escape_string($conn, $data['email']))));
-  $password = htmlspecialchars(addslashes(trim(mysqli_real_escape_string($conn, $data['password']))));
+if (!isset($_SESSION['data-user'])) {
+  function masuk($data)
+  {
+    global $conn;
+    $email = htmlspecialchars(addslashes(trim(mysqli_real_escape_string($conn, $data['email']))));
+    $password = htmlspecialchars(addslashes(trim(mysqli_real_escape_string($conn, $data['password']))));
 
-  // check account
-  $checkAccount = mysqli_query($conn, "SELECT * FROM users WHERE email='$email'");
-  if (mysqli_num_rows($checkAccount) == 0) {
-    $_SESSION['message-danger'] = "Maaf, akun yang anda masukan belum terdaftar.";
-    $_SESSION['time-message'] = time();
-    return false;
-  } else if (mysqli_num_rows($checkAccount) > 0) {
-    $row = mysqli_fetch_assoc($checkAccount);
-    if (password_verify($password, $row['password'])) {
-      $_SESSION['data-user'] = [
-        'id' => $row['id_user'],
-        'username' => $row['username'],
-        'email' => $row['email'],
-      ];
-    } else {
-      $_SESSION['message-danger'] = "Maaf, kata sandi yang anda masukan salah.";
+    // check account
+    $checkAccount = mysqli_query($conn, "SELECT * FROM users WHERE email='$email'");
+    if (mysqli_num_rows($checkAccount) == 0) {
+      $_SESSION['message-danger'] = "Maaf, akun yang anda masukan belum terdaftar.";
       $_SESSION['time-message'] = time();
       return false;
+    } else if (mysqli_num_rows($checkAccount) > 0) {
+      $row = mysqli_fetch_assoc($checkAccount);
+      if (password_verify($password, $row['password'])) {
+        $_SESSION['data-user'] = [
+          'id' => $row['id_user'],
+          'username' => $row['username'],
+          'email' => $row['email'],
+        ];
+      } else {
+        $_SESSION['message-danger'] = "Maaf, kata sandi yang anda masukan salah.";
+        $_SESSION['time-message'] = time();
+        return false;
+      }
     }
   }
 }
-// }
 
 if (isset($_SESSION['data-user'])) {
   function ubah_profile($data)
@@ -120,78 +120,86 @@ if (isset($_SESSION['data-user'])) {
     mysqli_query($conn, "DELETE FROM profil_sekolah WHERE id_profil='$id_profil'");
     return mysqli_affected_rows($conn);
   }
-  function fileJadwal()
+  function hari_ini($hari)
   {
-    $namaFile = $_FILES["jadwal"]["name"];
-    $ukuranFile = $_FILES["jadwal"]["size"];
-    $error = $_FILES["jadwal"]["error"];
-    $tmpName = $_FILES["jadwal"]["tmp_name"];
-    if ($error === 4) {
-      $_SESSION['message-danger'] = "Pilih file terlebih dahulu!";
-      $_SESSION['time-message'] = time();
-      return false;
+
+    switch ($hari) {
+      case 'Sun':
+        $hari_ini = "Minggu";
+        break;
+
+      case 'Mon':
+        $hari_ini = "Senin";
+        break;
+
+      case 'Tue':
+        $hari_ini = "Selasa";
+        break;
+
+      case 'Wed':
+        $hari_ini = "Rabu";
+        break;
+
+      case 'Thu':
+        $hari_ini = "Kamis";
+        break;
+
+      case 'Fri':
+        $hari_ini = "Jumat";
+        break;
+
+      case 'Sat':
+        $hari_ini = "Sabtu";
+        break;
+
+      default:
+        $hari_ini = "Tidak di ketahui";
+        break;
     }
-    $ekstensiGambarValid = ['jpg', 'png', 'jpeg', 'heic', 'pdf'];
-    $ekstensiGambar = explode('.', $namaFile);
-    $ekstensiGambar = strtolower(end($ekstensiGambar));
-    if (!in_array($ekstensiGambar, $ekstensiGambarValid)) {
-      $_SESSION['message-danger'] = "Maaf, file kamu bukan gambar atau pdf!";
-      $_SESSION['time-message'] = time();
-      return false;
-    }
-    if ($ukuranFile > 2000000) {
-      $_SESSION['message-danger'] = "Maaf, ukuran file terlalu besar! (2 MB)";
-      $_SESSION['time-message'] = time();
-      return false;
-    }
-    $namaFile_encrypt = crc32($namaFile);
-    $encrypt = $namaFile_encrypt . "." . $ekstensiGambar;
-    move_uploaded_file($tmpName, '../assets/file/jadwal/' . $encrypt);
-    return $encrypt;
+    return $hari_ini;
   }
   function tambah_jadwal($data)
   {
     global $conn;
-    $rombel = htmlspecialchars(addslashes(trim(mysqli_real_escape_string($conn, $data['rombel']))));
-    $tahun = htmlspecialchars(addslashes(trim(mysqli_real_escape_string($conn, $data['tahun']))));
-    $tahun = date_create($tahun);
-    $tahun = date_format($tahun, "Y");
-    $file = fileJadwal();
-    if (!$file) {
-      return false;
-    }
-    mysqli_query($conn, "INSERT INTO jadwal(rombel,tahun,file) VALUES('$rombel','$tahun','$file')");
+    $kelas = htmlspecialchars(addslashes(trim(mysqli_real_escape_string($conn, $data['kelas']))));
+    $mapel = htmlspecialchars(addslashes(trim(mysqli_real_escape_string($conn, $data['mapel']))));
+    $jam_mulai = htmlspecialchars(addslashes(trim(mysqli_real_escape_string($conn, $data['jam-mulai']))));
+    $jam_mulai = date_create($jam_mulai);
+    $jam_mulai = date_format($jam_mulai, "h:i a");
+    $jam_selesai = htmlspecialchars(addslashes(trim(mysqli_real_escape_string($conn, $data['jam-selesai']))));
+    $jam_selesai = date_create($jam_selesai);
+    $jam_selesai = date_format($jam_selesai, "h:i a");
+    $tgl = htmlspecialchars(addslashes(trim(mysqli_real_escape_string($conn, $data['tgl']))));
+    $hari = date_create($tgl);
+    $hari = date_format($hari, "D");
+    $hari = hari_ini($hari);
+    mysqli_query($conn, "INSERT INTO jadwal(kelas,mapel,jam_mulai,jam_selesai,hari) VALUES('$kelas','$mapel','$jam_mulai','$jam_selesai','$hari')");
     return mysqli_affected_rows($conn);
   }
   function ubah_jadwal($data)
   {
     global $conn, $time;
     $id_jadwal = htmlspecialchars(addslashes(trim(mysqli_real_escape_string($conn, $data['id-jadwal']))));
-    $rombel = htmlspecialchars(addslashes(trim(mysqli_real_escape_string($conn, $data['rombel']))));
-    $tahun = htmlspecialchars(addslashes(trim(mysqli_real_escape_string($conn, $data['tahun']))));
-    $tahun = date_create($tahun);
-    $tahun = date_format($tahun, "Y");
-    $fileOld = htmlspecialchars(addslashes(trim(mysqli_real_escape_string($conn, $data['fileOld']))));
-    if (!empty($_FILES['jadwal']['name'])) {
-      $file = fileJadwal();
-      if (!$file) {
-        return false;
-      } else {
-        unlink('../assets/file/jadwal/' . $fileOld);
-      }
-    } else {
-      $file = $fileOld;
-    }
+    $kelas = htmlspecialchars(addslashes(trim(mysqli_real_escape_string($conn, $data['kelas']))));
+    $mapel = htmlspecialchars(addslashes(trim(mysqli_real_escape_string($conn, $data['mapel']))));
+    $jam_mulai = htmlspecialchars(addslashes(trim(mysqli_real_escape_string($conn, $data['jam-mulai']))));
+    $jam_mulai = date_create($jam_mulai);
+    $jam_mulai = date_format($jam_mulai, "h:i a");
+    $jam_selesai = htmlspecialchars(addslashes(trim(mysqli_real_escape_string($conn, $data['jam-selesai']))));
+    $jam_selesai = date_create($jam_selesai);
+    $jam_selesai = date_format($jam_selesai, "h:i a");
+    $tgl = htmlspecialchars(addslashes(trim(mysqli_real_escape_string($conn, $data['tgl']))));
+    $hari = date_create($tgl);
+    $hari = date_format($hari, "D");
+    $hari = hari_ini($hari);
     $updated_at = date("Y-m-d " . $time);
-    mysqli_query($conn, "UPDATE jadwal SET rombel='$rombel', tahun='$tahun', file='$file', updated_at='$updated_at'  WHERE id_jadwal='$id_jadwal'");
+    mysqli_query($conn, "UPDATE jadwal SET kelas='$kelas', mapel='$mapel', jam_mulai='$jam_mulai', jam_selesai='$jam_selesai', hari='$hari', updated_at='$updated_at'  WHERE id_jadwal='$id_jadwal'");
     return mysqli_affected_rows($conn);
   }
   function hapus_jadwal($data)
   {
     global $conn;
     $id_jadwal = htmlspecialchars(addslashes(trim(mysqli_real_escape_string($conn, $data['id-jadwal']))));
-    $fileOld = htmlspecialchars(addslashes(trim(mysqli_real_escape_string($conn, $data['fileOld']))));
-    unlink('../assets/file/jadwal/' . $fileOld);
     mysqli_query($conn, "DELETE FROM jadwal WHERE id_jadwal='$id_jadwal'");
     return mysqli_affected_rows($conn);
   }
@@ -210,14 +218,11 @@ if (isset($_SESSION['data-user'])) {
     $tgl_lahir = htmlspecialchars(addslashes(trim(mysqli_real_escape_string($conn, $data['tgl-lahir']))));
     $tgl_lahir = date_create($tgl_lahir);
     $tgl_lahir = date_format($tgl_lahir, "m d Y");
-    $gol = htmlspecialchars(addslashes(trim(mysqli_real_escape_string($conn, $data['gol']))));
-    $tmt = htmlspecialchars(addslashes(trim(mysqli_real_escape_string($conn, $data['tmt']))));
+    $status = htmlspecialchars(addslashes(trim(mysqli_real_escape_string($conn, $data['status']))));
+    $jenis_kelamin = htmlspecialchars(addslashes(trim(mysqli_real_escape_string($conn, $data['jenis-kelamin']))));
     $jabatan = htmlspecialchars(addslashes(trim(mysqli_real_escape_string($conn, $data['jabatan']))));
     $gelar = htmlspecialchars(addslashes(trim(mysqli_real_escape_string($conn, $data['gelar']))));
-    $tahun = htmlspecialchars(addslashes(trim(mysqli_real_escape_string($conn, $data['thn-lulus']))));
-    $tahun = date_create($tahun);
-    $tahun = date_format($tahun, "Y");
-    mysqli_query($conn, "INSERT INTO guru(nip,nama,tempat_lahir,tgl_lahir,gol,tmt,jabatan,gelar,thn_lulus) VALUES('$nip','$nama','$tempat_lahir','$tgl_lahir','$gol','$tmt','$jabatan','$gelar','$tahun')");
+    mysqli_query($conn, "INSERT INTO guru(nip,nama,tempat_lahir,tgl_lahir,status,jenis_kelamin,jabatan,gelar) VALUES('$nip','$nama','$tempat_lahir','$tgl_lahir','$status','$jenis_kelamin','$jabatan','$gelar')");
     return mysqli_affected_rows($conn);
   }
   function ubah_guru($data)
@@ -239,15 +244,12 @@ if (isset($_SESSION['data-user'])) {
     $tgl_lahir = htmlspecialchars(addslashes(trim(mysqli_real_escape_string($conn, $data['tgl-lahir']))));
     $tgl_lahir = date_create($tgl_lahir);
     $tgl_lahir = date_format($tgl_lahir, "d M Y");
-    $gol = htmlspecialchars(addslashes(trim(mysqli_real_escape_string($conn, $data['gol']))));
-    $tmt = htmlspecialchars(addslashes(trim(mysqli_real_escape_string($conn, $data['tmt']))));
+    $status = htmlspecialchars(addslashes(trim(mysqli_real_escape_string($conn, $data['status']))));
+    $jenis_kelamin = htmlspecialchars(addslashes(trim(mysqli_real_escape_string($conn, $data['jenis-kelamin']))));
     $jabatan = htmlspecialchars(addslashes(trim(mysqli_real_escape_string($conn, $data['jabatan']))));
     $gelar = htmlspecialchars(addslashes(trim(mysqli_real_escape_string($conn, $data['gelar']))));
-    $tahun = htmlspecialchars(addslashes(trim(mysqli_real_escape_string($conn, $data['thn-lulus']))));
-    $tahun = date_create($tahun);
-    $tahun = date_format($tahun, "Y");
     $updated_at = date("Y-m-d " . $time);
-    mysqli_query($conn, "UPDATE guru SET nip='$nip', nama='$nama', tempat_lahir='$tempat_lahir', tgl_lahir='$tgl_lahir', gol='$gol', tmt='$tmt', jabatan='$jabatan', gelar='$gelar', thn_lulus='$tahun', updated_at='$updated_at' WHERE id_guru='$id_guru'");
+    mysqli_query($conn, "UPDATE guru SET nip='$nip', nama='$nama', tempat_lahir='$tempat_lahir', tgl_lahir='$tgl_lahir', status='$status', jenis_kelamin='$jenis_kelamin', jabatan='$jabatan', gelar='$gelar', updated_at='$updated_at' WHERE id_guru='$id_guru'");
     return mysqli_affected_rows($conn);
   }
   function hapus_guru($data)

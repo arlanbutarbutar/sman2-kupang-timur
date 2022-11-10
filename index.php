@@ -17,29 +17,14 @@
               <div class="full">
                 <div class="center-desk">
                   <div class="logo">
-                    <a href="./"><img src="<?= $baseURL ?>assets/images/logo.png" width="65" alt="#" /></a>
+                    <a href="./"><img src="assets/images/logo.png" width="65" alt="#" /></a>
                   </div>
                 </div>
               </div>
             </div>
             <div class="col-xl-10 col-lg-8 col-md-8 col-sm-9">
               <div class="header_information">
-                <div class="menu-area">
-                  <div class="limit-box">
-                    <nav class="main-menu">
-                      <ul class="menu-area-main">
-                        <li> <a class="action text-white" id="beranda" style="cursor: pointer;" onclick="window.location.href='./'">Beranda</a> </li>
-                        <li> <a class="action text-white" id="profil" style="cursor: pointer;" onclick="window.location.href='#about'">Profil Sekolah</a> </li>
-                        <li> <a class="action text-white" id="jadwal" style="cursor: pointer;" onclick="window.location.href='jadwal'">Jadwal</a> </li>
-                        <li> <a class="action text-white" id="guru" style="cursor: pointer;" onclick="window.location.href='guru'">Data Guru</a> </li>
-                        <li> <a class="action text-white" id="siswa" style="cursor: pointer;" onclick="window.location.href='siswa'">Data Siswa</a> </li>
-                      </ul>
-                    </nav>
-                  </div>
-                </div>
-                <div class="mean-last text-center">
-                  <a href="auth/" class="font-weight-bold" style="font-size: 16px;">Masuk</a>
-                </div>
+                <?php require_once("resources/navbar.php"); ?>
               </div>
             </div>
           </div>
@@ -71,7 +56,7 @@
                       </div>
                       <div class="col-xl-7 col-lg-7 col-md-7 col-sm-12">
                         <div class="images_box">
-                          <figure><img src="<?= $baseURL ?>assets/images/header1.png"></figure>
+                          <figure><img src="assets/images/header1.png"></figure>
                         </div>
                       </div>
                     </div>
@@ -91,7 +76,7 @@
                       </div>
                       <div class="col-xl-7 col-lg-7 col-md-7 col-sm-12">
                         <div class="images_box">
-                          <figure><img src="<?= $baseURL ?>assets/images/header2.png"></figure>
+                          <figure><img src="assets/images/header2.png"></figure>
                         </div>
                       </div>
                     </div>
@@ -111,7 +96,7 @@
                       </div>
                       <div class="col-xl-7 col-lg-7 col-md-7 col-sm-12">
                         <div class="images_box">
-                          <figure><img src="<?= $baseURL ?>assets/images/header3.png"></figure>
+                          <figure><img src="assets/images/header3.png"></figure>
                         </div>
                       </div>
                     </div>
@@ -139,49 +124,33 @@
       <div class="row mt-5">
         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
           <div class="about-box">
-            <h2>Profil <strong class="yellow"> Sekolah</strong></h2>
             <?php if (mysqli_num_rows($profil) > 0) {
               $row_profil = mysqli_fetch_assoc($profil); ?>
+              <h2 style="font-size: 50px;">Profil <strong class="yellow"> Sekolah</strong></h2>
               <p><?= $row_profil['isi'] ?></p>
+              <h4>Fasilitas <strong class="yellow"> Sekolah</strong></h4>
+              <p><?= $row_profil['fasilitas'] ?></p>
+              <h4>Ruang <strong class="yellow"> Belajar</strong></h4>
+              <div class="d-felx">
+                <p>10 IPA : <?= $row_profil['rombel_ipa10'] ?> ruang kelas</p>
+                <p style="margin-top: -15px;">10 IPS : <?= $row_profil['rombel_ips10'] ?> ruang kelas</p>
+                <p style="margin-top: -15px;">11 IPA : <?= $row_profil['rombel_ipa11'] ?> ruang kelas</p>
+                <p style="margin-top: -15px;">11 IPS : <?= $row_profil['rombel_ips11'] ?> ruang kelas</p>
+                <p style="margin-top: -15px;">12 IPA : <?= $row_profil['rombel_ipa12'] ?> ruang kelas</p>
+                <p style="margin-top: -15px;">12 IPS : <?= $row_profil['rombel_ips12'] ?> ruang kelas</p>
+              </div>
             <?php } ?>
           </div>
         </div>
         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
           <div class="about-box">
-            <figure><img src="<?= $baseURL ?>assets/images/profil.png" alt="#" /></figure>
+            <figure><img src="assets/images/profil.jpeg" alt="#" /></figure>
           </div>
         </div>
       </div>
     </div>
   </div>
   <!-- end abouts -->
-
-  <!-- our -->
-  <div id="important" class="important">
-    <div class="important_bg mt-5">
-      <div class="container">
-        <div class="row justify-content-center">
-          <div class="col col-lg-2">
-            <div class="important_box">
-              <a href="guru" style="background: none;border: 0;">
-                <h3><?= $count_guru ?></h3>
-                <span>Guru</span>
-              </a>
-            </div>
-          </div>
-          <div class="col col-lg-2">
-            <div class="important_box">
-              <a href="siswa" style="background: none;border: 0;">
-                <h3><?= $count_siswa ?></h3>
-                <span>Siswa</span>
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!-- end our -->
 
   <?php require_once("resources/footer.php"); ?>
 </body>

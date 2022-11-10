@@ -41,7 +41,7 @@ $_SESSION['page-url'] = "siswa";
                     <div class="btn-wrapper">
                       <a href="#" class="btn btn-primary text-white me-0" data-bs-toggle="modal" data-bs-target="#tambah-siswa">Tambah</a>
                       <!-- <a href="#" class="btn btn-outline-primary text-white me-0" data-bs-toggle="modal" data-bs-target="#import-siswa">Import</a> -->
-                      <a style="cursor: pointer;" onclick="window.location.href='export-siswa'" class="btn btn-outline-primary text-white me-0">Export</a>
+                      <a style="cursor: pointer;" onclick="window.location.href='export-siswa'" class="btn btn-outline-primary me-0">Export</a>
                     </div>
                   </div>
                 </div>
@@ -131,7 +131,51 @@ $_SESSION['page-url'] = "siswa";
                                           </div>
                                           <div class="mb-3">
                                             <label for="kelas" class="form-label">Kelas <small class="text-danger">*</small></label>
-                                            <input type="number" name="kelas" value="<?= $row['kelas'] ?>" class="form-control" id="kelas" minlength="2" placeholder="Kelas" required>
+                                            <select name="kelas" class="form-select" aria-label="Default select example" required>
+                                              <option selected value="">Pilih kelas</option>
+                                              <?php if (mysqli_num_rows($ubah_ipa10) > 0) {
+                                                while ($row_ipa10 = mysqli_fetch_assoc($ubah_ipa10)) {
+                                                  for ($xipa10 = 1; $xipa10 <= $row_ipa10['rombel_ipa10']; $xipa10++) { ?>
+                                                    <option value="10 IPA <?= $xipa10; ?>">10 IPA <?= $xipa10; ?></option>
+                                                  <?php }
+                                                }
+                                              }
+                                              if (mysqli_num_rows($ubah_ips10) > 0) {
+                                                while ($row_ips10 = mysqli_fetch_assoc($ubah_ips10)) {
+                                                  for ($xips10 = 1; $xips10 <= $row_ips10['rombel_ips10']; $xips10++) { ?>
+                                                    <option value="10 IPS <?= $xips10; ?>">10 IPS <?= $xips10; ?></option>
+                                                  <?php }
+                                                }
+                                              }
+                                              if (mysqli_num_rows($ubah_ipa11) > 0) {
+                                                while ($row_ipa11 = mysqli_fetch_assoc($ubah_ipa11)) {
+                                                  for ($xipa11 = 1; $xipa11 <= $row_ipa11['rombel_ipa11']; $xipa11++) { ?>
+                                                    <option value="11 IPA <?= $xipa11; ?>">11 IPA <?= $xipa11; ?></option>
+                                                  <?php }
+                                                }
+                                              }
+                                              if (mysqli_num_rows($ubah_ips11) > 0) {
+                                                while ($row_ips11 = mysqli_fetch_assoc($ubah_ips11)) {
+                                                  for ($xips11 = 1; $xips11 <= $row_ips11['rombel_ips11']; $xips11++) { ?>
+                                                    <option value="11 IPS <?= $xips11; ?>">11 IPS <?= $xips11; ?></option>
+                                                  <?php }
+                                                }
+                                              }
+                                              if (mysqli_num_rows($ubah_ipa12) > 0) {
+                                                while ($row_ipa12 = mysqli_fetch_assoc($ubah_ipa12)) {
+                                                  for ($xipa12 = 1; $xipa12 <= $row_ipa12['rombel_ipa12']; $xipa12++) { ?>
+                                                    <option value="12 IPA <?= $xipa12; ?>">12 IPA <?= $xipa12; ?></option>
+                                                  <?php }
+                                                }
+                                              }
+                                              if (mysqli_num_rows($ubah_ips12) > 0) {
+                                                while ($row_ips12 = mysqli_fetch_assoc($ubah_ips12)) {
+                                                  for ($xips12 = 1; $xips12 <= $row_ips12['rombel_ips12']; $xips12++) { ?>
+                                                    <option value="12 IPS <?= $xips12; ?>">12 IPS <?= $xips12; ?></option>
+                                              <?php }
+                                                }
+                                              } ?>
+                                            </select>
                                           </div>
                                         </div>
                                         <div class="modal-footer justify-content-center border-top-0">
@@ -269,7 +313,51 @@ $_SESSION['page-url'] = "siswa";
                   </div>
                   <div class="mb-3">
                     <label for="kelas" class="form-label">Kelas <small class="text-danger">*</small></label>
-                    <input type="number" name="kelas" class="form-control" id="kelas" minlength="2" placeholder="Kelas" required>
+                    <select name="kelas" class="form-select" aria-label="Default select example" required>
+                      <option selected value="">Pilih kelas</option>
+                      <?php if (mysqli_num_rows($ipa10) > 0) {
+                        while ($row_ipa10 = mysqli_fetch_assoc($ipa10)) {
+                          for ($xipa10 = 1; $xipa10 <= $row_ipa10['rombel_ipa10']; $xipa10++) { ?>
+                            <option value="10 IPA <?= $xipa10; ?>">10 IPA <?= $xipa10; ?></option>
+                          <?php }
+                        }
+                      }
+                      if (mysqli_num_rows($ips10) > 0) {
+                        while ($row_ips10 = mysqli_fetch_assoc($ips10)) {
+                          for ($xips10 = 1; $xips10 <= $row_ips10['rombel_ips10']; $xips10++) { ?>
+                            <option value="10 IPS <?= $xips10; ?>">10 IPS <?= $xips10; ?></option>
+                          <?php }
+                        }
+                      }
+                      if (mysqli_num_rows($ipa11) > 0) {
+                        while ($row_ipa11 = mysqli_fetch_assoc($ipa11)) {
+                          for ($xipa11 = 1; $xipa11 <= $row_ipa11['rombel_ipa11']; $xipa11++) { ?>
+                            <option value="11 IPA <?= $xipa11; ?>">11 IPA <?= $xipa11; ?></option>
+                          <?php }
+                        }
+                      }
+                      if (mysqli_num_rows($ips11) > 0) {
+                        while ($row_ips11 = mysqli_fetch_assoc($ips11)) {
+                          for ($xips11 = 1; $xips11 <= $row_ips11['rombel_ips11']; $xips11++) { ?>
+                            <option value="11 IPS <?= $xips11; ?>">11 IPS <?= $xips11; ?></option>
+                          <?php }
+                        }
+                      }
+                      if (mysqli_num_rows($ipa12) > 0) {
+                        while ($row_ipa12 = mysqli_fetch_assoc($ipa12)) {
+                          for ($xipa12 = 1; $xipa12 <= $row_ipa12['rombel_ipa12']; $xipa12++) { ?>
+                            <option value="12 IPA <?= $xipa12; ?>">12 IPA <?= $xipa12; ?></option>
+                          <?php }
+                        }
+                      }
+                      if (mysqli_num_rows($ips12) > 0) {
+                        while ($row_ips12 = mysqli_fetch_assoc($ips12)) {
+                          for ($xips12 = 1; $xips12 <= $row_ips12['rombel_ips12']; $xips12++) { ?>
+                            <option value="12 IPS <?= $xips12; ?>">12 IPS <?= $xips12; ?></option>
+                      <?php }
+                        }
+                      } ?>
+                    </select>
                   </div>
                 </div>
                 <div class="modal-footer border-top-0 justify-content-center">

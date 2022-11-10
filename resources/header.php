@@ -10,15 +10,15 @@
 <meta name="description" content="">
 <meta name="author" content="">
 <!-- fevicon -->
-<link rel="shortcut icon" href="<?= $baseURL ?>assets/images/logo.png">
+<link rel="shortcut icon" href="assets/images/logo.png">
 <!-- bootstrap css -->
-<link rel="stylesheet" href="<?= $baseURL ?>assets/css/bootstrap.min.css">
+<link rel="stylesheet" href="assets/css/bootstrap.min.css">
 <!-- style css -->
-<link rel="stylesheet" href="<?= $baseURL ?>assets/css/style-front.css">
+<link rel="stylesheet" href="assets/css/style-frontx.css">
 <!-- Responsive-->
-<link rel="stylesheet" href="<?= $baseURL ?>assets/css/responsive.css">
+<link rel="stylesheet" href="assets/css/responsive.css">
 <!-- Scrollbar Custom CSS -->
-<link rel="stylesheet" href="<?= $baseURL ?>assets/css/jquery.mCustomScrollbar.min.css">
+<link rel="stylesheet" href="assets/css/jquery.mCustomScrollbar.min.css">
 <!-- Tweaks for older IEs-->
 <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css" media="screen">

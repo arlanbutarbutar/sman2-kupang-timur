@@ -41,7 +41,7 @@ $_SESSION['page-url'] = "guru";
                     <div class="btn-wrapper">
                       <a href="#" class="btn btn-primary text-white me-0" data-bs-toggle="modal" data-bs-target="#tambah-guru">Tambah</a>
                       <!-- <a href="#" class="btn btn-outline-primary text-white me-0" data-bs-toggle="modal" data-bs-target="#import-guru">Import</a> -->
-                      <a style="cursor: pointer;" onclick="window.location.href='export-guru'" class="btn btn-outline-primary text-white me-0">Export</a>
+                      <a style="cursor: pointer;" onclick="window.location.href='export-guru'" class="btn btn-outline-primary me-0">Export</a>
                     </div>
                   </div>
                 </div>
@@ -54,11 +54,10 @@ $_SESSION['page-url'] = "guru";
                           <th scope="col">NIP</th>
                           <th scope="col">Nama</th>
                           <th scope="col">TTL</th>
-                          <th scope="col">Golongan</th>
-                          <th scope="col">TMT <small>(Terhitung Mulai Tanggal)</small></th>
+                          <th scope="col">Status</th>
+                          <th scope="col">Jenis Kelamin</th>
                           <th scope="col">Jabatan</th>
                           <th scope="col">Gelar</th>
-                          <th scope="col">Tahun Lulus</th>
                           <th scope="col">Tgl Buat</th>
                           <th scope="col">Tgl Ubah</th>
                           <th scope="col" colspan="2">Aksi</th>
@@ -67,7 +66,7 @@ $_SESSION['page-url'] = "guru";
                       <tbody id="search-page">
                         <?php if (mysqli_num_rows($guru) == 0) { ?>
                           <tr>
-                            <th scope="row" colspan="13">belum ada data guru</th>
+                            <th scope="row" colspan="12">belum ada data guru</th>
                           </tr>
                           <?php } else if (mysqli_num_rows($guru) > 0) {
                           $no = 1;
@@ -77,14 +76,10 @@ $_SESSION['page-url'] = "guru";
                               <td><?= $row['nip'] ?></td>
                               <td><?= $row['nama'] ?></td>
                               <td><?= $row['tempat_lahir'] . ", " . $row['tgl_lahir'] ?></td>
-                              <td><?= $row['gol'] ?></td>
-                              <td>
-                                <?php $tmt = date_create($row['tmt']);
-                                echo date_format($tmt, "l, d M Y"); ?>
-                              </td>
+                              <td><?= $row['status'] ?></td>
+                              <td><?= $row['jenis_kelamin'] ?></td>
                               <td><?= $row['jabatan'] ?></td>
                               <td><?= $row['gelar'] ?></td>
-                              <td><?= $row['thn_lulus'] ?></td>
                               <td>
                                 <div class="badge badge-opacity-success">
                                   <?php $dateCreate = date_create($row['created_at']);
@@ -127,12 +122,16 @@ $_SESSION['page-url'] = "guru";
                                             <input type="date" name="tgl-lahir" value="<?= $row['tgl_lahir'] ?>" class="form-control" id="tgl-lahir" placeholder="Tgl Lahir" required>
                                           </div>
                                           <div class="mb-3">
-                                            <label for="gol" class="form-label">Golongan <small class="text-danger">*</small></label>
-                                            <input type="text" name="gol" value="<?= $row['gol'] ?>" class="form-control" id="gol" placeholder="Golongan" required>
+                                            <label for="status" class="form-label">Status <small class="text-danger">*</small></label>
+                                            <input type="text" name="status" value="<?= $row['status'] ?>" class="form-control" id="status" placeholder="Status" required>
                                           </div>
                                           <div class="mb-3">
-                                            <label for="tmt" class="form-label">Terhitung mulai tanggal <small class="text-danger">*</small></label>
-                                            <input type="date" name="tmt" value="<?= $row['tmt'] ?>" class="form-control" id="tmt" placeholder="" required>
+                                            <label for="jenis-kelamin" class="form-label">Jenis Kelamin <small class="text-danger">*</small></label>
+                                            <select name="jenis-kelamin" id="jenis-kelamin" class="form-select" aria-label="Default select example" required>
+                                              <option selected value="">Pilih Jenis Kelamin</option>
+                                              <option value="Laki-Laki">Laki-Laki</option>
+                                              <option value="Perempuan">Perempuan</option>
+                                            </select>
                                           </div>
                                           <div class="mb-3">
                                             <label for="jabatan" class="form-label">Jabatan <small class="text-danger">*</small></label>
@@ -142,15 +141,10 @@ $_SESSION['page-url'] = "guru";
                                             <label for="gelar" class="form-label">Gelar <small class="text-danger">*</small></label>
                                             <input type="text" name="gelar" value="<?= $row['gelar'] ?>" class="form-control" id="gelar" minlength="3" placeholder="Gelar" required>
                                           </div>
-                                          <div class="mb-3">
-                                            <label for="thn-lulus" class="form-label">Tahun Lulus <small class="text-danger">*</small></label>
-                                            <input type="month" name="thn-lulus" class="form-control" id="thn-lulus" minlength="3" placeholder="Tahun Lulus" required>
-                                            <small class="text-danger">Input yang di ambil hanya tahun!</small>
-                                          </div>
                                         </div>
                                         <div class="modal-footer justify-content-center border-top-0">
                                           <input type="hidden" name="id-guru" value="<?= $row['id_guru'] ?>">
-                                          <input type="hidden" name="nama" value="<?= $row['nama'] ?>">
+                                          <input type="hidden" name="namaOld" value="<?= $row['nama'] ?>">
                                           <input type="hidden" name="nipOld" value="<?= $row['nip'] ?>">
                                           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
                                           <button type="submit" name="ubah-guru" class="btn btn-warning">Ubah</button>
@@ -274,12 +268,16 @@ $_SESSION['page-url'] = "guru";
                     <input type="date" name="tgl-lahir" class="form-control" id="tgl-lahir" placeholder="Tgl Lahir" required>
                   </div>
                   <div class="mb-3">
-                    <label for="gol" class="form-label">Golongan <small class="text-danger">*</small></label>
-                    <input type="text" name="gol" class="form-control" id="gol" placeholder="Golongan" required>
+                    <label for="status" class="form-label">Status <small class="text-danger">*</small></label>
+                    <input type="text" name="status" class="form-control" id="status" placeholder="Status" required>
                   </div>
                   <div class="mb-3">
-                    <label for="tmt" class="form-label">Terhitung mulai tanggal <small class="text-danger">*</small></label>
-                    <input type="date" name="tmt" class="form-control" id="tmt" placeholder="" required>
+                    <label for="jenis-kelamin" class="form-label">Jenis Kelamin <small class="text-danger">*</small></label>
+                    <select name="jenis-kelamin" id="jenis-kelamin" class="form-select" aria-label="Default select example" required>
+                      <option selected value="">Pilih Jenis Kelamin</option>
+                      <option value="Laki-Laki">Laki-Laki</option>
+                      <option value="Perempuan">Perempuan</option>
+                    </select>
                   </div>
                   <div class="mb-3">
                     <label for="jabatan" class="form-label">Jabatan <small class="text-danger">*</small></label>
@@ -288,11 +286,6 @@ $_SESSION['page-url'] = "guru";
                   <div class="mb-3">
                     <label for="gelar" class="form-label">Gelar <small class="text-danger">*</small></label>
                     <input type="text" name="gelar" class="form-control" id="gelar" minlength="3" placeholder="Gelar" required>
-                  </div>
-                  <div class="mb-3">
-                    <label for="thn-lulus" class="form-label">Tahun Lulus <small class="text-danger">*</small></label>
-                    <input type="month" name="thn-lulus" class="form-control" id="thn-lulus" minlength="3" placeholder="Tahun Lulus" required>
-                    <small class="text-danger">Input yang di ambil hanya tahun!</small>
                   </div>
                 </div>
                 <div class="modal-footer border-top-0 justify-content-center">

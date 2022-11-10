@@ -37,7 +37,7 @@ if (isset($_POST['masuk'])) {
 }
 
 $nama_sekolah = mysqli_query($conn, "SELECT judul FROM profil_sekolah");
-$profil = mysqli_query($conn, "SELECT isi FROM profil_sekolah");
+$profil = mysqli_query($conn, "SELECT * FROM profil_sekolah");
 $count_guru = mysqli_query($conn, "SELECT * FROM guru");
 $count_guru = mysqli_num_rows($count_guru);
 $count_siswa = mysqli_query($conn, "SELECT * FROM siswa");
@@ -143,7 +143,7 @@ if (isset($_SESSION['data-user'])) {
   }
   if (isset($_POST['ubah-jadwal'])) {
     if (ubah_jadwal($_POST) > 0) {
-      $_SESSION['message-success'] = "Jadwal sekolah dengan " . $_POST['nama-jadwal'] . " berhasil diubah.";
+      $_SESSION['message-success'] = "Jadwal sekolah dengan mapel " . $_POST['nama-jadwal'] . " berhasil diubah.";
       $_SESSION['time-message'] = time();
       header("Location: " . $_SESSION['page-url']);
       exit();
@@ -151,7 +151,7 @@ if (isset($_SESSION['data-user'])) {
   }
   if (isset($_POST['hapus-jadwal'])) {
     if (hapus_jadwal($_POST) > 0) {
-      $_SESSION['message-success'] = "Jadwal sekolah dengan " . $_POST['nama-jadwal'] . " berhasil dihapus.";
+      $_SESSION['message-success'] = "Jadwal sekolah dengan mapel " . $_POST['nama-jadwal'] . " berhasil dihapus.";
       $_SESSION['time-message'] = time();
       header("Location: " . $_SESSION['page-url']);
       exit();
@@ -175,7 +175,7 @@ if (isset($_SESSION['data-user'])) {
   }
   if (isset($_POST['ubah-guru'])) {
     if (ubah_guru($_POST) > 0) {
-      $_SESSION['message-success'] = "Data guru dengan nama " . $_POST['nama'] . " berhasil diubah.";
+      $_SESSION['message-success'] = "Data guru dengan nama " . $_POST['namaOld'] . " berhasil diubah.";
       $_SESSION['time-message'] = time();
       header("Location: " . $_SESSION['page-url']);
       exit();
@@ -183,7 +183,7 @@ if (isset($_SESSION['data-user'])) {
   }
   if (isset($_POST['hapus-guru'])) {
     if (hapus_guru($_POST) > 0) {
-      $_SESSION['message-success'] = "Data guru dengan nama " . $_POST['nama'] . " berhasil dihapus.";
+      $_SESSION['message-success'] = "Data guru dengan nama " . $_POST['namaOld'] . " berhasil dihapus.";
       $_SESSION['time-message'] = time();
       header("Location: " . $_SESSION['page-url']);
       exit();
@@ -237,4 +237,17 @@ if (isset($_SESSION['data-user'])) {
       exit();
     }
   }
+
+  $ipa10=mysqli_query($conn, "SELECT rombel_ipa10 FROM profil_sekolah");
+  $ubah_ipa10=mysqli_query($conn, "SELECT rombel_ipa10 FROM profil_sekolah");
+  $ips10=mysqli_query($conn, "SELECT rombel_ips10 FROM profil_sekolah");
+  $ubah_ips10=mysqli_query($conn, "SELECT rombel_ips10 FROM profil_sekolah");
+  $ipa11=mysqli_query($conn, "SELECT rombel_ipa11 FROM profil_sekolah");
+  $ubah_ipa11=mysqli_query($conn, "SELECT rombel_ipa11 FROM profil_sekolah");
+  $ips11=mysqli_query($conn, "SELECT rombel_ips11 FROM profil_sekolah");
+  $ubah_ips11=mysqli_query($conn, "SELECT rombel_ips11 FROM profil_sekolah");
+  $ipa12=mysqli_query($conn, "SELECT rombel_ipa12 FROM profil_sekolah");
+  $ubah_ipa12=mysqli_query($conn, "SELECT rombel_ipa12 FROM profil_sekolah");
+  $ips12=mysqli_query($conn, "SELECT rombel_ips12 FROM profil_sekolah");
+  $ubah_ips12=mysqli_query($conn, "SELECT rombel_ips12 FROM profil_sekolah");
 }
