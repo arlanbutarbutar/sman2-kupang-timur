@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 07 Nov 2022 pada 07.50
+-- Waktu pembuatan: 24 Nov 2022 pada 21.13
 -- Versi server: 10.4.22-MariaDB
 -- Versi PHP: 7.4.27
 
@@ -33,11 +33,9 @@ CREATE TABLE `guru` (
   `nama` varchar(225) NOT NULL,
   `tempat_lahir` varchar(50) NOT NULL,
   `tgl_lahir` varchar(35) NOT NULL,
-  `gol` varchar(35) NOT NULL,
-  `tmt` date NOT NULL,
-  `jabatan` varchar(35) NOT NULL,
+  `status` varchar(50) NOT NULL,
+  `jenis_kelamin` varchar(20) NOT NULL,
   `gelar` varchar(35) NOT NULL,
-  `thn_lulus` int(11) NOT NULL,
   `created_at` datetime NOT NULL DEFAULT current_timestamp(),
   `updated_at` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -50,9 +48,11 @@ CREATE TABLE `guru` (
 
 CREATE TABLE `jadwal` (
   `id_jadwal` int(11) NOT NULL,
-  `rombel` int(11) NOT NULL,
-  `tahun` year(4) NOT NULL DEFAULT current_timestamp(),
-  `file` varchar(100) NOT NULL,
+  `kelas` varchar(35) NOT NULL,
+  `mapel` varchar(75) NOT NULL,
+  `jam_mulai` varchar(10) NOT NULL,
+  `jam_selesai` varchar(10) NOT NULL,
+  `hari` varchar(15) NOT NULL,
   `created_at` datetime NOT NULL DEFAULT current_timestamp(),
   `updated_at` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -83,7 +83,7 @@ CREATE TABLE `profil_sekolah` (
 --
 
 INSERT INTO `profil_sekolah` (`id_profil`, `judul`, `rombel_ipa10`, `rombel_ipa11`, `rombel_ipa12`, `rombel_ips10`, `rombel_ips11`, `rombel_ips12`, `fasilitas`, `isi`, `created_at`, `updated_at`) VALUES
-(2, 'SMA Negeri 2 Kupang Timur', '3', '3', '3', '3', '4', '3', 'Ruang kelas, laoratorium, perpustakaan, toilet siswa dan guru', '<p>SMA Negeri 2 Kupang, merupakan salah satu Sekolah Menengah Atas Negeri yang ada di Provinsi Nusa Tenggara Timur, Indonesia. Sama dengan SMA pada umumnya di Indonesia masa pendidikan sekolah di SMAN 2 Kupang ditempuh dalam waktu tiga tahun pelajaran, mulai dari Kelas X sampai Kelas XII.</p>\r\n', '2022-10-28 19:43:00', '2022-11-07 14:41:21');
+(2, 'SMA Negeri 2 Kupang Timur', '3', '3', '3', '3', '4', '3', 'Ruang kelas, laboratorium, perpustakaan, toilet siswa dan guru', '<p>SMA Negeri 2 Kupang, merupakan salah satu Sekolah Menengah Atas Negeri yang ada di Provinsi Nusa Tenggara Timur, Indonesia. Sama dengan SMA pada umumnya di Indonesia masa pendidikan sekolah di SMAN 2 Kupang ditempuh dalam waktu tiga tahun pelajaran, mulai dari Kelas X sampai Kelas XII.</p>\r\n', '2022-10-28 19:43:00', '2022-11-07 14:41:21');
 
 -- --------------------------------------------------------
 
@@ -100,6 +100,10 @@ CREATE TABLE `siswa` (
   `alamat` text NOT NULL,
   `agama` varchar(50) NOT NULL,
   `kelas` varchar(10) NOT NULL,
+  `ortu` varchar(75) NOT NULL,
+  `pekerjaan` varchar(50) NOT NULL,
+  `no_hp_ortu` char(12) NOT NULL,
+  `no_hp_siswa` char(12) NOT NULL,
   `created_at` datetime NOT NULL DEFAULT current_timestamp(),
   `updated_at` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -168,13 +172,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT untuk tabel `guru`
 --
 ALTER TABLE `guru`
-  MODIFY `id_guru` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id_guru` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT untuk tabel `jadwal`
 --
 ALTER TABLE `jadwal`
-  MODIFY `id_jadwal` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_jadwal` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT untuk tabel `profil_sekolah`
@@ -186,13 +190,13 @@ ALTER TABLE `profil_sekolah`
 -- AUTO_INCREMENT untuk tabel `siswa`
 --
 ALTER TABLE `siswa`
-  MODIFY `id_siswa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_siswa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT untuk tabel `users`
 --
 ALTER TABLE `users`
-  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
