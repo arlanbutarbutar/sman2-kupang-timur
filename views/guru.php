@@ -56,7 +56,7 @@ $_SESSION['page-url'] = "guru";
                           <th scope="col">TTL</th>
                           <th scope="col">Status</th>
                           <th scope="col">Jenis Kelamin</th>
-                          <th scope="col">Jabatan</th>
+                          <!-- <th scope="col">Jabatan</th> -->
                           <th scope="col">Gelar</th>
                           <th scope="col">Tgl Buat</th>
                           <th scope="col">Tgl Ubah</th>
@@ -78,7 +78,7 @@ $_SESSION['page-url'] = "guru";
                               <td><?= $row['tempat_lahir'] . ", " . $row['tgl_lahir'] ?></td>
                               <td><?= $row['status'] ?></td>
                               <td><?= $row['jenis_kelamin'] ?></td>
-                              <td><?= $row['jabatan'] ?></td>
+                              <!-- <td><?= $row['jabatan'] ?></td> -->
                               <td><?= $row['gelar'] ?></td>
                               <td>
                                 <div class="badge badge-opacity-success">
@@ -106,8 +106,8 @@ $_SESSION['page-url'] = "guru";
                                       <form action="" method="POST">
                                         <div class="modal-body">
                                           <div class="mb-3">
-                                            <label for="nip" class="form-label">NIP <small class="text-danger">*</small></label>
-                                            <input type="number" name="nip" value="<?= $row['nip'] ?>" class="form-control" id="nip" minlength="5" placeholder="NIP" required>
+                                            <label for="nip" class="form-label">NIP</label>
+                                            <input type="number" name="nip" value="<?= $row['nip'] ?>" class="form-control" id="nip" minlength="5" placeholder="NIP">
                                           </div>
                                           <div class="mb-3">
                                             <label for="nama" class="form-label">Nama <small class="text-danger">*</small></label>
@@ -132,10 +132,6 @@ $_SESSION['page-url'] = "guru";
                                               <option value="Laki-Laki">Laki-Laki</option>
                                               <option value="Perempuan">Perempuan</option>
                                             </select>
-                                          </div>
-                                          <div class="mb-3">
-                                            <label for="jabatan" class="form-label">Jabatan <small class="text-danger">*</small></label>
-                                            <input type="text" name="jabatan" value="<?= $row['jabatan'] ?>" class="form-control" id="jabatan" minlength="3" placeholder="Jabatan" required>
                                           </div>
                                           <div class="mb-3">
                                             <label for="gelar" class="form-label">Gelar <small class="text-danger">*</small></label>
@@ -252,8 +248,8 @@ $_SESSION['page-url'] = "guru";
               <form action="" method="post">
                 <div class="modal-body text-center">
                   <div class="mb-3">
-                    <label for="nip" class="form-label">NIP <small class="text-danger">*</small></label>
-                    <input type="number" name="nip" class="form-control" id="nip" minlength="5" placeholder="NIP" required>
+                    <label for="nip" class="form-label">NIP</label>
+                    <input type="number" name="nip" class="form-control" id="nip" minlength="5" placeholder="NIP">
                   </div>
                   <div class="mb-3">
                     <label for="nama" class="form-label">Nama <small class="text-danger">*</small></label>
@@ -278,10 +274,6 @@ $_SESSION['page-url'] = "guru";
                       <option value="Laki-Laki">Laki-Laki</option>
                       <option value="Perempuan">Perempuan</option>
                     </select>
-                  </div>
-                  <div class="mb-3">
-                    <label for="jabatan" class="form-label">Jabatan <small class="text-danger">*</small></label>
-                    <input type="text" name="jabatan" class="form-control" id="jabatan" minlength="3" placeholder="Jabatan" required>
                   </div>
                   <div class="mb-3">
                     <label for="gelar" class="form-label">Gelar <small class="text-danger">*</small></label>

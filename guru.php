@@ -135,7 +135,6 @@
                       <th scope="col">TTL</th>
                       <th scope="col">Status</th>
                       <th scope="col">Jenis Kelamin</th>
-                      <th scope="col">Jabatan</th>
                       <th scope="col">Gelar</th>
                     </tr>
                   </thead>
@@ -149,7 +148,6 @@
                         <td><?= $row['tempat_lahir'] . ", " . $row['tgl_lahir'] ?></td>
                         <td><?= $row['status'] ?></td>
                         <td><?= $row['jenis_kelamin'] ?></td>
-                        <td><?= $row['jabatan'] ?></td>
                         <td><?= $row['gelar'] ?></td>
                       </tr>
                     <?php $no++;

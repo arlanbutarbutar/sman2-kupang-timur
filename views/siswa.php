@@ -57,6 +57,10 @@ $_SESSION['page-url'] = "siswa";
                           <th scope="col">Alamat</th>
                           <th scope="col">TTL</th>
                           <th scope="col">Agama</th>
+                          <th scope="col">No HP</th>
+                          <th scope="col">Nama Ortu/Wali</th>
+                          <th scope="col">Pekerjaan</th>
+                          <th scope="col">No HP Ortu/Wali</th>
                           <th scope="col">Tgl Buat</th>
                           <th scope="col">Tgl Ubah</th>
                           <th scope="col" colspan="2">Aksi</th>
@@ -80,6 +84,10 @@ $_SESSION['page-url'] = "siswa";
                               <td><?= $row['alamat'] ?></td>
                               <td><?= $row['tempat_lahir'] . ", " . $tgl_lahir ?></td>
                               <td><?= $row['agama'] ?></td>
+                              <td><?= $row['no_hp_siswa'] ?></td>
+                              <td><?= $row['ortu'] ?></td>
+                              <td><?= $row['pekerjaan'] ?></td>
+                              <td><?= $row['no_hp_ortu'] ?></td>
                               <td>
                                 <div class="badge badge-opacity-success">
                                   <?php $dateCreate = date_create($row['created_at']);
@@ -177,6 +185,23 @@ $_SESSION['page-url'] = "siswa";
                                               } ?>
                                             </select>
                                           </div>
+                                          <div class="mb-3">
+                                            <label for="no-hp-siswa" class="form-label">No HP</label>
+                                            <input type="number" name="no-hp-siswa" value="<?= $row['no_hp_siswa'] ?>" class="form-control" id="no-hp-siswa" minlength="11" placeholder="No HP">
+                                          </div>
+                                          <hr>
+                                          <div class="mb-3">
+                                            <label for="ortu" class="form-label">Nama Ortu/Wali <small class="text-danger">*</small></label>
+                                            <input type="text" name="ortu" value="<?= $row['ortu'] ?>" class="form-control" id="ortu" minlength="5" placeholder="Nama Ortu/Wali" required>
+                                          </div>
+                                          <div class="mb-3">
+                                            <label for="pekerjaan" class="form-label">Pekerjaan</label>
+                                            <input type="text" name="pekerjaan" value="<?= $row['pekerjaan'] ?>" class="form-control" id="pekerjaan" minlength="3" placeholder="Pekerjaan">
+                                          </div>
+                                          <div class="mb-3">
+                                            <label for="no-hp-ortu" class="form-label">No HP Ortu/Wali</label>
+                                            <input type="number" name="no-hp-ortu" value="<?= $row['no_hp_ortu'] ?>" class="form-control" id="no-hp-ortu" minlength="11" placeholder="No HP Ortu/Wali">
+                                          </div>
                                         </div>
                                         <div class="modal-footer justify-content-center border-top-0">
                                           <input type="hidden" name="id-siswa" value="<?= $row['id_siswa'] ?>">
@@ -252,12 +277,12 @@ $_SESSION['page-url'] = "siswa";
                                                                                 } else if ($page_role4 <= 4) {
                                                                                   echo '5';
                                                                                 } ?>/" class="btn btn-<?php if ($page_role4 <= 4) {
-                                                                                                        echo 'outline-';
-                                                                                                      } ?>primary btn-sm rounded-0"><?php if ($page_role4 > 4) {
-                                                                                                                                      echo $page_role4;
-                                                                                                                                    } else if ($page_role4 <= 4) {
-                                                                                                                                      echo '5';
-                                                                                                                                    } ?></a>
+                                                                                                  echo 'outline-';
+                                                                                                } ?>primary btn-sm rounded-0"><?php if ($page_role4 > 4) {
+                                                                                                                                echo $page_role4;
+                                                                                                                              } else if ($page_role4 <= 4) {
+                                                                                                                                echo '5';
+                                                                                                                              } ?></a>
                                   </li>
                                 <?php endif;
                                 if ($page_role4 < $total_page_role4 && $total_page_role4 >= 4) : ?>
@@ -358,6 +383,23 @@ $_SESSION['page-url'] = "siswa";
                         }
                       } ?>
                     </select>
+                  </div>
+                  <div class="mb-3">
+                    <label for="no-hp-siswa" class="form-label">No HP</label>
+                    <input type="number" name="no-hp-siswa" class="form-control" id="no-hp-siswa" minlength="11" placeholder="No HP">
+                  </div>
+                  <hr>
+                  <div class="mb-3">
+                    <label for="ortu" class="form-label">Nama Ortu/Wali <small class="text-danger">*</small></label>
+                    <input type="text" name="ortu" class="form-control" id="ortu" minlength="5" placeholder="Nama Ortu/Wali" required>
+                  </div>
+                  <div class="mb-3">
+                    <label for="pekerjaan" class="form-label">Pekerjaan</label>
+                    <input type="text" name="pekerjaan" class="form-control" id="pekerjaan" minlength="3" placeholder="Pekerjaan">
+                  </div>
+                  <div class="mb-3">
+                    <label for="no-hp-ortu" class="form-label">No HP Ortu/Wali</label>
+                    <input type="number" name="no-hp-ortu" class="form-control" id="no-hp-ortu" minlength="11" placeholder="No HP Ortu/Wali">
                   </div>
                 </div>
                 <div class="modal-footer border-top-0 justify-content-center">

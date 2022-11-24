@@ -136,6 +136,10 @@
                       <th scope="col">Alamat</th>
                       <th scope="col">TTL</th>
                       <th scope="col">Agama</th>
+                      <th scope="col">No HP</th>
+                      <th scope="col">Orang Tua/Wali</th>
+                      <th scope="col">Pekerjaan</th>
+                      <th scope="col">No HP Orang Tua</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -151,6 +155,10 @@
                         <td><?= $row['alamat'] ?></td>
                         <td><?= $row['tempat_lahir'] . ", " . $tgl_lahir ?></td>
                         <td><?= $row['agama'] ?></td>
+                        <td><?= $row['no_hp_siswa'] ?></td>
+                        <td><?= $row['ortu'] ?></td>
+                        <td><?= $row['pekerjaan'] ?></td>
+                        <td><?= $row['no_hp_ortu'] ?></td>
                       </tr>
                     <?php $no++;
                     } ?>

@@ -126,11 +126,11 @@
           <div class="about-box">
             <?php if (mysqli_num_rows($profil) > 0) {
               $row_profil = mysqli_fetch_assoc($profil); ?>
-              <h2 style="font-size: 50px;">Profil <strong class="yellow"> Sekolah</strong></h2>
+              <h2 style="font-size: 50px;"><strong class="yellow">Profil Sekolah</strong></h2>
               <p><?= $row_profil['isi'] ?></p>
-              <h4>Fasilitas <strong class="yellow"> Sekolah</strong></h4>
+              <h2 style="font-size: 50px;"><strong class="yellow">Fasilitas Sekolah</strong></h2>
               <p><?= $row_profil['fasilitas'] ?></p>
-              <h4>Ruang <strong class="yellow"> Belajar</strong></h4>
+              <h2 style="font-size: 50px;"><strong class="yellow">Ruang Belajar</strong></h2>
               <div class="d-felx">
                 <p>10 IPA : <?= $row_profil['rombel_ipa10'] ?> ruang kelas</p>
                 <p style="margin-top: -15px;">10 IPS : <?= $row_profil['rombel_ips10'] ?> ruang kelas</p>

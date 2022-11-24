@@ -268,7 +268,7 @@ if ($_SESSION['page-url'] == "guru") {
     $quer = "";
     foreach ($keys as $no => $data) {
       $data = strtolower($data);
-      $quer .= "nip LIKE '%$data%'";
+      $quer .= "nama LIKE '%$data%'";
       if ($no + 1 < count($keys)) {
         $quer .= " OR ";
       }
@@ -290,7 +290,7 @@ if ($_SESSION['page-url'] == "guru") {
         <td><?= $row['tempat_lahir'] . ", " . $row['tgl_lahir'] ?></td>
         <td><?= $row['status'] ?></td>
         <td><?= $row['jenis_kelamin'] ?></td>
-        <td><?= $row['jabatan'] ?></td>
+        <!-- <td><?= $row['jabatan'] ?></td> -->
         <td><?= $row['gelar'] ?></td>
         <td>
           <div class="badge badge-opacity-success">
@@ -318,7 +318,7 @@ if ($_SESSION['page-url'] == "guru") {
                 <form action="" method="POST">
                   <div class="modal-body">
                     <div class="mb-3">
-                      <label for="nip" class="form-label">NIP <small class="text-danger">*</small></label>
+                      <label for="nip" class="form-label">NIP</label>
                       <input type="number" name="nip" value="<?= $row['nip'] ?>" class="form-control" id="nip" minlength="5" placeholder="NIP" required>
                     </div>
                     <div class="mb-3">
@@ -344,10 +344,6 @@ if ($_SESSION['page-url'] == "guru") {
                         <option value="Laki-Laki">Laki-Laki</option>
                         <option value="Perempuan">Perempuan</option>
                       </select>
-                    </div>
-                    <div class="mb-3">
-                      <label for="jabatan" class="form-label">Jabatan <small class="text-danger">*</small></label>
-                      <input type="text" name="jabatan" value="<?= $row['jabatan'] ?>" class="form-control" id="jabatan" minlength="3" placeholder="Jabatan" required>
                     </div>
                     <div class="mb-3">
                       <label for="gelar" class="form-label">Gelar <small class="text-danger">*</small></label>
@@ -429,6 +425,10 @@ if ($_SESSION['page-url'] == "siswa") {
         <td><?= $row['alamat'] ?></td>
         <td><?= $row['tempat_lahir'] . ", " . $tgl_lahir ?></td>
         <td><?= $row['agama'] ?></td>
+        <td><?= $row['no_hp_siswa'] ?></td>
+        <td><?= $row['ortu'] ?></td>
+        <td><?= $row['pekerjaan'] ?></td>
+        <td><?= $row['no_hp_ortu'] ?></td>
         <td>
           <div class="badge badge-opacity-success">
             <?php $dateCreate = date_create($row['created_at']);
@@ -482,49 +482,66 @@ if ($_SESSION['page-url'] == "siswa") {
                       <label for="kelas" class="form-label">Kelas <small class="text-danger">*</small></label>
                       <select name="kelas" class="form-select" aria-label="Default select example" required>
                         <option selected value="">Pilih kelas</option>
-                        <?php if (mysqli_num_rows($ipa10) > 0) {
-                          while ($row_ipa10 = mysqli_fetch_assoc($ipa10)) {
+                        <?php if (mysqli_num_rows($ubah_ipa10) > 0) {
+                          while ($row_ipa10 = mysqli_fetch_assoc($ubah_ipa10)) {
                             for ($xipa10 = 1; $xipa10 <= $row_ipa10['rombel_ipa10']; $xipa10++) { ?>
                               <option value="10 IPA <?= $xipa10; ?>">10 IPA <?= $xipa10; ?></option>
                             <?php }
                           }
                         }
-                        if (mysqli_num_rows($ips10) > 0) {
-                          while ($row_ips10 = mysqli_fetch_assoc($ips10)) {
+                        if (mysqli_num_rows($ubah_ips10) > 0) {
+                          while ($row_ips10 = mysqli_fetch_assoc($ubah_ips10)) {
                             for ($xips10 = 1; $xips10 <= $row_ips10['rombel_ips10']; $xips10++) { ?>
                               <option value="10 IPS <?= $xips10; ?>">10 IPS <?= $xips10; ?></option>
                             <?php }
                           }
                         }
-                        if (mysqli_num_rows($ipa11) > 0) {
-                          while ($row_ipa11 = mysqli_fetch_assoc($ipa11)) {
+                        if (mysqli_num_rows($ubah_ipa11) > 0) {
+                          while ($row_ipa11 = mysqli_fetch_assoc($ubah_ipa11)) {
                             for ($xipa11 = 1; $xipa11 <= $row_ipa11['rombel_ipa11']; $xipa11++) { ?>
                               <option value="11 IPA <?= $xipa11; ?>">11 IPA <?= $xipa11; ?></option>
                             <?php }
                           }
                         }
-                        if (mysqli_num_rows($ips11) > 0) {
-                          while ($row_ips11 = mysqli_fetch_assoc($ips11)) {
+                        if (mysqli_num_rows($ubah_ips11) > 0) {
+                          while ($row_ips11 = mysqli_fetch_assoc($ubah_ips11)) {
                             for ($xips11 = 1; $xips11 <= $row_ips11['rombel_ips11']; $xips11++) { ?>
                               <option value="11 IPS <?= $xips11; ?>">11 IPS <?= $xips11; ?></option>
                             <?php }
                           }
                         }
-                        if (mysqli_num_rows($ipa12) > 0) {
-                          while ($row_ipa12 = mysqli_fetch_assoc($ipa12)) {
+                        if (mysqli_num_rows($ubah_ipa12) > 0) {
+                          while ($row_ipa12 = mysqli_fetch_assoc($ubah_ipa12)) {
                             for ($xipa12 = 1; $xipa12 <= $row_ipa12['rombel_ipa12']; $xipa12++) { ?>
                               <option value="12 IPA <?= $xipa12; ?>">12 IPA <?= $xipa12; ?></option>
                             <?php }
                           }
                         }
-                        if (mysqli_num_rows($ips12) > 0) {
-                          while ($row_ips12 = mysqli_fetch_assoc($ips12)) {
+                        if (mysqli_num_rows($ubah_ips12) > 0) {
+                          while ($row_ips12 = mysqli_fetch_assoc($ubah_ips12)) {
                             for ($xips12 = 1; $xips12 <= $row_ips12['rombel_ips12']; $xips12++) { ?>
                               <option value="12 IPS <?= $xips12; ?>">12 IPS <?= $xips12; ?></option>
                         <?php }
                           }
                         } ?>
                       </select>
+                    </div>
+                    <div class="mb-3">
+                      <label for="no-hp-siswa" class="form-label">No HP</label>
+                      <input type="number" name="no-hp-siswa" value="<?= $row['no_hp_siswa'] ?>" class="form-control" id="no-hp-siswa" minlength="11" placeholder="No HP">
+                    </div>
+                    <hr>
+                    <div class="mb-3">
+                      <label for="ortu" class="form-label">Nama Ortu/Wali <small class="text-danger">*</small></label>
+                      <input type="text" name="ortu" value="<?= $row['ortu'] ?>" class="form-control" id="ortu" minlength="5" placeholder="Nama Ortu/Wali" required>
+                    </div>
+                    <div class="mb-3">
+                      <label for="pekerjaan" class="form-label">Pekerjaan</label>
+                      <input type="text" name="pekerjaan" value="<?= $row['pekerjaan'] ?>" class="form-control" id="pekerjaan" minlength="3" placeholder="Pekerjaan">
+                    </div>
+                    <div class="mb-3">
+                      <label for="no-hp-ortu" class="form-label">No HP Ortu/Wali</label>
+                      <input type="number" name="no-hp-ortu" value="<?= $row['no_hp_ortu'] ?>" class="form-control" id="no-hp-ortu" minlength="11" placeholder="No HP Ortu/Wali">
                     </div>
                   </div>
                   <div class="modal-footer justify-content-center border-top-0">

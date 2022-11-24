@@ -207,12 +207,6 @@ if (isset($_SESSION['data-user'])) {
   {
     global $conn;
     $nip = htmlspecialchars(addslashes(trim(mysqli_real_escape_string($conn, $data['nip']))));
-    $checkNIP = mysqli_query($conn, "SELECT * FROM guru WHERE nip='$nip'");
-    if (mysqli_num_rows($checkNIP) > 0) {
-      $_SESSION['message-danger'] = "Maaf, NIP yang anda masukan sudah digunakan di data guru yang lain";
-      $_SESSION['time-message'] = time();
-      return false;
-    }
     $nama = htmlspecialchars(addslashes(trim(mysqli_real_escape_string($conn, $data['nama']))));
     $tempat_lahir = htmlspecialchars(addslashes(trim(mysqli_real_escape_string($conn, $data['tempat-lahir']))));
     $tgl_lahir = htmlspecialchars(addslashes(trim(mysqli_real_escape_string($conn, $data['tgl-lahir']))));
@@ -220,9 +214,8 @@ if (isset($_SESSION['data-user'])) {
     $tgl_lahir = date_format($tgl_lahir, "m d Y");
     $status = htmlspecialchars(addslashes(trim(mysqli_real_escape_string($conn, $data['status']))));
     $jenis_kelamin = htmlspecialchars(addslashes(trim(mysqli_real_escape_string($conn, $data['jenis-kelamin']))));
-    $jabatan = htmlspecialchars(addslashes(trim(mysqli_real_escape_string($conn, $data['jabatan']))));
     $gelar = htmlspecialchars(addslashes(trim(mysqli_real_escape_string($conn, $data['gelar']))));
-    mysqli_query($conn, "INSERT INTO guru(nip,nama,tempat_lahir,tgl_lahir,status,jenis_kelamin,jabatan,gelar) VALUES('$nip','$nama','$tempat_lahir','$tgl_lahir','$status','$jenis_kelamin','$jabatan','$gelar')");
+    mysqli_query($conn, "INSERT INTO guru(nip,nama,tempat_lahir,tgl_lahir,status,jenis_kelamin,gelar) VALUES('$nip','$nama','$tempat_lahir','$tgl_lahir','$status','$jenis_kelamin','$gelar')");
     return mysqli_affected_rows($conn);
   }
   function ubah_guru($data)
@@ -246,10 +239,9 @@ if (isset($_SESSION['data-user'])) {
     $tgl_lahir = date_format($tgl_lahir, "d M Y");
     $status = htmlspecialchars(addslashes(trim(mysqli_real_escape_string($conn, $data['status']))));
     $jenis_kelamin = htmlspecialchars(addslashes(trim(mysqli_real_escape_string($conn, $data['jenis-kelamin']))));
-    $jabatan = htmlspecialchars(addslashes(trim(mysqli_real_escape_string($conn, $data['jabatan']))));
     $gelar = htmlspecialchars(addslashes(trim(mysqli_real_escape_string($conn, $data['gelar']))));
     $updated_at = date("Y-m-d " . $time);
-    mysqli_query($conn, "UPDATE guru SET nip='$nip', nama='$nama', tempat_lahir='$tempat_lahir', tgl_lahir='$tgl_lahir', status='$status', jenis_kelamin='$jenis_kelamin', jabatan='$jabatan', gelar='$gelar', updated_at='$updated_at' WHERE id_guru='$id_guru'");
+    mysqli_query($conn, "UPDATE guru SET nip='$nip', nama='$nama', tempat_lahir='$tempat_lahir', tgl_lahir='$tgl_lahir', status='$status', jenis_kelamin='$jenis_kelamin', gelar='$gelar', updated_at='$updated_at' WHERE id_guru='$id_guru'");
     return mysqli_affected_rows($conn);
   }
   function hapus_guru($data)
@@ -316,7 +308,11 @@ if (isset($_SESSION['data-user'])) {
     $alamat = htmlspecialchars(addslashes(trim(mysqli_real_escape_string($conn, $data['alamat']))));
     $agama = htmlspecialchars(addslashes(trim(mysqli_real_escape_string($conn, $data['agama']))));
     $kelas = htmlspecialchars(addslashes(trim(mysqli_real_escape_string($conn, $data['kelas']))));
-    mysqli_query($conn, "INSERT INTO siswa(nis,nama,tempat_lahir,tgl_lahir,alamat,agama,kelas) VALUES('$nis','$nama','$tempat_lahir','$tgl_lahir','$alamat','$agama','$kelas')");
+    $ortu = htmlspecialchars(addslashes(trim(mysqli_real_escape_string($conn, $data['ortu']))));
+    $pekerjaan = htmlspecialchars(addslashes(trim(mysqli_real_escape_string($conn, $data['pekerjaan']))));
+    $no_hp_ortu = htmlspecialchars(addslashes(trim(mysqli_real_escape_string($conn, $data['no-hp-ortu']))));
+    $no_hp_siswa = htmlspecialchars(addslashes(trim(mysqli_real_escape_string($conn, $data['no-hp-siswa']))));
+    mysqli_query($conn, "INSERT INTO siswa(nis,nama,tempat_lahir,tgl_lahir,alamat,agama,kelas,ortu,pekerjaan,no_hp_ortu,no_hp_siswa) VALUES('$nis','$nama','$tempat_lahir','$tgl_lahir','$alamat','$agama','$kelas','$ortu','$pekerjaan','$no_hp_ortu','$no_hp_siswa')");
     return mysqli_affected_rows($conn);
   }
   function ubah_siswa($data)
@@ -339,8 +335,12 @@ if (isset($_SESSION['data-user'])) {
     $alamat = htmlspecialchars(addslashes(trim(mysqli_real_escape_string($conn, $data['alamat']))));
     $agama = htmlspecialchars(addslashes(trim(mysqli_real_escape_string($conn, $data['agama']))));
     $kelas = htmlspecialchars(addslashes(trim(mysqli_real_escape_string($conn, $data['kelas']))));
+    $ortu = htmlspecialchars(addslashes(trim(mysqli_real_escape_string($conn, $data['ortu']))));
+    $pekerjaan = htmlspecialchars(addslashes(trim(mysqli_real_escape_string($conn, $data['pekerjaan']))));
+    $no_hp_ortu = htmlspecialchars(addslashes(trim(mysqli_real_escape_string($conn, $data['no-hp-ortu']))));
+    $no_hp_siswa = htmlspecialchars(addslashes(trim(mysqli_real_escape_string($conn, $data['no-hp-siswa']))));
     $updated_at = date("Y-m-d " . $time);
-    mysqli_query($conn, "UPDATE siswa SET nis='$nis', nama='$nama', tempat_lahir='$tempat_lahir', tgl_lahir='$tgl_lahir', alamat='$alamat', agama='$agama', kelas='$kelas', updated_at='$updated_at' WHERE id_siswa='$id_siswa'");
+    mysqli_query($conn, "UPDATE siswa SET nis='$nis', nama='$nama', tempat_lahir='$tempat_lahir', tgl_lahir='$tgl_lahir', alamat='$alamat', agama='$agama', kelas='$kelas', ortu='$ortu', pekerjaan='$pekerjaan', no_hp_ortu='$no_hp_ortu', no_hp_siswa='$no_hp_siswa', updated_at='$updated_at' WHERE id_siswa='$id_siswa'");
     return mysqli_affected_rows($conn);
   }
   function hapus_siswa($data)
