@@ -51,7 +51,6 @@
                         <div class="text-bg">
                           <h1><?= $row_sekolah['judul'] ?></h1>
                           <p><?= $row_sekolah['judul'] ?>, merupakan salah satu Sekolah Menengah Atas Negeri yang ada di Provinsi Nusa Tenggara Timur, Indonesia.</p>
-                          <a href="#teacher">Lihat Guru</a>
                         </div>
                       </div>
                       <div class="col-xl-7 col-lg-7 col-md-7 col-sm-12">
@@ -123,7 +122,7 @@
       <div class="row mt-5">
         <div class="col-md-12">
           <div class="titlepage">
-            <h2>Data <strong class="yellow">Guru</strong></h2>
+            <h2><strong class="yellow">Data Guru</strong></h2>
             <?php if (mysqli_num_rows($data_guru) > 0) { ?>
               <div class="table-responsive mt-4">
                 <table class="table table-striped table-hover table-borderless table-sm text-center">
@@ -143,7 +142,11 @@
                     while ($row = mysqli_fetch_assoc($data_guru)) { ?>
                       <tr>
                         <th scope="row"><?= $no; ?></th>
-                        <td><?= $row['nip'] ?></td>
+                        <td><?php if ($row['nip'] == "") {
+                              echo "-";
+                            } else if ($row['nip'] != "") {
+                              echo $row['nip'];
+                            } ?></td>
                         <td><?= $row['nama'] ?></td>
                         <td><?= $row['tempat_lahir'] . ", " . $row['tgl_lahir'] ?></td>
                         <td><?= $row['status'] ?></td>

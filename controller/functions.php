@@ -207,6 +207,14 @@ if (isset($_SESSION['data-user'])) {
   {
     global $conn;
     $nip = htmlspecialchars(addslashes(trim(mysqli_real_escape_string($conn, $data['nip']))));
+    if($nip!=""){
+      $checkNIP = mysqli_query($conn, "SELECT * FROM guru WHERE nip='$nip'");
+      if (mysqli_num_rows($checkNIP) > 0) {
+        $_SESSION['message-danger'] = "Maaf, NIP yang anda masukan sudah digunakan di data guru yang lain";
+        $_SESSION['time-message'] = time();
+        return false;
+      }
+    }
     $nama = htmlspecialchars(addslashes(trim(mysqli_real_escape_string($conn, $data['nama']))));
     $tempat_lahir = htmlspecialchars(addslashes(trim(mysqli_real_escape_string($conn, $data['tempat-lahir']))));
     $tgl_lahir = htmlspecialchars(addslashes(trim(mysqli_real_escape_string($conn, $data['tgl-lahir']))));
@@ -224,12 +232,14 @@ if (isset($_SESSION['data-user'])) {
     $id_guru = htmlspecialchars(addslashes(trim(mysqli_real_escape_string($conn, $data['id-guru']))));
     $nip = htmlspecialchars(addslashes(trim(mysqli_real_escape_string($conn, $data['nip']))));
     $nipOld = htmlspecialchars(addslashes(trim(mysqli_real_escape_string($conn, $data['nipOld']))));
-    if ($nip != $nipOld) {
-      $checkNIP = mysqli_query($conn, "SELECT * FROM guru WHERE nip='$nip'");
-      if (mysqli_num_rows($checkNIP) > 0) {
-        $_SESSION['message-danger'] = "Maaf, NIP yang anda masukan sudah digunakan di data guru yang lain";
-        $_SESSION['time-message'] = time();
-        return false;
+    if($nip!=""){
+      if ($nip != $nipOld) {
+        $checkNIP = mysqli_query($conn, "SELECT * FROM guru WHERE nip='$nip'");
+        if (mysqli_num_rows($checkNIP) > 0) {
+          $_SESSION['message-danger'] = "Maaf, NIP yang anda masukan sudah digunakan di data guru yang lain";
+          $_SESSION['time-message'] = time();
+          return false;
+        }
       }
     }
     $nama = htmlspecialchars(addslashes(trim(mysqli_real_escape_string($conn, $data['nama']))));

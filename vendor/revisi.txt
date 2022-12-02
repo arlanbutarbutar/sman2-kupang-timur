@@ -1,4 +1,0 @@
-revisi
-1. warna tulisan harus sama : 1 warna (biru) = profil sekolah, fasilitas, ruang belajar
-2. ukuran huruf : harus sama - profil sekolah - fasilitas - ruang belajar
-3. untuk data siswa tambahkan : nama orang tua, pekerjaan, no hp orang tua dan no hp siswa

@@ -73,7 +73,11 @@ $_SESSION['page-url'] = "guru";
                           while ($row = mysqli_fetch_assoc($guru)) { ?>
                             <tr>
                               <th scope="row"><?= $no; ?></th>
-                              <td><?= $row['nip'] ?></td>
+                              <td><?php if ($row['nip'] == "") {
+                                    echo "-";
+                                  } else if ($row['nip'] != "") {
+                                    echo $row['nip'];
+                                  } ?></td>
                               <td><?= $row['nama'] ?></td>
                               <td><?= $row['tempat_lahir'] . ", " . $row['tgl_lahir'] ?></td>
                               <td><?= $row['status'] ?></td>

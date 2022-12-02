@@ -1,6 +1,6 @@
 <!--  footer -->
 <footer>
-  <div class="footer">
+  <div class="footer" style="margin-top: 0px;">
     <div class="container">
       <div class="row">
         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 pt-5">
@@ -33,7 +33,6 @@
               <div class="address d-flex justify-content-center flex-wrap">
                 <a class="p-2"> <img src="assets/images/logo.png" width="120" alt="logo"></a>
                 <a class="p-2"> <img src="assets/images/ntt.png" width="120" alt="logo"></a>
-                <a class="p-2 my-auto"> <img src="assets/images/kampus-merdeka.png" width="120" alt="logo"></a>
               </div>
             </div>
           </div>

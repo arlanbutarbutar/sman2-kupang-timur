@@ -51,7 +51,6 @@
                         <div class="text-bg">
                           <h1><?= $row_sekolah['judul'] ?></h1>
                           <p><?= $row_sekolah['judul'] ?>, merupakan salah satu Sekolah Menengah Atas Negeri yang ada di Provinsi Nusa Tenggara Timur, Indonesia.</p>
-                          <a href="#about">Baca Lebih</a>
                         </div>
                       </div>
                       <div class="col-xl-7 col-lg-7 col-md-7 col-sm-12">
@@ -71,7 +70,6 @@
                         <div class="text-bg">
                           <h1><?= $row_sekolah['judul'] ?></h1>
                           <p><?= $row_sekolah['judul'] ?>, merupakan salah satu Sekolah Menengah Atas Negeri yang ada di Provinsi Nusa Tenggara Timur, Indonesia.</p>
-                          <a href="#about">Baca Lebih</a>
                         </div>
                       </div>
                       <div class="col-xl-7 col-lg-7 col-md-7 col-sm-12">
@@ -91,7 +89,6 @@
                         <div class="text-bg">
                           <h1><?= $row_sekolah['judul'] ?></h1>
                           <p><?= $row_sekolah['judul'] ?>, merupakan salah satu Sekolah Menengah Atas Negeri yang ada di Provinsi Nusa Tenggara Timur, Indonesia.</p>
-                          <a href="#about">Baca Lebih</a>
                         </div>
                       </div>
                       <div class="col-xl-7 col-lg-7 col-md-7 col-sm-12">
@@ -151,6 +148,51 @@
     </div>
   </div>
   <!-- end abouts -->
+
+  <!-- Video -->
+  <div id="video" class="learn">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12 text-center">
+          <div class="learn_box">
+            <figure>
+              <iframe style="width: 100%;" height="450" src="https://www.youtube.com/embed/c7EtH692CwQ?autoplay=0&enablejsapi=0&controls=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </figure>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- end Video -->
+
+  <!-- Sambutan Kepsek -->
+  <div class="make">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="titlepage">
+            <h2 class="text-white" style="font-size: 50px;">Sambutan Kepala Sekolah</h2>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xl-5 col-lg-5 col-md-5 col-sm-12">
+          <div class="make_text">
+            <p>Salam Hormat seluruh warga SMAN 2 Kupang Timur</p><br>
+            <p>Website sekolah yang kita miliki ini diharapkan ikut memberi warna dalam upaya menggerakan geliat literasi di sekolah kita. Oleh karena itu, saya harapkan agar semua warga sekolah terutama bapak dan ibu guru serta para murid dapat memanfaatkan keberadaan website ini untuk mempublikasi berbagai tulisannya seperti artikel/opini, esay, cerita pendek, puisi, renungan, catatan perjalanan, dan karya semacamnya.</p>
+          </div>
+        </div>
+        <div class="col-xl-5 col-lg-5 col-md-5 col-sm-12 text-center">
+          <div class="make_img">
+            <figure><img src="assets/images/kepsek.jpg" style="width: 70%;"></figure>
+            <h4 class="text-white font-weight-bold mt-3">YULIUS B. TENAWAHANG</h4>
+            <P class="text-white">Kepala Sekolah</P>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- end Sambutan Kepsek -->
 
   <?php require_once("resources/footer.php"); ?>
 </body>

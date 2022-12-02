@@ -1,0 +1,6 @@
+REVISI, Selasa 30/11/2022
+1. menambahkan vidio dan foto pada profil sekolah (visi dan misi) vidio dan foto akan dikirim
+2. untuk baca lebih di profil sekolah di hapus jadi ketika kita tekan data guru langsung muncul data gurunya
+3. di data guru untuk guru yang honor disitu kan b taruh angka 1- 23 jadi mau ubah untuk taruh tanda strep (-) saja
+4. di data siswa untuk data yg sudah pernah didinput terdahulu ketika mau ubah tidak bisa ( dibagian kelas)
+5. warna tulisan DATA GURU, DATA SISWA DAN PROFIL SEKOLAH diubah ke warn biru semua
