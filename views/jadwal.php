@@ -1,7 +1,12 @@
 <?php require_once("../controller/script.php");
 require_once("redirect.php");
 $_SESSION['page-name'] = "Jadwal";
-$_SESSION['page-url'] = "jadwal";
+if (isset($_GET['guru'])) {
+  $idguru = htmlspecialchars(addslashes(trim(mysqli_real_escape_string($conn, $_GET['guru']))));
+  $_SESSION['page-url'] = "jadwal?guru=$idguru";
+} else if (!isset($_GET['guru'])) {
+  $_SESSION['page-url'] = "jadwal";
+}
 ?>
 
 <!DOCTYPE html>
@@ -49,6 +54,7 @@ $_SESSION['page-url'] = "jadwal";
                       <thead>
                         <tr>
                           <th scope="col">#</th>
+                          <th scope="col">Guru</th>
                           <th scope="col">Kelas</th>
                           <th scope="col">Mata Pelajaran</th>
                           <th scope="col">Jam Mulai - Selesai</th>
@@ -68,6 +74,7 @@ $_SESSION['page-url'] = "jadwal";
                           while ($row = mysqli_fetch_assoc($jadwal)) { ?>
                             <tr>
                               <th scope="row"><?= $no; ?></th>
+                              <td><?= $row['nama'] . ", " . $row['gelar'] ?></td>
                               <td><?= $row['kelas'] ?></td>
                               <td><?= $row['mapel'] ?></td>
                               <td><?= $row['jam_mulai'] . " - " . $row['jam_selesai'] ?></td>
@@ -146,20 +153,37 @@ $_SESSION['page-url'] = "jadwal";
                                             </select>
                                           </div>
                                           <div class="mb-3">
+                                            <label for="guru" class="form-label">Guru <small class="text-danger">*</small></label>
+                                            <select name="id-guru" class="form-select" aria-label="" required>
+                                              <option selected value="<?= $row['id_guru'] ?>"><?= $row['nama'] . ", " . $row['gelar'] ?></option>
+                                              <?php $guruID=$row['id_guru'];
+                                              $selectEditJadwal=mysqli_query($conn, "SELECT * FROM guru WHERE id_guru!='$guruID'");
+                                              foreach ($selectEditJadwal as $data_ej) : ?>
+                                                <option value="<?= $data_ej['id_guru'] ?>"><?= $data_ej['nama'] . ", " . $data_ej['gelar'] ?></option>
+                                              <?php endforeach; ?>
+                                            </select>
+                                          </div>
+                                          <div class="mb-3">
                                             <label for="mapel" class="form-label">Mapel <small class="text-danger">*</small></label>
                                             <input type="text" name="mapel" value="<?= $row['mapel'] ?>" class="form-control" id="mapel" placeholder="Mapel" required>
                                           </div>
                                           <div class="mb-3">
                                             <label for="jam-mulai" class="form-label">Jam Mulai <small class="text-danger">*</small></label>
-                                            <input type="time" name="jam-mulai" value="<?= $row['jam_mulai'] ?>" class="form-control" id="jam-mulai" placeholder="Jam Mulai" required>
+                                            <input type="time" name="jam-mulai" value="
+                                              <?php $jam_mulai = date_create($row['jam_mulai']);
+                                              echo date_format($jam_mulai, "h.i"); ?>" class="form-control" id="jam-mulai" placeholder="Jam Mulai" required>
                                           </div>
                                           <div class="mb-3">
                                             <label for="jam-selesai" class="form-label">Jam Selesai <small class="text-danger">*</small></label>
-                                            <input type="time" name="jam-selesai" value="<?= $row['jam_selesai'] ?>" class="form-control" id="jam-selesai" placeholder="Jam Selesai" required>
+                                            <input type="time" name="jam-selesai" value="
+                                              <?php $jam_mulai = date_create($row['jam_selesai']);
+                                              echo date_format($jam_mulai, "h.i"); ?>" class="form-control" id="jam-selesai" placeholder="Jam Selesai" required>
                                           </div>
                                           <div class="mb-3">
-                                            <label for="tgl" class="form-label">Tanggal <small class="text-danger">*</small></label>
-                                            <input type="date" name="tgl" value="<?= $row['tgl'] ?>" class="form-control" id="tgl" placeholder="Tanggal" required>
+                                            <label for="tgl" class="form-label">Hari <small class="text-danger">*</small></label>
+                                            <input type="date" name="tgl" value="
+                                              <?php $hari = date_create($row['created_at']);
+                                              echo date_format($hari, "d/m/Y"); ?>" class="form-control" id="tgl" placeholder="Tanggal" required>
                                           </div>
                                         </div>
                                         <div class="modal-footer justify-content-center border-top-0">
@@ -319,6 +343,15 @@ $_SESSION['page-url'] = "jadwal";
                     </select>
                   </div>
                   <div class="mb-3">
+                    <label for="guru" class="form-label">Guru <small class="text-danger">*</small></label>
+                    <select name="id-guru" class="form-select" aria-label="" required>
+                      <option selected value="">Pilih Guru</option>
+                      <?php foreach ($selectGuru as $data_guru) : ?>
+                        <option value="<?= $data_guru['id_guru'] ?>"><?= $data_guru['nama'] . ", " . $data_guru['gelar'] ?></option>
+                      <?php endforeach; ?>
+                    </select>
+                  </div>
+                  <div class="mb-3">
                     <label for="mapel" class="form-label">Mapel <small class="text-danger">*</small></label>
                     <input type="text" name="mapel" class="form-control" id="mapel" placeholder="Mapel" required>
                   </div>
@@ -331,7 +364,7 @@ $_SESSION['page-url'] = "jadwal";
                     <input type="time" name="jam-selesai" class="form-control" id="jam-selesai" placeholder="Jam Selesai" required>
                   </div>
                   <div class="mb-3">
-                    <label for="tgl" class="form-label">Tanggal <small class="text-danger">*</small></label>
+                    <label for="tgl" class="form-label">Hari <small class="text-danger">*</small></label>
                     <input type="date" name="tgl" class="form-control" id="tgl" placeholder="Tanggal" required>
                   </div>
                 </div>

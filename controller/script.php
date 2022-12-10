@@ -26,7 +26,7 @@ if (isset($_SESSION['time-message'])) {
   }
 }
 
-$baseURL = "http://$_SERVER[HTTP_HOST]/apps/sman2-kupang-timur/";
+$baseURL = "http://$_SERVER[HTTP_HOST]/sman2-kupang-timur/";
 
 // if (!isset($_SESSION['data-user'])) {
 if (isset($_POST['masuk'])) {
@@ -42,7 +42,7 @@ $count_guru = mysqli_query($conn, "SELECT * FROM guru");
 $count_guru = mysqli_num_rows($count_guru);
 $count_siswa = mysqli_query($conn, "SELECT * FROM siswa");
 $count_siswa = mysqli_num_rows($count_siswa);
-$jadwal_belajar = mysqli_query($conn, "SELECT * FROM jadwal");
+$jadwal_belajar = mysqli_query($conn, "SELECT * FROM jadwal JOIN guru ON jadwal.id_guru=guru.id_guru");
 $jadwal_pdf = mysqli_query($conn, "SELECT * FROM jadwal ORDER BY id_jadwal DESC LIMIT 1");
 $data_guru = mysqli_query($conn, "SELECT * FROM guru ORDER BY id_guru DESC");
 $data_siswa = mysqli_query($conn, "SELECT * FROM siswa ORDER BY id_siswa DESC");
@@ -132,7 +132,14 @@ if (isset($_SESSION['data-user'])) {
   $total_page_role2 = ceil($total_role2 / $data_role2);
   $page_role2 = isset($_GET["page"]) ? (int)$_GET["page"] : 1;
   $awal_data_role2 = ($page_role2 > 1) ? ($page_role2 * $data_role2) - $data_role2 : 0;
-  $jadwal = mysqli_query($conn, "SELECT * FROM jadwal ORDER BY id_jadwal DESC LIMIT $awal_data_role2, $data_role2");
+  if (isset($_GET['guru'])) {
+    $idguru = htmlspecialchars(addslashes(trim(mysqli_real_escape_string($conn, $_GET['guru']))));
+    $selectGuru = mysqli_query($conn, "SELECT * FROM guru WHERE id_guru='$idguru' ORDER BY nama ASC");
+    $jadwal = mysqli_query($conn, "SELECT jadwal.id_jadwal, jadwal.id_guru, jadwal.kelas, jadwal.mapel, jadwal.jam_mulai, jadwal.jam_selesai, jadwal.hari, jadwal.created_at, jadwal.updated_at, guru.nama, guru.gelar FROM jadwal JOIN guru ON jadwal.id_guru=guru.id_guru WHERE jadwal.id_guru='$idguru' ORDER BY jadwal.id_jadwal DESC LIMIT 50");
+  } else if (!isset($_GET['guru'])) {
+    $selectGuru = mysqli_query($conn, "SELECT * FROM guru ORDER BY nama ASC");
+    $jadwal = mysqli_query($conn, "SELECT jadwal.id_jadwal, jadwal.id_guru, jadwal.kelas, jadwal.mapel, jadwal.jam_mulai, jadwal.jam_selesai, jadwal.hari, jadwal.created_at, jadwal.updated_at, guru.nama, guru.gelar FROM jadwal JOIN guru ON jadwal.id_guru=guru.id_guru ORDER BY jadwal.id_jadwal DESC LIMIT $awal_data_role2, $data_role2");
+  }
   if (isset($_POST['tambah-jadwal'])) {
     if (tambah_jadwal($_POST) > 0) {
       $_SESSION['message-success'] = "Jadwal sekolah berhasil ditambahkan.";
@@ -238,16 +245,16 @@ if (isset($_SESSION['data-user'])) {
     }
   }
 
-  $ipa10=mysqli_query($conn, "SELECT rombel_ipa10 FROM profil_sekolah");
-  $ubah_ipa10=mysqli_query($conn, "SELECT rombel_ipa10 FROM profil_sekolah");
-  $ips10=mysqli_query($conn, "SELECT rombel_ips10 FROM profil_sekolah");
-  $ubah_ips10=mysqli_query($conn, "SELECT rombel_ips10 FROM profil_sekolah");
-  $ipa11=mysqli_query($conn, "SELECT rombel_ipa11 FROM profil_sekolah");
-  $ubah_ipa11=mysqli_query($conn, "SELECT rombel_ipa11 FROM profil_sekolah");
-  $ips11=mysqli_query($conn, "SELECT rombel_ips11 FROM profil_sekolah");
-  $ubah_ips11=mysqli_query($conn, "SELECT rombel_ips11 FROM profil_sekolah");
-  $ipa12=mysqli_query($conn, "SELECT rombel_ipa12 FROM profil_sekolah");
-  $ubah_ipa12=mysqli_query($conn, "SELECT rombel_ipa12 FROM profil_sekolah");
-  $ips12=mysqli_query($conn, "SELECT rombel_ips12 FROM profil_sekolah");
-  $ubah_ips12=mysqli_query($conn, "SELECT rombel_ips12 FROM profil_sekolah");
+  $ipa10 = mysqli_query($conn, "SELECT rombel_ipa10 FROM profil_sekolah");
+  $ubah_ipa10 = mysqli_query($conn, "SELECT rombel_ipa10 FROM profil_sekolah");
+  $ips10 = mysqli_query($conn, "SELECT rombel_ips10 FROM profil_sekolah");
+  $ubah_ips10 = mysqli_query($conn, "SELECT rombel_ips10 FROM profil_sekolah");
+  $ipa11 = mysqli_query($conn, "SELECT rombel_ipa11 FROM profil_sekolah");
+  $ubah_ipa11 = mysqli_query($conn, "SELECT rombel_ipa11 FROM profil_sekolah");
+  $ips11 = mysqli_query($conn, "SELECT rombel_ips11 FROM profil_sekolah");
+  $ubah_ips11 = mysqli_query($conn, "SELECT rombel_ips11 FROM profil_sekolah");
+  $ipa12 = mysqli_query($conn, "SELECT rombel_ipa12 FROM profil_sekolah");
+  $ubah_ipa12 = mysqli_query($conn, "SELECT rombel_ipa12 FROM profil_sekolah");
+  $ips12 = mysqli_query($conn, "SELECT rombel_ips12 FROM profil_sekolah");
+  $ubah_ips12 = mysqli_query($conn, "SELECT rombel_ips12 FROM profil_sekolah");
 }

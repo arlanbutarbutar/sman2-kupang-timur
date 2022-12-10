@@ -56,11 +56,10 @@ $_SESSION['page-url'] = "guru";
                           <th scope="col">TTL</th>
                           <th scope="col">Status</th>
                           <th scope="col">Jenis Kelamin</th>
-                          <!-- <th scope="col">Jabatan</th> -->
                           <th scope="col">Gelar</th>
                           <th scope="col">Tgl Buat</th>
                           <th scope="col">Tgl Ubah</th>
-                          <th scope="col" colspan="2">Aksi</th>
+                          <th scope="col" colspan="3">Aksi</th>
                         </tr>
                       </thead>
                       <tbody id="search-page">
@@ -95,6 +94,9 @@ $_SESSION['page-url'] = "guru";
                                   <?php $dateUpdate = date_create($row['updated_at']);
                                   echo date_format($dateUpdate, "l, d M Y h:i a"); ?>
                                 </div>
+                              </td>
+                              <td>
+                                <button onclick="window.location.href='jadwal?guru=<?= $row['id_guru'] ?>'" class="btn btn-primary text-white"><i class="bi bi-calendar-week menu-icon" style="color: #f4bd01;"></i> Jadwal</button>
                               </td>
                               <td>
                                 <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#ubah<?= $row['id_guru'] ?>">

@@ -35,11 +35,6 @@
       <!-- end header -->
       <section class="slider_section">
         <div id="myCarousel" class="carousel slide" data-ride="carousel">
-          <ol class="carousel-indicators">
-            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-            <li data-target="#myCarousel" data-slide-to="1"></li>
-            <li data-target="#myCarousel" data-slide-to="2"></li>
-          </ol>
           <div class="carousel-inner">
             <?php if (mysqli_num_rows($nama_sekolah) > 0) {
               $row_sekolah = mysqli_fetch_assoc($nama_sekolah); ?>
@@ -105,14 +100,6 @@
             <?php } ?>
           </div>
         </div>
-        <a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">
-          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span class="sr-only">Previous</span>
-        </a>
-        <a class="carousel-control-next" href="#myCarousel" role="button" data-slide="next">
-          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-          <span class="sr-only">Next</span>
-        </a>
       </section>
     </div>
   </header>
@@ -131,6 +118,7 @@
                       <th scope="col">#</th>
                       <th scope="col">Hari</th>
                       <th scope="col">Jam Mulai - Selesai</th>
+                      <th scope="col">Guru Pengajar</th>
                       <th scope="col">Kelas</th>
                       <th scope="col">Mata Pelajaran</th>
                     </tr>
@@ -142,6 +130,7 @@
                         <td><?= $no; ?></td>
                         <td><?= $row_belajar['hari'] ?></td>
                         <td><?= $row_belajar['jam_mulai'] . " - " . $row_belajar['jam_selesai'] ?></td>
+                        <td><?= $row_belajar['nama'] . ", " . $row_belajar['gelar'] ?></td>
                         <td><?= $row_belajar['kelas'] ?></td>
                         <td><?= $row_belajar['mapel'] ?></td>
                       </tr>

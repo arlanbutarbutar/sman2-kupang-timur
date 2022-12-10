@@ -161,6 +161,7 @@ if (isset($_SESSION['data-user'])) {
   function tambah_jadwal($data)
   {
     global $conn;
+    $id_guru = htmlspecialchars(addslashes(trim(mysqli_real_escape_string($conn, $data['id-guru']))));
     $kelas = htmlspecialchars(addslashes(trim(mysqli_real_escape_string($conn, $data['kelas']))));
     $mapel = htmlspecialchars(addslashes(trim(mysqli_real_escape_string($conn, $data['mapel']))));
     $jam_mulai = htmlspecialchars(addslashes(trim(mysqli_real_escape_string($conn, $data['jam-mulai']))));
@@ -173,13 +174,14 @@ if (isset($_SESSION['data-user'])) {
     $hari = date_create($tgl);
     $hari = date_format($hari, "D");
     $hari = hari_ini($hari);
-    mysqli_query($conn, "INSERT INTO jadwal(kelas,mapel,jam_mulai,jam_selesai,hari) VALUES('$kelas','$mapel','$jam_mulai','$jam_selesai','$hari')");
+    mysqli_query($conn, "INSERT INTO jadwal(id_guru,kelas,mapel,jam_mulai,jam_selesai,hari) VALUES('$id_guru','$kelas','$mapel','$jam_mulai','$jam_selesai','$hari')");
     return mysqli_affected_rows($conn);
   }
   function ubah_jadwal($data)
   {
     global $conn, $time;
     $id_jadwal = htmlspecialchars(addslashes(trim(mysqli_real_escape_string($conn, $data['id-jadwal']))));
+    $id_guru = htmlspecialchars(addslashes(trim(mysqli_real_escape_string($conn, $data['id-guru']))));
     $kelas = htmlspecialchars(addslashes(trim(mysqli_real_escape_string($conn, $data['kelas']))));
     $mapel = htmlspecialchars(addslashes(trim(mysqli_real_escape_string($conn, $data['mapel']))));
     $jam_mulai = htmlspecialchars(addslashes(trim(mysqli_real_escape_string($conn, $data['jam-mulai']))));
@@ -193,7 +195,7 @@ if (isset($_SESSION['data-user'])) {
     $hari = date_format($hari, "D");
     $hari = hari_ini($hari);
     $updated_at = date("Y-m-d " . $time);
-    mysqli_query($conn, "UPDATE jadwal SET kelas='$kelas', mapel='$mapel', jam_mulai='$jam_mulai', jam_selesai='$jam_selesai', hari='$hari', updated_at='$updated_at'  WHERE id_jadwal='$id_jadwal'");
+    mysqli_query($conn, "UPDATE jadwal SET id_guru='$id_guru', kelas='$kelas', mapel='$mapel', jam_mulai='$jam_mulai', jam_selesai='$jam_selesai', hari='$hari', updated_at='$updated_at'  WHERE id_jadwal='$id_jadwal'");
     return mysqli_affected_rows($conn);
   }
   function hapus_jadwal($data)
@@ -207,7 +209,7 @@ if (isset($_SESSION['data-user'])) {
   {
     global $conn;
     $nip = htmlspecialchars(addslashes(trim(mysqli_real_escape_string($conn, $data['nip']))));
-    if($nip!=""){
+    if ($nip != "") {
       $checkNIP = mysqli_query($conn, "SELECT * FROM guru WHERE nip='$nip'");
       if (mysqli_num_rows($checkNIP) > 0) {
         $_SESSION['message-danger'] = "Maaf, NIP yang anda masukan sudah digunakan di data guru yang lain";
@@ -232,7 +234,7 @@ if (isset($_SESSION['data-user'])) {
     $id_guru = htmlspecialchars(addslashes(trim(mysqli_real_escape_string($conn, $data['id-guru']))));
     $nip = htmlspecialchars(addslashes(trim(mysqli_real_escape_string($conn, $data['nip']))));
     $nipOld = htmlspecialchars(addslashes(trim(mysqli_real_escape_string($conn, $data['nipOld']))));
-    if($nip!=""){
+    if ($nip != "") {
       if ($nip != $nipOld) {
         $checkNIP = mysqli_query($conn, "SELECT * FROM guru WHERE nip='$nip'");
         if (mysqli_num_rows($checkNIP) > 0) {

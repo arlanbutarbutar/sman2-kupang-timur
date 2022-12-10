@@ -43,7 +43,7 @@
     </div>
     <div class="copyright">
       <div class="container text-center">
-        <small class="text-white">© Copyright <?= date('Y') ?> <a href="https://netmedia-framecode.com/">Netmedia Framecode.</a> By Suzana Pinto</small>
+        <small class="text-white">© Copyright <?= date('Y') ?> <a href="https://netmedia-framecode.com/">Netmedia Framecode.</a> Powered by Suzana Pinto</small>
       </div>
     </div>
   </div>

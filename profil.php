@@ -65,7 +65,6 @@
                         <div class="text-bg">
                           <h1><?= $row_sekolah['judul'] ?></h1>
                           <p><?= $row_sekolah['judul'] ?>, merupakan salah satu Sekolah Menengah Atas Negeri yang ada di Provinsi Nusa Tenggara Timur, Indonesia.</p>
-                          <a href="#teacher">Lihat Guru</a>
                         </div>
                       </div>
                       <div class="col-xl-7 col-lg-7 col-md-7 col-sm-12">
@@ -85,7 +84,6 @@
                         <div class="text-bg">
                           <h1><?= $row_sekolah['judul'] ?></h1>
                           <p><?= $row_sekolah['judul'] ?>, merupakan salah satu Sekolah Menengah Atas Negeri yang ada di Provinsi Nusa Tenggara Timur, Indonesia.</p>
-                          <a href="#teacher">Lihat Guru</a>
                         </div>
                       </div>
                       <div class="col-xl-7 col-lg-7 col-md-7 col-sm-12">
@@ -104,53 +102,39 @@
     </div>
   </header>
 
-  <div id="teacher" class="learn">
+  <!-- about  -->
+  <div id="sekolah" class="sekolah">
     <div class="container">
       <div class="row mt-5">
-        <div class="col-md-12">
-          <div class="titlepage">
-            <h2><strong class="yellow">Data Guru</strong></h2>
-            <?php if (mysqli_num_rows($data_guru) > 0) { ?>
-              <div class="table-responsive mt-4">
-                <table class="table table-striped table-hover table-borderless table-sm text-center">
-                  <thead>
-                    <tr>
-                      <th scope="col">#</th>
-                      <th scope="col">NIP</th>
-                      <th scope="col">Nama</th>
-                      <th scope="col">TTL</th>
-                      <th scope="col">Status</th>
-                      <th scope="col">Jenis Kelamin</th>
-                      <th scope="col">Gelar</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <?php $no = 1;
-                    while ($row = mysqli_fetch_assoc($data_guru)) { ?>
-                      <tr>
-                        <th scope="row"><?= $no; ?></th>
-                        <td><?php if ($row['nip'] == "") {
-                              echo "-";
-                            } else if ($row['nip'] != "") {
-                              echo $row['nip'];
-                            } ?></td>
-                        <td><?= $row['nama'] ?></td>
-                        <td><?= $row['tempat_lahir'] . ", " . $row['tgl_lahir'] ?></td>
-                        <td><?= $row['status'] ?></td>
-                        <td><?= $row['jenis_kelamin'] ?></td>
-                        <td><?= $row['gelar'] ?></td>
-                      </tr>
-                    <?php $no++;
-                    } ?>
-                  </tbody>
-                </table>
+        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12" style="margin-top: 100px;">
+          <div class="about-box">
+            <?php if (mysqli_num_rows($profil) > 0) {
+              $row_profil = mysqli_fetch_assoc($profil); ?>
+              <h2 style="font-size: 50px;"><strong class="yellow">Profil Sekolah</strong></h2>
+              <p><?= $row_profil['isi'] ?></p>
+              <h2 style="font-size: 50px;"><strong class="yellow">Fasilitas Sekolah</strong></h2>
+              <p><?= $row_profil['fasilitas'] ?></p>
+              <h2 style="font-size: 50px;"><strong class="yellow">Ruang Belajar</strong></h2>
+              <div class="d-felx">
+                <p>10 IPA : <?= $row_profil['rombel_ipa10'] ?> ruang kelas</p>
+                <p style="margin-top: 0px;">10 IPS : <?= $row_profil['rombel_ips10'] ?> ruang kelas</p>
+                <p style="margin-top: 0px;">11 IPA : <?= $row_profil['rombel_ipa11'] ?> ruang kelas</p>
+                <p style="margin-top: 0px;">11 IPS : <?= $row_profil['rombel_ips11'] ?> ruang kelas</p>
+                <p style="margin-top: 0px;">12 IPA : <?= $row_profil['rombel_ipa12'] ?> ruang kelas</p>
+                <p style="margin-top: 0px;">12 IPS : <?= $row_profil['rombel_ips12'] ?> ruang kelas</p>
               </div>
             <?php } ?>
+          </div>
+        </div>
+        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12" style="margin-top: 100px;">
+          <div class="about-box">
+            <figure><img src="assets/images/profil.jpeg" alt="#" /></figure>
           </div>
         </div>
       </div>
     </div>
   </div>
+  <!-- end abouts -->
 
   <?php require_once("resources/footer.php"); ?>
 </body>
