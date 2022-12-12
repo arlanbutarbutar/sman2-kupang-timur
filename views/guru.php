@@ -41,7 +41,37 @@ $_SESSION['page-url'] = "guru";
                     <div class="btn-wrapper">
                       <a href="#" class="btn btn-primary text-white me-0" data-bs-toggle="modal" data-bs-target="#tambah-guru">Tambah</a>
                       <!-- <a href="#" class="btn btn-outline-primary text-white me-0" data-bs-toggle="modal" data-bs-target="#import-guru">Import</a> -->
-                      <a style="cursor: pointer;" onclick="window.location.href='export-guru'" class="btn btn-outline-primary me-0">Export</a>
+                      <a style="cursor: pointer;" class="btn btn-outline-primary me-0" data-bs-toggle="modal" data-bs-target="#exampleModal">Export</a>
+                      <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                          <div class="modal-content">
+                            <div class="modal-header border-bottom-0">
+                              <h5 class="modal-title" id="exampleModalLabel"></h5>
+                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                              <div class="row">
+                                <div class="col-lg-6">
+                                  <a style="cursor: pointer;" onclick="window.location.href='export-guru-excel'">
+                                    <div class="card card-body text-center">
+                                      <i class="bi bi-file-earmark-excel" style="font-size: 60px;"></i>
+                                      <h4>Export Excel</h4>
+                                    </div>
+                                  </a>
+                                </div>
+                                <div class="col-lg-6">
+                                  <a style="cursor: pointer;" onclick="window.open('export-guru-pdf', 'blank')">
+                                    <div class="card card-body text-center">
+                                      <i class="bi bi-filetype-pdf" style="font-size: 60px;"></i>
+                                      <h4>Export PDF</h4>
+                                    </div>
+                                  </a>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
