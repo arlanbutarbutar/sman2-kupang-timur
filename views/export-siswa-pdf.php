@@ -5,7 +5,7 @@ require_once __DIR__ . '../../vendor/autoload.php';
 $siswa = mysqli_query($conn, "SELECT * FROM siswa ORDER BY id_siswa DESC");
 
 $mpdf = new \Mpdf\Mpdf();
-// $mpdf->WriteHTML('<img src="assets/img/cop.png">');
+$mpdf->WriteHTML('<img src="../assets/images/cop.jpg">');
 $mpdf->WriteHTML('<h2 style="text-align: center;">Data Siswa SMAN 2 Kupang Timur</h2>');
 $mpdf->WriteHTML('<table class="table table-striped" style="text-align: center;margin: auto;">
   <thead>

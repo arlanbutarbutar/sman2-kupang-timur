@@ -5,7 +5,7 @@ require_once __DIR__ . '../../vendor/autoload.php';
 $guru = mysqli_query($conn, "SELECT * FROM guru ORDER BY id_guru DESC");
 
 $mpdf = new \Mpdf\Mpdf();
-// $mpdf->WriteHTML('<img src="assets/img/cop.png">');
+$mpdf->WriteHTML('<img src="../assets/images/cop.jpg">');
 $mpdf->WriteHTML('<h2 style="text-align: center;">Data Guru SMAN 2 Kupang Timur</h2>');
 $mpdf->WriteHTML('<table class="table table-striped" style="text-align: center;margin: auto;">
   <thead>
