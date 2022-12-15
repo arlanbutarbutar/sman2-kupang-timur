@@ -38,7 +38,7 @@
       </li>
     </ul>
     <ul class="navbar-nav ms-auto">
-      <?php if ($_SESSION['page-url'] != "./" && $_SESSION['page-url'] != "profil" && $_SESSION['page-url'] != "profil-sekolah") { ?>
+      <?php if ($_SESSION['page-url'] != "./" && $_SESSION['page-url'] != "profil" && $_SESSION['page-url'] != "profil-sekolah"  && $_SESSION['page-url'] != "prestasi" && $_SESSION['page-url'] != "pengumuman" && $_SESSION['page-url'] != "ekstrakulikuler") { ?>
         <li class="nav-item">
           <form class="search-form" action="#">
             <i class="bi bi-search"></i>

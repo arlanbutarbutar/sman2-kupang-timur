@@ -52,20 +52,196 @@ $_SESSION['page-url'] = "siswa";
                             <div class="modal-body">
                               <div class="row">
                                 <div class="col-lg-6">
-                                  <a style="cursor: pointer;" onclick="window.location.href='export-siswa-excel'">
-                                    <div class="card card-body text-center">
+                                  <!-- onclick="window.location.href='export-siswa-excel'" -->
+                                  <a class="text-decoration-none" style="cursor: pointer;" data-bs-toggle="collapse" href="#export-to-excel" role="button" aria-expanded="false" aria-controls="export-to-excel">
+                                    <div class="card card-body text-center rounded-0">
                                       <i class="bi bi-file-earmark-excel" style="font-size: 60px;"></i>
                                       <h4>Export Excel</h4>
                                     </div>
                                   </a>
                                 </div>
                                 <div class="col-lg-6">
-                                  <a style="cursor: pointer;" onclick="window.open('export-siswa-pdf', 'blank')">
-                                    <div class="card card-body text-center">
+                                  <!-- onclick="window.open('export-siswa-pdf', 'blank')" -->
+                                  <a class="text-decoration-none" style="cursor: pointer;" data-bs-toggle="collapse" href="#export-to-pdf" role="button" aria-expanded="false" aria-controls="export-to-pdf">
+                                    <div class="card card-body rounded-0 text-center">
                                       <i class="bi bi-filetype-pdf" style="font-size: 60px;"></i>
                                       <h4>Export PDF</h4>
                                     </div>
                                   </a>
+                                </div>
+                                <div class="col-lg-12">
+                                  <div class="collapse" id="export-to-excel">
+                                    <div class="card card-body mt-3 rounded-0">
+                                      <table class="table table-striped table-sm">
+                                        <tbody>
+                                          <tr>
+                                            <th scope="row">All</th>
+                                            <td>
+                                              <a style="cursor: pointer;" onclick="window.location.href='export-siswa-excel'">Export</a>
+                                            </td>
+                                          </tr>
+                                          <?php if (mysqli_num_rows($ubah_ipa10excel) > 0) {
+                                            while ($row_ipa10 = mysqli_fetch_assoc($ubah_ipa10excel)) {
+                                              for ($xipa10 = 1; $xipa10 <= $row_ipa10['rombel_ipa10']; $xipa10++) { ?>
+                                                <tr>
+                                                  <th scope="row">10 IPA <?= $xipa10; ?></th>
+                                                  <td>
+                                                    <a style="cursor: pointer;" onclick="window.location.href='export-siswa-excel?kelas=10 IPA <?= $xipa10; ?>'">Export</a>
+                                                  </td>
+                                                </tr>
+                                              <?php }
+                                            }
+                                          }
+                                          if (mysqli_num_rows($ubah_ips10excel) > 0) {
+                                            while ($row_ips10 = mysqli_fetch_assoc($ubah_ips10excel)) {
+                                              for ($xips10 = 1; $xips10 <= $row_ips10['rombel_ips10']; $xips10++) { ?>
+                                                <tr>
+                                                  <th scope="row">10 IPS <?= $xips10; ?></th>
+                                                  <td>
+                                                    <a style="cursor: pointer;" onclick="window.location.href='export-siswa-excel?kelas=10 IPS <?= $xips10; ?>'">Export</a>
+                                                  </td>
+                                                </tr>
+                                              <?php }
+                                            }
+                                          }
+                                          if (mysqli_num_rows($ubah_ipa11excel) > 0) {
+                                            while ($row_ipa11 = mysqli_fetch_assoc($ubah_ipa11excel)) {
+                                              for ($xipa11 = 1; $xipa11 <= $row_ipa11['rombel_ipa11']; $xipa11++) { ?>
+                                                <tr>
+                                                  <th scope="row">11 IPA <?= $xipa11; ?></th>
+                                                  <td>
+                                                    <a style="cursor: pointer;" onclick="window.location.href='export-siswa-excel?kelas=11 IPA <?= $xipa11; ?>'">Export</a>
+                                                  </td>
+                                                </tr>
+                                              <?php }
+                                            }
+                                          }
+                                          if (mysqli_num_rows($ubah_ips11excel) > 0) {
+                                            while ($row_ips11 = mysqli_fetch_assoc($ubah_ips11excel)) {
+                                              for ($xips11 = 1; $xips11 <= $row_ips11['rombel_ips11']; $xips11++) { ?>
+                                                <tr>
+                                                  <th scope="row">11 IPS <?= $xips11; ?></th>
+                                                  <td>
+                                                    <a style="cursor: pointer;" onclick="window.location.href='export-siswa-excel?kelas=11 IPS <?= $xips11; ?>'">Export</a>
+                                                  </td>
+                                                </tr>
+                                              <?php }
+                                            }
+                                          }
+                                          if (mysqli_num_rows($ubah_ipa12excel) > 0) {
+                                            while ($row_ipa12 = mysqli_fetch_assoc($ubah_ipa12excel)) {
+                                              for ($xipa12 = 1; $xipa12 <= $row_ipa12['rombel_ipa12']; $xipa12++) { ?>
+                                                <tr>
+                                                  <th scope="row">12 IPA <?= $xipa12; ?></th>
+                                                  <td>
+                                                    <a style="cursor: pointer;" onclick="window.location.href='export-siswa-excel?kelas=12 IPA <?= $xipa12; ?>'">Export</a>
+                                                  </td>
+                                                </tr>
+                                              <?php }
+                                            }
+                                          }
+                                          if (mysqli_num_rows($ubah_ips12excel) > 0) {
+                                            while ($row_ips12 = mysqli_fetch_assoc($ubah_ips12excel)) {
+                                              for ($xips12 = 1; $xips12 <= $row_ips12['rombel_ips12']; $xips12++) { ?>
+                                                <tr>
+                                                  <th scope="row">12 IPS <?= $xips12; ?></th>
+                                                  <td>
+                                                    <a style="cursor: pointer;" onclick="window.location.href='export-siswa-excel?kelas=12 IPS <?= $xips12; ?>'">Export</a>
+                                                  </td>
+                                                </tr>
+                                          <?php }
+                                            }
+                                          } ?>
+                                        </tbody>
+                                      </table>
+                                    </div>
+                                  </div>
+                                  <div class="collapse" id="export-to-pdf">
+                                    <div class="card card-body mt-3 rounded-0">
+                                      <table class="table table-striped table-sm">
+                                        <tbody>
+                                          <tr>
+                                            <th scope="row">All</th>
+                                            <td>
+                                              <a style="cursor: pointer;" onclick="window.open('export-siswa-pdf','blank')">Export</a>
+                                            </td>
+                                          </tr>
+                                          <?php if (mysqli_num_rows($ubah_ipa10pdf) > 0) {
+                                            while ($row_ipa10 = mysqli_fetch_assoc($ubah_ipa10pdf)) {
+                                              for ($xipa10 = 1; $xipa10 <= $row_ipa10['rombel_ipa10']; $xipa10++) { ?>
+                                                <tr>
+                                                  <th scope="row">10 IPA <?= $xipa10; ?></th>
+                                                  <td>
+                                                    <a style="cursor: pointer;" onclick="window.open('export-siswa-pdf?kelas=10 IPA <?= $xipa10; ?>','blank')">Export</a>
+                                                  </td>
+                                                </tr>
+                                              <?php }
+                                            }
+                                          }
+                                          if (mysqli_num_rows($ubah_ips10pdf) > 0) {
+                                            while ($row_ips10 = mysqli_fetch_assoc($ubah_ips10pdf)) {
+                                              for ($xips10 = 1; $xips10 <= $row_ips10['rombel_ips10']; $xips10++) { ?>
+                                                <tr>
+                                                  <th scope="row">10 IPS <?= $xips10; ?></th>
+                                                  <td>
+                                                    <a style="cursor: pointer;" onclick="window.open('export-siswa-pdf?kelas=10 IPS <?= $xips10; ?>','blank')">Export</a>
+                                                  </td>
+                                                </tr>
+                                              <?php }
+                                            }
+                                          }
+                                          if (mysqli_num_rows($ubah_ipa11pdf) > 0) {
+                                            while ($row_ipa11 = mysqli_fetch_assoc($ubah_ipa11pdf)) {
+                                              for ($xipa11 = 1; $xipa11 <= $row_ipa11['rombel_ipa11']; $xipa11++) { ?>
+                                                <tr>
+                                                  <th scope="row">11 IPA <?= $xipa11; ?></th>
+                                                  <td>
+                                                    <a style="cursor: pointer;" onclick="window.open('export-siswa-pdf?kelas=11 IPA <?= $xipa11; ?>','blank')">Export</a>
+                                                  </td>
+                                                </tr>
+                                              <?php }
+                                            }
+                                          }
+                                          if (mysqli_num_rows($ubah_ips11pdf) > 0) {
+                                            while ($row_ips11 = mysqli_fetch_assoc($ubah_ips11pdf)) {
+                                              for ($xips11 = 1; $xips11 <= $row_ips11['rombel_ips11']; $xips11++) { ?>
+                                                <tr>
+                                                  <th scope="row">11 IPS <?= $xips11; ?></th>
+                                                  <td>
+                                                    <a style="cursor: pointer;" onclick="window.open('export-siswa-pdf?kelas=11 IPS <?= $xips11; ?>','blank')">Export</a>
+                                                  </td>
+                                                </tr>
+                                              <?php }
+                                            }
+                                          }
+                                          if (mysqli_num_rows($ubah_ipa12pdf) > 0) {
+                                            while ($row_ipa12 = mysqli_fetch_assoc($ubah_ipa12pdf)) {
+                                              for ($xipa12 = 1; $xipa12 <= $row_ipa12['rombel_ipa12']; $xipa12++) { ?>
+                                                <tr>
+                                                  <th scope="row">12 IPA <?= $xipa12; ?></th>
+                                                  <td>
+                                                    <a style="cursor: pointer;" onclick="window.open('export-siswa-pdf?kelas=12 IPA <?= $xipa12; ?>','blank')">Export</a>
+                                                  </td>
+                                                </tr>
+                                              <?php }
+                                            }
+                                          }
+                                          if (mysqli_num_rows($ubah_ips12pdf) > 0) {
+                                            while ($row_ips12 = mysqli_fetch_assoc($ubah_ips12pdf)) {
+                                              for ($xips12 = 1; $xips12 <= $row_ips12['rombel_ips12']; $xips12++) { ?>
+                                                <tr>
+                                                  <th scope="row">12 IPS <?= $xips12; ?></th>
+                                                  <td>
+                                                    <a style="cursor: pointer;" onclick="window.open('export-siswa-pdf?kelas=12 IPS <?= $xips12; ?>','blank')">Export</a>
+                                                  </td>
+                                                </tr>
+                                          <?php }
+                                            }
+                                          } ?>
+                                        </tbody>
+                                      </table>
+                                    </div>
+                                  </div>
                                 </div>
                               </div>
                             </div>
@@ -309,10 +485,10 @@ $_SESSION['page-url'] = "siswa";
                                                                                 } ?>/" class="btn btn-<?php if ($page_role4 <= 4) {
                                                                                                         echo 'outline-';
                                                                                                       } ?>primary btn-sm rounded-0"><?php if ($page_role4 > 4) {
-                                                                                                                                echo $page_role4;
-                                                                                                                              } else if ($page_role4 <= 4) {
-                                                                                                                                echo '5';
-                                                                                                                              } ?></a>
+                                                                                                                                      echo $page_role4;
+                                                                                                                                    } else if ($page_role4 <= 4) {
+                                                                                                                                      echo '5';
+                                                                                                                                    } ?></a>
                                   </li>
                                 <?php endif;
                                 if ($page_role4 < $total_page_role4 && $total_page_role4 >= 4) : ?>

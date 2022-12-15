@@ -1,7 +1,7 @@
 <?php require_once("../controller/script.php");
 require_once("redirect.php");
-$_SESSION['page-name'] = "Guru";
-$_SESSION['page-url'] = "guru";
+$_SESSION['page-name'] = "Pegawai";
+$_SESSION['page-url'] = "pegawai";
 ?>
 
 <!DOCTYPE html>
@@ -39,8 +39,7 @@ $_SESSION['page-url'] = "guru";
                   </ul>
                   <div>
                     <div class="btn-wrapper">
-                      <a href="#" class="btn btn-primary text-white me-0" data-bs-toggle="modal" data-bs-target="#tambah-guru">Tambah</a>
-                      <!-- <a href="#" class="btn btn-outline-primary text-white me-0" data-bs-toggle="modal" data-bs-target="#import-guru">Import</a> -->
+                      <a href="#" class="btn btn-primary text-white me-0" data-bs-toggle="modal" data-bs-target="#tambah-pegawai">Tambah</a>
                       <a style="cursor: pointer;" class="btn btn-outline-primary me-0" data-bs-toggle="modal" data-bs-target="#exampleModal">Export</a>
                       <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog">
@@ -52,7 +51,7 @@ $_SESSION['page-url'] = "guru";
                             <div class="modal-body">
                               <div class="row">
                                 <div class="col-lg-6">
-                                  <a style="cursor: pointer;" onclick="window.location.href='export-guru-excel'">
+                                  <a style="cursor: pointer;" onclick="window.location.href='export-pegawai-excel'">
                                     <div class="card card-body text-center rounded-0">
                                       <i class="bi bi-file-earmark-excel" style="font-size: 60px;"></i>
                                       <h4>Export Excel</h4>
@@ -60,7 +59,7 @@ $_SESSION['page-url'] = "guru";
                                   </a>
                                 </div>
                                 <div class="col-lg-6">
-                                  <a style="cursor: pointer;" onclick="window.open('export-guru-pdf', 'blank')">
+                                  <a style="cursor: pointer;" onclick="window.open('export-pegawai-pdf', 'blank')">
                                     <div class="card card-body text-center rounded-0">
                                       <i class="bi bi-filetype-pdf" style="font-size: 60px;"></i>
                                       <h4>Export PDF</h4>
@@ -83,24 +82,22 @@ $_SESSION['page-url'] = "guru";
                           <th scope="col">#</th>
                           <th scope="col">NIP</th>
                           <th scope="col">Nama</th>
-                          <th scope="col">TTL</th>
-                          <th scope="col">Status</th>
+                          <th scope="col">Alamat</th>
+                          <th scope="col">Jabatan</th>
                           <th scope="col">Jenis Kelamin</th>
-                          <th scope="col">Gelar</th>
-                          <th scope="col">Mapel</th>
                           <th scope="col">Tgl Buat</th>
                           <th scope="col">Tgl Ubah</th>
-                          <th scope="col" colspan="3">Aksi</th>
+                          <th scope="col" colspan="2">Aksi</th>
                         </tr>
                       </thead>
                       <tbody id="search-page">
-                        <?php if (mysqli_num_rows($guru) == 0) { ?>
+                        <?php if (mysqli_num_rows($pegawai) == 0) { ?>
                           <tr>
-                            <th scope="row" colspan="12">belum ada data guru</th>
+                            <th scope="row" colspan="10">belum ada data pegawai</th>
                           </tr>
-                          <?php } else if (mysqli_num_rows($guru) > 0) {
+                          <?php } else if (mysqli_num_rows($pegawai) > 0) {
                           $no = 1;
-                          while ($row = mysqli_fetch_assoc($guru)) { ?>
+                          while ($row = mysqli_fetch_assoc($pegawai)) { ?>
                             <tr>
                               <th scope="row"><?= $no; ?></th>
                               <td><?php if ($row['nip'] == "") {
@@ -108,13 +105,10 @@ $_SESSION['page-url'] = "guru";
                                   } else if ($row['nip'] != "") {
                                     echo $row['nip'];
                                   } ?></td>
-                              <td><?= $row['nama'] ?></td>
-                              <td><?= $row['tempat_lahir'] . ", " . $row['tgl_lahir'] ?></td>
-                              <td><?= $row['status'] ?></td>
-                              <td><?= $row['jenis_kelamin'] ?></td>
-                              <!-- <td><?= $row['jabatan'] ?></td> -->
-                              <td><?= $row['gelar'] ?></td>
-                              <td><?= $row['mapel'] ?></td>
+                              <td><?= $row['nama_pegawai'] ?></td>
+                              <td><?= $row['alamat_pegawai'] ?></td>
+                              <td><?= $row['jabatan_pegawai'] ?></td>
+                              <td><?= $row['jk_pegawai'] ?></td>
                               <td>
                                 <div class="badge badge-opacity-success">
                                   <?php $dateCreate = date_create($row['created_at']);
@@ -128,17 +122,14 @@ $_SESSION['page-url'] = "guru";
                                 </div>
                               </td>
                               <td>
-                                <button onclick="window.location.href='jadwal?guru=<?= $row['id_guru'] ?>'" class="btn btn-primary text-white"><i class="bi bi-calendar-week menu-icon" style="color: #f4bd01;"></i> Jadwal</button>
-                              </td>
-                              <td>
-                                <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#ubah<?= $row['id_guru'] ?>">
+                                <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#ubah<?= $row['id_pegawai'] ?>">
                                   <i class="bi bi-pencil-square"></i>
                                 </button>
-                                <div class="modal fade" id="ubah<?= $row['id_guru'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal fade" id="ubah<?= $row['id_pegawai'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                   <div class="modal-dialog">
                                     <div class="modal-content">
                                       <div class="modal-header border-bottom-0 shadow">
-                                        <h5 class="modal-title" id="exampleModalLabel">Ubah data <?= $row['nama'] ?></h5>
+                                        <h5 class="modal-title" id="exampleModalLabel">Ubah data <?= $row['nama_pegawai'] ?></h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                       </div>
                                       <form action="" method="POST">
@@ -149,43 +140,31 @@ $_SESSION['page-url'] = "guru";
                                           </div>
                                           <div class="mb-3">
                                             <label for="nama" class="form-label">Nama <small class="text-danger">*</small></label>
-                                            <input type="text" name="nama" value="<?= $row['nama'] ?>" class="form-control" id="nama" minlength="3" placeholder="Nama" required>
+                                            <input type="text" name="nama" value="<?= $row['nama_pegawai'] ?>" class="form-control" id="nama" minlength="3" placeholder="Nama" required>
                                           </div>
                                           <div class="mb-3">
-                                            <label for="tempat-lahir" class="form-label">Tempat Lahir <small class="text-danger">*</small></label>
-                                            <input type="text" name="tempat-lahir" value="<?= $row['tempat_lahir'] ?>" class="form-control" id="tempat-lahir" minlength="3" placeholder="Tempat Lahir" required>
+                                            <label for="alamat" class="form-label">Alamat <small class="text-danger">*</small></label>
+                                            <input type="text" name="alamat" value="<?= $row['alamat_pegawai'] ?>" class="form-control" id="alamat" minlength="3" placeholder="Alamat" required>
                                           </div>
                                           <div class="mb-3">
-                                            <label for="tgl-lahir" class="form-label">Tgl Lahir <small class="text-danger">*</small></label>
-                                            <input type="date" name="tgl-lahir" value="<?= $row['tgl_lahir'] ?>" class="form-control" id="tgl-lahir" placeholder="Tgl Lahir" required>
-                                          </div>
-                                          <div class="mb-3">
-                                            <label for="status" class="form-label">Status <small class="text-danger">*</small></label>
-                                            <input type="text" name="status" value="<?= $row['status'] ?>" class="form-control" id="status" placeholder="Status" required>
+                                            <label for="jabatan" class="form-label">Jabatan <small class="text-danger">*</small></label>
+                                            <input type="text" name="jabatan" value="<?= $row['jabatan_pegawai'] ?>" class="form-control" id="jabatan" placeholder="Jabatan" required>
                                           </div>
                                           <div class="mb-3">
                                             <label for="jenis-kelamin" class="form-label">Jenis Kelamin <small class="text-danger">*</small></label>
-                                            <select name="jenis-kelamin" id="jenis-kelamin" class="form-select" aria-label="Default select example" required>
+                                            <select name="jk" id="jenis-kelamin" class="form-select" aria-label="Default select example" required>
                                               <option selected value="">Pilih Jenis Kelamin</option>
                                               <option value="Laki-Laki">Laki-Laki</option>
                                               <option value="Perempuan">Perempuan</option>
                                             </select>
                                           </div>
-                                          <div class="mb-3">
-                                            <label for="gelar" class="form-label">Gelar <small class="text-danger">*</small></label>
-                                            <input type="text" name="gelar" value="<?= $row['gelar'] ?>" class="form-control" id="gelar" minlength="3" placeholder="Gelar" required>
-                                          </div>
-                                          <div class="mb-3">
-                                            <label for="mapel" class="form-label">Mata Pelajaran <small class="text-danger">*</small></label>
-                                            <input type="text" name="mapel" class="form-control" id="mapel" minlength="3" placeholder="Mata Pelajaran" required>
-                                          </div>
                                         </div>
                                         <div class="modal-footer justify-content-center border-top-0">
-                                          <input type="hidden" name="id-guru" value="<?= $row['id_guru'] ?>">
-                                          <input type="hidden" name="namaOld" value="<?= $row['nama'] ?>">
+                                          <input type="hidden" name="id-pegawai" value="<?= $row['id_pegawai'] ?>">
+                                          <input type="hidden" name="namaOld" value="<?= $row['nama_pegawai'] ?>">
                                           <input type="hidden" name="nipOld" value="<?= $row['nip'] ?>">
                                           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                                          <button type="submit" name="ubah-guru" class="btn btn-warning">Ubah</button>
+                                          <button type="submit" name="ubah-pegawai" class="btn btn-warning">Ubah</button>
                                         </div>
                                       </form>
                                     </div>
@@ -193,25 +172,25 @@ $_SESSION['page-url'] = "guru";
                                 </div>
                               </td>
                               <td>
-                                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#hapus<?= $row['id_guru'] ?>">
+                                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#hapus<?= $row['id_pegawai'] ?>">
                                   <i class="bi bi-trash3"></i>
                                 </button>
-                                <div class="modal fade" id="hapus<?= $row['id_guru'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal fade" id="hapus<?= $row['id_pegawai'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                   <div class="modal-dialog">
                                     <div class="modal-content">
                                       <div class="modal-header border-bottom-0 shadow">
-                                        <h5 class="modal-title" id="exampleModalLabel">Hapus data <?= $row['nama'] ?></h5>
+                                        <h5 class="modal-title" id="exampleModalLabel">Hapus data <?= $row['nama_pegawai'] ?></h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                       </div>
                                       <div class="modal-body">
-                                        Anda yakin ingin menghapus data <?= $row['nama'] ?> ini?
+                                        Anda yakin ingin menghapus data <?= $row['nama_pegawai'] ?> ini?
                                       </div>
                                       <div class="modal-footer justify-content-center border-top-0">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
                                         <form action="" method="POST">
-                                          <input type="hidden" name="id-guru" value="<?= $row['id_guru'] ?>">
-                                          <input type="hidden" name="nama" value="<?= $row['nama'] ?>">
-                                          <button type="submit" name="hapus-guru" class="btn btn-danger">Hapus</button>
+                                          <input type="hidden" name="id-pegawai" value="<?= $row['id_pegawai'] ?>">
+                                          <input type="hidden" name="nama" value="<?= $row['nama_pegawai'] ?>">
+                                          <button type="submit" name="hapus-pegawai" class="btn btn-danger">Hapus</button>
                                         </form>
                                       </div>
                                     </div>
@@ -224,19 +203,19 @@ $_SESSION['page-url'] = "guru";
                         } ?>
                       </tbody>
                     </table>
-                    <?php if ($total_role3 > $data_role3) { ?>
+                    <?php if ($total_role5 > $data_role5) { ?>
                       <div class="d-flex justify-content-between mt-4 flex-wrap">
-                        <p class="text-muted">Showing 1 to <?= $data_role3 ?> of <?= $total_role3 ?> entries</p>
+                        <p class="text-muted">Showing 1 to <?= $data_role5 ?> of <?= $total_role5 ?> entries</p>
                         <nav class="ml-auto">
                           <ul class="pagination separated pagination-info">
-                            <?php if (isset($page_role3)) {
-                              if (isset($total_page_role3)) {
-                                if ($page_role3 > 1) : ?>
+                            <?php if (isset($page_role5)) {
+                              if (isset($total_page_role5)) {
+                                if ($page_role5 > 1) : ?>
                                   <li class="page-item">
-                                    <a href="<?= $_SESSION['page-url'] ?>?page=<?= $page_role3 - 1; ?>/" class="btn btn-primary btn-sm rounded-0"><i class="bi bi-arrow-bar-left text-white"></i></a>
+                                    <a href="<?= $_SESSION['page-url'] ?>?page=<?= $page_role5 - 1; ?>/" class="btn btn-primary btn-sm rounded-0"><i class="bi bi-arrow-bar-left text-white"></i></a>
                                   </li>
                                   <?php endif;
-                                for ($i = 1; $i <= $total_page_role3; $i++) : if ($i <= 4) : if ($i == $page_role3) : ?>
+                                for ($i = 1; $i <= $total_page_role5; $i++) : if ($i <= 4) : if ($i == $page_role5) : ?>
                                       <li class="page-item active">
                                         <a href="<?= $_SESSION['page-url'] ?>?page=<?= $i; ?>/" class="btn btn-primary btn-sm rounded-0 text-white"><?= $i; ?></a>
                                       </li>
@@ -247,24 +226,24 @@ $_SESSION['page-url'] = "guru";
                                   <?php endif;
                                   endif;
                                 endfor;
-                                if ($total_page_role3 >= 4) : ?>
+                                if ($total_page_role5 >= 4) : ?>
                                   <li class="page-item">
-                                    <a href="<?= $_SESSION['page-url'] ?>?page=<?php if ($page_role3 > 4) {
-                                                                                  echo $page_role3;
-                                                                                } else if ($page_role3 <= 4) {
+                                    <a href="<?= $_SESSION['page-url'] ?>?page=<?php if ($page_role5 > 4) {
+                                                                                  echo $page_role5;
+                                                                                } else if ($page_role5 <= 4) {
                                                                                   echo '5';
-                                                                                } ?>/" class="btn btn-<?php if ($page_role3 <= 4) {
+                                                                                } ?>/" class="btn btn-<?php if ($page_role5 <= 4) {
                                                                                                         echo 'outline-';
-                                                                                                      } ?>primary btn-sm rounded-0"><?php if ($page_role3 > 4) {
-                                                                                                                                      echo $page_role3;
-                                                                                                                                    } else if ($page_role3 <= 4) {
+                                                                                                      } ?>primary btn-sm rounded-0"><?php if ($page_role5 > 4) {
+                                                                                                                                      echo $page_role5;
+                                                                                                                                    } else if ($page_role5 <= 4) {
                                                                                                                                       echo '5';
                                                                                                                                     } ?></a>
                                   </li>
                                 <?php endif;
-                                if ($page_role3 < $total_page_role3 && $total_page_role3 >= 4) : ?>
+                                if ($page_role5 < $total_page_role5 && $total_page_role5 >= 4) : ?>
                                   <li class="page-item">
-                                    <a href="<?= $_SESSION['page-url'] ?>?page=<?= $page_role3 + 1; ?>/" class="btn btn-primary btn-sm rounded-0"><i class="bi bi-arrow-bar-right"></i></a>
+                                    <a href="<?= $_SESSION['page-url'] ?>?page=<?= $page_role5 + 1; ?>/" class="btn btn-primary btn-sm rounded-0"><i class="bi bi-arrow-bar-right"></i></a>
                                   </li>
                             <?php endif;
                               }
@@ -280,11 +259,11 @@ $_SESSION['page-url'] = "guru";
           </div>
         </div>
 
-        <div class="modal fade" id="tambah-guru" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="tambah-pegawai" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-header border-bottom-0 shadow">
-                <h5 class="modal-title" id="exampleModalLabel">Tambah guru</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Tambah pegawai</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <form action="" method="post">
@@ -298,61 +277,25 @@ $_SESSION['page-url'] = "guru";
                     <input type="text" name="nama" class="form-control" id="nama" minlength="3" placeholder="Nama" required>
                   </div>
                   <div class="mb-3">
-                    <label for="tempat-lahir" class="form-label">Tempat Lahir <small class="text-danger">*</small></label>
-                    <input type="text" name="tempat-lahir" class="form-control" id="tempat-lahir" minlength="3" placeholder="Tempat Lahir" required>
+                    <label for="alamat" class="form-label">Alamat <small class="text-danger">*</small></label>
+                    <input type="text" name="alamat" class="form-control" id="alamat" minlength="3" placeholder="Alamat" required>
                   </div>
                   <div class="mb-3">
-                    <label for="tgl-lahir" class="form-label">Tgl Lahir <small class="text-danger">*</small></label>
-                    <input type="date" name="tgl-lahir" class="form-control" id="tgl-lahir" placeholder="Tgl Lahir" required>
-                  </div>
-                  <div class="mb-3">
-                    <label for="status" class="form-label">Status <small class="text-danger">*</small></label>
-                    <input type="text" name="status" class="form-control" id="status" placeholder="Status" required>
+                    <label for="jabatan" class="form-label">Jabatan <small class="text-danger">*</small></label>
+                    <input type="text" name="jabatan" class="form-control" id="jabatan" placeholder="Jabatan" required>
                   </div>
                   <div class="mb-3">
                     <label for="jenis-kelamin" class="form-label">Jenis Kelamin <small class="text-danger">*</small></label>
-                    <select name="jenis-kelamin" id="jenis-kelamin" class="form-select" aria-label="Default select example" required>
+                    <select name="jk" id="jenis-kelamin" class="form-select" aria-label="Default select example" required>
                       <option selected value="">Pilih Jenis Kelamin</option>
                       <option value="Laki-Laki">Laki-Laki</option>
                       <option value="Perempuan">Perempuan</option>
                     </select>
                   </div>
-                  <div class="mb-3">
-                    <label for="gelar" class="form-label">Gelar <small class="text-danger">*</small></label>
-                    <input type="text" name="gelar" class="form-control" id="gelar" minlength="3" placeholder="Gelar" required>
-                  </div>
-                  <div class="mb-3">
-                    <label for="mapel" class="form-label">Mata Pelajaran <small class="text-danger">*</small></label>
-                    <input type="text" name="mapel" class="form-control" id="mapel" minlength="3" placeholder="Mata Pelajaran" required>
-                  </div>
                 </div>
                 <div class="modal-footer border-top-0 justify-content-center">
                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                  <button type="submit" name="tambah-guru" class="btn btn-primary">Simpan</button>
-                </div>
-              </form>
-            </div>
-          </div>
-        </div>
-        <div class="modal fade" id="import-guru" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header border-bottom-0 shadow">
-                <h5 class="modal-title" id="exampleModalLabel">Import data guru</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-              </div>
-              <form action="" method="POST" enctype="multipart/form-data">
-                <div class="modal-body">
-                  <div class="mb-3">
-                    <label for="import" class="form-label">Upload data guru</label>
-                    <input class="form-control" type="file" name="import" id="import">
-                    <small class="text-danger">Hanya dapat mengimport file excel!</small><br>
-                    <small class="text-info">Pastikan tiap nama kolom yang ada pada excel sama dengan yang ada pada form inputan guru di website! *Kecuali file Ijasah.</small>
-                  </div>
-                </div>
-                <div class="modal-footer justify-content-center border-top-0">
-                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                  <button type="submit" name="import-guru" class="btn btn-primary">Simpan</button>
+                  <button type="submit" name="tambah-pegawai" class="btn btn-primary">Simpan</button>
                 </div>
               </form>
             </div>

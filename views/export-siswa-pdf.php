@@ -2,7 +2,13 @@
 require_once("../controller/script.php");
 require_once __DIR__ . '../../vendor/autoload.php';
 
-$siswa = mysqli_query($conn, "SELECT * FROM siswa ORDER BY id_siswa DESC");
+if (isset($_GET['kelas'])) {
+  $kelas = htmlspecialchars(addslashes(trim(mysqli_real_escape_string($conn, $_GET['kelas']))));
+  $kelas = str_replace("%20", " ", $kelas);
+  $siswa = mysqli_query($conn, "SELECT * FROM siswa WHERE kelas='$kelas' ORDER BY id_siswa DESC");
+} else if (!isset($_GET['kelas'])) {
+  $siswa = mysqli_query($conn, "SELECT * FROM siswa ORDER BY id_siswa DESC");
+}
 
 $mpdf = new \Mpdf\Mpdf();
 $mpdf->WriteHTML('<img src="../assets/images/cop.jpg">');

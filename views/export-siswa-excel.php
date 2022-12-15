@@ -1,7 +1,13 @@
 <?php require_once("../controller/script.php");
 require_once("redirect.php");
 
-$siswa = mysqli_query($conn, "SELECT * FROM siswa ORDER BY id_siswa DESC");
+if (isset($_GET['kelas'])) {
+  $kelas = htmlspecialchars(addslashes(trim(mysqli_real_escape_string($conn, $_GET['kelas']))));
+  $kelas = str_replace("%20", " ", $kelas);
+  $siswa = mysqli_query($conn, "SELECT * FROM siswa WHERE kelas='$kelas' ORDER BY id_siswa DESC");
+} else if (!isset($_GET['kelas'])) {
+  $siswa = mysqli_query($conn, "SELECT * FROM siswa ORDER BY id_siswa DESC");
+}
 
 header("Content-type: application/vnd-ms-excel");
 header("Content-Disposition: attachment; filename=Data siswa SMAN 2 Kupang Timur.xls");

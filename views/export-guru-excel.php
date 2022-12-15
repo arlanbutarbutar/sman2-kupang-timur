@@ -19,6 +19,7 @@ header("Content-Disposition: attachment; filename=Data Guru SMAN 2 Kupang Timur.
       <th scope="col">Status</th>
       <th scope="col">Jenis Kelamin</th>
       <th scope="col">Gelar</th>
+      <th scope="col">Mapel</th>
     </tr>
   </thead>
   <tbody>
@@ -37,6 +38,7 @@ header("Content-Disposition: attachment; filename=Data Guru SMAN 2 Kupang Timur.
           <td><?= $row['status'] ?></td>
           <td><?= $row['jenis_kelamin'] ?></td>
           <td><?= $row['gelar'] ?></td>
+          <td><?= $row['mapel'] ?></td>
         </tr>
     <?php $no++;
       }

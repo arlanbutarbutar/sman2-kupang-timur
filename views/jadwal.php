@@ -164,10 +164,6 @@ if (isset($_GET['guru'])) {
                                             </select>
                                           </div>
                                           <div class="mb-3">
-                                            <label for="mapel" class="form-label">Mapel <small class="text-danger">*</small></label>
-                                            <input type="text" name="mapel" value="<?= $row['mapel'] ?>" class="form-control" id="mapel" placeholder="Mapel" required>
-                                          </div>
-                                          <div class="mb-3">
                                             <label for="jam-mulai" class="form-label">Jam Mulai <small class="text-danger">*</small></label>
                                             <input type="time" name="jam-mulai" value="
                                               <?php $jam_mulai = date_create($row['jam_mulai']);
@@ -350,10 +346,6 @@ if (isset($_GET['guru'])) {
                         <option value="<?= $data_guru['id_guru'] ?>"><?= $data_guru['nama'] . ", " . $data_guru['gelar'] ?></option>
                       <?php endforeach; ?>
                     </select>
-                  </div>
-                  <div class="mb-3">
-                    <label for="mapel" class="form-label">Mapel <small class="text-danger">*</small></label>
-                    <input type="text" name="mapel" class="form-control" id="mapel" placeholder="Mapel" required>
                   </div>
                   <div class="mb-3">
                     <label for="jam-mulai" class="form-label">Jam Mulai <small class="text-danger">*</small></label>

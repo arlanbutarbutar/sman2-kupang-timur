@@ -25,6 +25,7 @@ if ($_SESSION['page-url'] == "users") {
         <th scope="row"><?= $no; ?></th>
         <td><?= $row['username'] ?></td>
         <td><?= $row['email'] ?></td>
+        <td><?= $row['role'] ?></td>
         <td>
           <div class="badge badge-opacity-success">
             <?php $dateCreate = date_create($row['created_at']);
@@ -38,10 +39,10 @@ if ($_SESSION['page-url'] == "users") {
           </div>
         </td>
         <td>
-          <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#hapus<?= $row['id_user'] ?>">
+          <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#ubah<?= $row['id_user'] ?>">
             <i class="bi bi-pencil-square"></i>
           </button>
-          <div class="modal fade" id="hapus<?= $row['id_user'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal fade" id="ubah<?= $row['id_user'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
               <div class="modal-content">
                 <div class="modal-header border-bottom-0 shadow">
@@ -51,17 +52,27 @@ if ($_SESSION['page-url'] == "users") {
                 <form action="" method="POST">
                   <div class="modal-body">
                     <div class="mb-3">
-                      <label for="username" class="form-label">Nama</label>
+                      <label for="username" class="form-label">Nama <small class="text-danger">*</small></label>
                       <input type="text" name="username" value="<?= $row['username'] ?>" class="form-control" id="username" minlength="3" placeholder="Nama" required>
                     </div>
                     <div class="mb-3">
-                      <label for="email" class="form-label">Email</label>
+                      <label for="email" class="form-label">Email <small class="text-danger">*</small></label>
                       <input type="email" name="email" value="<?= $row['email'] ?>" class="form-control" id="email" placeholder="Email" required>
+                    </div>
+                    <div class="mb-3">
+                      <label for="role" class="form-label">Role <small class="text-danger">*</small></label>
+                      <select name="id-role" id="role" class="form-select" aria-label="Default select example" required>
+                        <option selected value="">Pilih Role</option>
+                        <?php foreach ($users_role as $row_ur) : ?>
+                          <option value="<?= $row_ur['id_role'] ?>"><?= $row_ur['role'] ?></option>
+                        <?php endforeach; ?>
+                      </select>
                     </div>
                   </div>
                   <div class="modal-footer justify-content-center border-top-0">
                     <input type="hidden" name="id-user" value="<?= $row['id_user'] ?>">
                     <input type="hidden" name="username" value="<?= $row['username'] ?>">
+                    <input type="hidden" name="emailOld" value="<?= $row['email'] ?>">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
                     <button type="submit" name="ubah-user" class="btn btn-warning">Ubah</button>
                   </div>
@@ -71,10 +82,10 @@ if ($_SESSION['page-url'] == "users") {
           </div>
         </td>
         <td>
-          <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#ubah<?= $row['id_user'] ?>">
+          <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#hapus<?= $row['id_user'] ?>">
             <i class="bi bi-trash3"></i>
           </button>
-          <div class="modal fade" id="ubah<?= $row['id_user'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal fade" id="hapus<?= $row['id_user'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
               <div class="modal-content">
                 <div class="modal-header border-bottom-0 shadow">
@@ -207,16 +218,12 @@ if ($_SESSION['page-url'] == "jadwal") {
                       <label for="guru" class="form-label">Guru <small class="text-danger">*</small></label>
                       <select name="id-guru" class="form-select" aria-label="" required>
                         <option selected value="<?= $row['id_guru'] ?>"><?= $row['nama'] . ", " . $row['gelar'] ?></option>
-                        <?php $guruID=$row['id_guru'];
-                        $selectEditJadwal=mysqli_query($conn, "SELECT * FROM guru WHERE id_guru!='$guruID'");
+                        <?php $guruID = $row['id_guru'];
+                        $selectEditJadwal = mysqli_query($conn, "SELECT * FROM guru WHERE id_guru!='$guruID'");
                         foreach ($selectEditJadwal as $data_ej) : ?>
                           <option value="<?= $data_ej['id_guru'] ?>"><?= $data_ej['nama'] . ", " . $data_ej['gelar'] ?></option>
                         <?php endforeach; ?>
                       </select>
-                    </div>
-                    <div class="mb-3">
-                      <label for="mapel" class="form-label">Mapel <small class="text-danger">*</small></label>
-                      <input type="text" name="mapel" value="<?= $row['mapel'] ?>" class="form-control" id="mapel" placeholder="Mapel" required>
                     </div>
                     <div class="mb-3">
                       <label for="jam-mulai" class="form-label">Jam Mulai <small class="text-danger">*</small></label>
@@ -314,6 +321,7 @@ if ($_SESSION['page-url'] == "guru") {
         <td><?= $row['jenis_kelamin'] ?></td>
         <!-- <td><?= $row['jabatan'] ?></td> -->
         <td><?= $row['gelar'] ?></td>
+        <td><?= $row['mapel'] ?></td>
         <td>
           <div class="badge badge-opacity-success">
             <?php $dateCreate = date_create($row['created_at']);
@@ -373,6 +381,10 @@ if ($_SESSION['page-url'] == "guru") {
                     <div class="mb-3">
                       <label for="gelar" class="form-label">Gelar <small class="text-danger">*</small></label>
                       <input type="text" name="gelar" value="<?= $row['gelar'] ?>" class="form-control" id="gelar" minlength="3" placeholder="Gelar" required>
+                    </div>
+                    <div class="mb-3">
+                      <label for="mapel" class="form-label">Mata Pelajaran <small class="text-danger">*</small></label>
+                      <input type="text" name="mapel" class="form-control" id="mapel" minlength="3" placeholder="Mata Pelajaran" required>
                     </div>
                   </div>
                   <div class="modal-footer justify-content-center border-top-0">
@@ -601,6 +613,132 @@ if ($_SESSION['page-url'] == "siswa") {
                     <input type="hidden" name="id-siswa" value="<?= $row['id_siswa'] ?>">
                     <input type="hidden" name="nama" value="<?= $row['nama'] ?>">
                     <button type="submit" name="hapus-siswa" class="btn btn-danger">Hapus</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </td>
+      </tr>
+    <?php $no++;
+    }
+  }
+}
+if ($_SESSION['page-url'] == "pegawai") {
+  if (isset($_GET['key']) && $_GET['key'] != "") {
+    $key = addslashes(trim($_GET['key']));
+    $keys = explode(" ", $key);
+    $quer = "";
+    foreach ($keys as $no => $data) {
+      $data = strtolower($data);
+      $quer .= "nama_pegawai LIKE '%$data%'";
+      if ($no + 1 < count($keys)) {
+        $quer .= " OR ";
+      }
+    }
+    $query = "SELECT * FROM pegawai WHERE $quer ORDER BY id_pegawai DESC LIMIT 100";
+    $pegawai = mysqli_query($conn, $query);
+  }
+  if (mysqli_num_rows($pegawai) == 0) { ?>
+    <tr>
+      <th scope="row" colspan="10">belum ada data pegawai</th>
+    </tr>
+    <?php } else if (mysqli_num_rows($pegawai) > 0) {
+    $no = 1;
+    while ($row = mysqli_fetch_assoc($pegawai)) { ?>
+      <tr>
+        <th scope="row"><?= $no; ?></th>
+        <td><?php if ($row['nip'] == "") {
+              echo "-";
+            } else if ($row['nip'] != "") {
+              echo $row['nip'];
+            } ?></td>
+        <td><?= $row['nama_pegawai'] ?></td>
+        <td><?= $row['alamat_pegawai'] ?></td>
+        <td><?= $row['jabatan_pegawai'] ?></td>
+        <td><?= $row['jk_pegawai'] ?></td>
+        <td>
+          <div class="badge badge-opacity-success">
+            <?php $dateCreate = date_create($row['created_at']);
+            echo date_format($dateCreate, "l, d M Y h:i a"); ?>
+          </div>
+        </td>
+        <td>
+          <div class="badge badge-opacity-warning">
+            <?php $dateUpdate = date_create($row['updated_at']);
+            echo date_format($dateUpdate, "l, d M Y h:i a"); ?>
+          </div>
+        </td>
+        <td>
+          <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#ubah<?= $row['id_pegawai'] ?>">
+            <i class="bi bi-pencil-square"></i>
+          </button>
+          <div class="modal fade" id="ubah<?= $row['id_pegawai'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header border-bottom-0 shadow">
+                  <h5 class="modal-title" id="exampleModalLabel">Ubah data <?= $row['nama_pegawai'] ?></h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form action="" method="POST">
+                  <div class="modal-body">
+                    <div class="mb-3">
+                      <label for="nip" class="form-label">NIP</label>
+                      <input type="number" name="nip" value="<?= $row['nip'] ?>" class="form-control" id="nip" minlength="5" placeholder="NIP">
+                    </div>
+                    <div class="mb-3">
+                      <label for="nama" class="form-label">Nama <small class="text-danger">*</small></label>
+                      <input type="text" name="nama" value="<?= $row['nama_pegawai'] ?>" class="form-control" id="nama" minlength="3" placeholder="Nama" required>
+                    </div>
+                    <div class="mb-3">
+                      <label for="alamat" class="form-label">Alamat <small class="text-danger">*</small></label>
+                      <input type="text" name="alamat" value="<?= $row['alamat_pegawai'] ?>" class="form-control" id="alamat" minlength="3" placeholder="Alamat" required>
+                    </div>
+                    <div class="mb-3">
+                      <label for="jabatan" class="form-label">Jabatan <small class="text-danger">*</small></label>
+                      <input type="text" name="jabatan" value="<?= $row['jabatan_pegawai'] ?>" class="form-control" id="jabatan" placeholder="Jabatan" required>
+                    </div>
+                    <div class="mb-3">
+                      <label for="jenis-kelamin" class="form-label">Jenis Kelamin <small class="text-danger">*</small></label>
+                      <select name="jk" id="jenis-kelamin" class="form-select" aria-label="Default select example" required>
+                        <option selected value="">Pilih Jenis Kelamin</option>
+                        <option value="Laki-Laki">Laki-Laki</option>
+                        <option value="Perempuan">Perempuan</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="modal-footer justify-content-center border-top-0">
+                    <input type="hidden" name="id-pegawai" value="<?= $row['id_pegawai'] ?>">
+                    <input type="hidden" name="namaOld" value="<?= $row['nama_pegawai'] ?>">
+                    <input type="hidden" name="nipOld" value="<?= $row['nip'] ?>">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                    <button type="submit" name="ubah-pegawai" class="btn btn-warning">Ubah</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </td>
+        <td>
+          <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#hapus<?= $row['id_pegawai'] ?>">
+            <i class="bi bi-trash3"></i>
+          </button>
+          <div class="modal fade" id="hapus<?= $row['id_pegawai'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header border-bottom-0 shadow">
+                  <h5 class="modal-title" id="exampleModalLabel">Hapus data <?= $row['nama_pegawai'] ?></h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  Anda yakin ingin menghapus data <?= $row['nama_pegawai'] ?> ini?
+                </div>
+                <div class="modal-footer justify-content-center border-top-0">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                  <form action="" method="POST">
+                    <input type="hidden" name="id-pegawai" value="<?= $row['id_pegawai'] ?>">
+                    <input type="hidden" name="nama" value="<?= $row['nama_pegawai'] ?>">
+                    <button type="submit" name="hapus-pegawai" class="btn btn-danger">Hapus</button>
                   </form>
                 </div>
               </div>

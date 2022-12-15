@@ -84,7 +84,6 @@
                         <div class="text-bg">
                           <h1><?= $row_sekolah['judul'] ?></h1>
                           <p><?= $row_sekolah['judul'] ?>, merupakan salah satu Sekolah Menengah Atas Negeri yang ada di Provinsi Nusa Tenggara Timur, Indonesia.</p>
-                          <a href="#stundent">Lihat Siswa</a>
                         </div>
                       </div>
                       <div class="col-xl-7 col-lg-7 col-md-7 col-sm-12">
@@ -103,54 +102,22 @@
     </div>
   </header>
 
-  <div id="stundent" class="learn">
+  <div id="view" class="learn">
     <div class="container">
       <div class="row mt-5">
         <div class="col-md-12">
           <div class="titlepage">
-            <h2 class="text-center"><strong class="yellow">Data Siswa</strong></h2>
-            <?php if (mysqli_num_rows($data_siswa) > 0) { ?>
-              <div class="table-responsive mt-4">
-                <table class="table table-striped table-hover table-borderless table-sm text-center">
-                  <thead>
-                    <tr>
-                      <th scope="col">#</th>
-                      <th scope="col">NIS</th>
-                      <th scope="col">Nama</th>
-                      <th scope="col">Kelas</th>
-                      <th scope="col">Alamat</th>
-                      <th scope="col">TTL</th>
-                      <th scope="col">Agama</th>
-                      <th scope="col">No HP</th>
-                      <th scope="col">Orang Tua/Wali</th>
-                      <th scope="col">Pekerjaan</th>
-                      <th scope="col">No HP Orang Tua</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <?php $no = 1;
-                    while ($row = mysqli_fetch_assoc($data_siswa)) {
-                      $tgl_lahir = date_create($row['tgl_lahir']);
-                      $tgl_lahir = date_format($tgl_lahir, "d M Y"); ?>
-                      <tr>
-                        <th scope="row"><?= $no; ?></th>
-                        <td><?= $row['nis'] ?></td>
-                        <td><?= $row['nama'] ?></td>
-                        <td><?= $row['kelas'] ?></td>
-                        <td><?= $row['alamat'] ?></td>
-                        <td><?= $row['tempat_lahir'] . ", " . $tgl_lahir ?></td>
-                        <td><?= $row['agama'] ?></td>
-                        <td><?= $row['no_hp_siswa'] ?></td>
-                        <td><?= $row['ortu'] ?></td>
-                        <td><?= $row['pekerjaan'] ?></td>
-                        <td><?= $row['no_hp_ortu'] ?></td>
-                      </tr>
-                    <?php $no++;
-                    } ?>
-                  </tbody>
-                </table>
-              </div>
-            <?php } ?>
+            <h2 class="text-center mb-4"><strong class="yellow">Ekstrakuliker</strong></h2>
+            <?php if (mysqli_num_rows($ekstraView) > 0) {
+              while ($row = mysqli_fetch_assoc($ekstraView)) { ?> <div class="card" style="width: 18rem;">
+                  <img src="assets/images/ekstra/<?= $row['image_ekstra'] ?>" class="card-img-top" alt="Image Ekstra">
+                  <div class="card-body">
+                    <h3 class="card-title font-weight-bold"><?= $row['nama_ekstra'] ?></h3>
+                    <?= $row['deskripsi_ekstra'] ?>
+                  </div>
+                </div>
+            <?php }
+            } ?>
           </div>
         </div>
       </div>

@@ -28,14 +28,6 @@ if (isset($_SESSION['time-message'])) {
 
 $baseURL = "http://$_SERVER[HTTP_HOST]/sman2-kupang-timur/";
 
-// if (!isset($_SESSION['data-user'])) {
-if (isset($_POST['masuk'])) {
-  if (masuk($_POST) > 0) {
-    header("Location: ../views/");
-    exit();
-  }
-}
-
 $nama_sekolah = mysqli_query($conn, "SELECT judul FROM profil_sekolah");
 $profil = mysqli_query($conn, "SELECT * FROM profil_sekolah");
 $count_guru = mysqli_query($conn, "SELECT * FROM guru");
@@ -46,10 +38,23 @@ $jadwal_belajar = mysqli_query($conn, "SELECT * FROM jadwal JOIN guru ON jadwal.
 $jadwal_pdf = mysqli_query($conn, "SELECT * FROM jadwal ORDER BY id_jadwal DESC LIMIT 1");
 $data_guru = mysqli_query($conn, "SELECT * FROM guru ORDER BY id_guru DESC");
 $data_siswa = mysqli_query($conn, "SELECT * FROM siswa ORDER BY id_siswa DESC");
-// }
+$pengumumanView=mysqli_query($conn, "SELECT * FROM pengumuman ORDER BY id_pengumuman DESC");
+$prestasiView=mysqli_query($conn, "SELECT * FROM prestasi JOIN guru ON prestasi.id_guru=guru.id_guru ORDER BY prestasi.id_prestasi DESC");
+$ekstraView=mysqli_query($conn, "SELECT * FROM ekstra ORDER BY id_ekstra DESC");
+$pegawaiView=mysqli_query($conn, "SELECT * FROM pegawai ORDER BY id_pegawai DESC");
+
+if (!isset($_SESSION['data-user'])) {
+  if (isset($_POST['masuk'])) {
+    if (masuk($_POST) > 0) {
+      header("Location: ../views/");
+      exit();
+    }
+  }
+}
 
 if (isset($_SESSION['data-user'])) {
   $idUser = htmlspecialchars(addslashes(trim(mysqli_real_escape_string($conn, $_SESSION['data-user']['id']))));
+  $users_role = mysqli_query($conn, "SELECT * FROM users_role");
 
   $count_users = mysqli_query($conn, "SELECT * FROM users WHERE id_user='$idUser'");
   $count_users = mysqli_num_rows($count_users);
@@ -74,7 +79,7 @@ if (isset($_SESSION['data-user'])) {
   $total_page_role1 = ceil($total_role1 / $data_role1);
   $page_role1 = isset($_GET["page"]) ? (int)$_GET["page"] : 1;
   $awal_data_role1 = ($page_role1 > 1) ? ($page_role1 * $data_role1) - $data_role1 : 0;
-  $users = mysqli_query($conn, "SELECT * FROM users WHERE id_user!='$idUser' ORDER BY id_user DESC LIMIT $awal_data_role1, $data_role1");
+  $users = mysqli_query($conn, "SELECT * FROM users JOIN users_role ON users.id_role=users_role.id_role WHERE users.id_user!='$idUser' ORDER BY users.id_user DESC LIMIT $awal_data_role1, $data_role1");
   if (isset($_POST['tambah-user'])) {
     if (tambah_user($_POST) > 0) {
       $_SESSION['message-success'] = "Pengguna " . $_POST['username'] . " berhasil ditambahkan.";
@@ -135,10 +140,10 @@ if (isset($_SESSION['data-user'])) {
   if (isset($_GET['guru'])) {
     $idguru = htmlspecialchars(addslashes(trim(mysqli_real_escape_string($conn, $_GET['guru']))));
     $selectGuru = mysqli_query($conn, "SELECT * FROM guru WHERE id_guru='$idguru' ORDER BY nama ASC");
-    $jadwal = mysqli_query($conn, "SELECT jadwal.id_jadwal, jadwal.id_guru, jadwal.kelas, jadwal.mapel, jadwal.jam_mulai, jadwal.jam_selesai, jadwal.hari, jadwal.created_at, jadwal.updated_at, guru.nama, guru.gelar FROM jadwal JOIN guru ON jadwal.id_guru=guru.id_guru WHERE jadwal.id_guru='$idguru' ORDER BY jadwal.id_jadwal DESC LIMIT 50");
+    $jadwal = mysqli_query($conn, "SELECT jadwal.id_jadwal, jadwal.id_guru, jadwal.kelas, jadwal.jam_mulai, jadwal.jam_selesai, jadwal.hari, jadwal.created_at, jadwal.updated_at, guru.nama, guru.gelar, guru.mapel FROM jadwal JOIN guru ON jadwal.id_guru=guru.id_guru WHERE jadwal.id_guru='$idguru' ORDER BY jadwal.id_jadwal DESC LIMIT 50");
   } else if (!isset($_GET['guru'])) {
     $selectGuru = mysqli_query($conn, "SELECT * FROM guru ORDER BY nama ASC");
-    $jadwal = mysqli_query($conn, "SELECT jadwal.id_jadwal, jadwal.id_guru, jadwal.kelas, jadwal.mapel, jadwal.jam_mulai, jadwal.jam_selesai, jadwal.hari, jadwal.created_at, jadwal.updated_at, guru.nama, guru.gelar FROM jadwal JOIN guru ON jadwal.id_guru=guru.id_guru ORDER BY jadwal.id_jadwal DESC LIMIT $awal_data_role2, $data_role2");
+    $jadwal = mysqli_query($conn, "SELECT jadwal.id_jadwal, jadwal.id_guru, jadwal.kelas, jadwal.jam_mulai, jadwal.jam_selesai, jadwal.hari, jadwal.created_at, jadwal.updated_at, guru.nama, guru.gelar, guru.mapel FROM jadwal JOIN guru ON jadwal.id_guru=guru.id_guru ORDER BY jadwal.id_jadwal DESC LIMIT $awal_data_role2, $data_role2");
   }
   if (isset($_POST['tambah-jadwal'])) {
     if (tambah_jadwal($_POST) > 0) {
@@ -245,6 +250,128 @@ if (isset($_SESSION['data-user'])) {
     }
   }
 
+  $data_role5 = 25;
+  $result_role5 = mysqli_query($conn, "SELECT * FROM pegawai");
+  $total_role5 = mysqli_num_rows($result_role5);
+  $total_page_role5 = ceil($total_role5 / $data_role5);
+  $page_role5 = isset($_GET["page"]) ? (int)$_GET["page"] : 1;
+  $awal_data_role5 = ($page_role5 > 1) ? ($page_role5 * $data_role5) - $data_role5 : 0;
+  $pegawai = mysqli_query($conn, "SELECT * FROM pegawai ORDER BY id_pegawai DESC LIMIT $awal_data_role5, $data_role5");
+  if (isset($_POST['tambah-pegawai'])) {
+    if (tambah_pegawai($_POST) > 0) {
+      $_SESSION['message-success'] = "Data pegawai telah berhasil ditambahkan.";
+      $_SESSION['time-message'] = time();
+      header("Location: " . $_SESSION['page-url']);
+      exit();
+    }
+  }
+  if (isset($_POST['ubah-pegawai'])) {
+    if (ubah_pegawai($_POST) > 0) {
+      $_SESSION['message-success'] = "Data pegawai dengan nama " . $_POST['namaOld'] . " berhasil diubah.";
+      $_SESSION['time-message'] = time();
+      header("Location: " . $_SESSION['page-url']);
+      exit();
+    }
+  }
+  if (isset($_POST['hapus-pegawai'])) {
+    if (hapus_pegawai($_POST) > 0) {
+      $_SESSION['message-success'] = "Data pegawai dengan nama " . $_POST['namaOld'] . " berhasil dihapus.";
+      $_SESSION['time-message'] = time();
+      header("Location: " . $_SESSION['page-url']);
+      exit();
+    }
+  }
+
+  $data_role6 = 25;
+  $result_role6 = mysqli_query($conn, "SELECT * FROM prestasi");
+  $total_role6 = mysqli_num_rows($result_role6);
+  $total_page_role6 = ceil($total_role6 / $data_role6);
+  $page_role6 = isset($_GET["page"]) ? (int)$_GET["page"] : 1;
+  $awal_data_role6 = ($page_role6 > 1) ? ($page_role6 * $data_role6) - $data_role6 : 0;
+  $prestasi = mysqli_query($conn, "SELECT prestasi.id_prestasi, prestasi.id_siswa, prestasi.lomba, prestasi.juara, prestasi.tgl_lomba, prestasi.created_at, prestasi.updated_at, guru.nama FROM prestasi JOIN guru ON prestasi.id_guru=guru.id_guru ORDER BY prestasi.id_prestasi DESC LIMIT $awal_data_role6, $data_role6");
+  if (isset($_POST['tambah-prestasi'])) {
+    if (tambah_prestasi($_POST) > 0) {
+      $_SESSION['message-success'] = "Data prestasi telah berhasil ditambahkan.";
+      $_SESSION['time-message'] = time();
+      header("Location: " . $_SESSION['page-url']);
+      exit();
+    }
+  }
+  if (isset($_POST['ubah-prestasi'])) {
+    if (ubah_prestasi($_POST) > 0) {
+      $_SESSION['message-success'] = "Data prestasi dengan nama lomba" . $_POST['namaOld'] . " berhasil diubah.";
+      $_SESSION['time-message'] = time();
+      header("Location: " . $_SESSION['page-url']);
+      exit();
+    }
+  }
+  if (isset($_POST['hapus-prestasi'])) {
+    if (hapus_prestasi($_POST) > 0) {
+      $_SESSION['message-success'] = "Data prestasi dengan nama lomba" . $_POST['namaOld'] . " berhasil dihapus.";
+      $_SESSION['time-message'] = time();
+      header("Location: " . $_SESSION['page-url']);
+      exit();
+    }
+  }
+
+  $pengumuman = mysqli_query($conn, "SELECT * FROM pengumuman ORDER BY id_pengumuman DESC");
+  if (isset($_POST['tambah-pengumuman'])) {
+    if (tambah_pengumuman($_POST) > 0) {
+      $_SESSION['message-success'] = "Data pengumuman telah berhasil ditambahkan.";
+      $_SESSION['time-message'] = time();
+      header("Location: " . $_SESSION['page-url']);
+      exit();
+    }
+  }
+  if (isset($_POST['ubah-pengumuman'])) {
+    if (ubah_pengumuman($_POST) > 0) {
+      $_SESSION['message-success'] = "Data pengumuman berhasil diubah.";
+      $_SESSION['time-message'] = time();
+      header("Location: " . $_SESSION['page-url']);
+      exit();
+    }
+  }
+  if (isset($_POST['hapus-pengumuman'])) {
+    if (hapus_pengumuman($_POST) > 0) {
+      $_SESSION['message-success'] = "Data pengumuman berhasil dihapus.";
+      $_SESSION['time-message'] = time();
+      header("Location: " . $_SESSION['page-url']);
+      exit();
+    }
+  }
+
+  $data_role7 = 25;
+  $result_role7 = mysqli_query($conn, "SELECT * FROM ekstra");
+  $total_role7 = mysqli_num_rows($result_role7);
+  $total_page_role7 = ceil($total_role7 / $data_role7);
+  $page_role7 = isset($_GET["page"]) ? (int)$_GET["page"] : 1;
+  $awal_data_role7 = ($page_role7 > 1) ? ($page_role7 * $data_role7) - $data_role7 : 0;
+  $ekstra = mysqli_query($conn, "SELECT * FROM ekstra ORDER BY ekstra.id_ekstra DESC LIMIT $awal_data_role7, $data_role7");
+  if (isset($_POST['tambah-ekstra'])) {
+    if (tambah_ekstra($_POST) > 0) {
+      $_SESSION['message-success'] = "Data ekstrakulikuler telah berhasil ditambahkan.";
+      $_SESSION['time-message'] = time();
+      header("Location: " . $_SESSION['page-url']);
+      exit();
+    }
+  }
+  if (isset($_POST['ubah-ekstra'])) {
+    if (ubah_ekstra($_POST) > 0) {
+      $_SESSION['message-success'] = "Data ekstrakulikuler berhasil diubah.";
+      $_SESSION['time-message'] = time();
+      header("Location: " . $_SESSION['page-url']);
+      exit();
+    }
+  }
+  if (isset($_POST['hapus-ekstra'])) {
+    if (hapus_ekstra($_POST) > 0) {
+      $_SESSION['message-success'] = "Data ekstrakulikuler berhasil dihapus.";
+      $_SESSION['time-message'] = time();
+      header("Location: " . $_SESSION['page-url']);
+      exit();
+    }
+  }
+
   $ipa10 = mysqli_query($conn, "SELECT rombel_ipa10 FROM profil_sekolah");
   $ubah_ipa10 = mysqli_query($conn, "SELECT rombel_ipa10 FROM profil_sekolah");
   $ips10 = mysqli_query($conn, "SELECT rombel_ips10 FROM profil_sekolah");
@@ -257,4 +384,21 @@ if (isset($_SESSION['data-user'])) {
   $ubah_ipa12 = mysqli_query($conn, "SELECT rombel_ipa12 FROM profil_sekolah");
   $ips12 = mysqli_query($conn, "SELECT rombel_ips12 FROM profil_sekolah");
   $ubah_ips12 = mysqli_query($conn, "SELECT rombel_ips12 FROM profil_sekolah");
+  $ipa10 = mysqli_query($conn, "SELECT rombel_ipa10 FROM profil_sekolah");
+
+  // export excel
+  $ubah_ipa10excel = mysqli_query($conn, "SELECT rombel_ipa10 FROM profil_sekolah");
+  $ubah_ips10excel = mysqli_query($conn, "SELECT rombel_ips10 FROM profil_sekolah");
+  $ubah_ipa11excel = mysqli_query($conn, "SELECT rombel_ipa11 FROM profil_sekolah");
+  $ubah_ips11excel = mysqli_query($conn, "SELECT rombel_ips11 FROM profil_sekolah");
+  $ubah_ipa12excel = mysqli_query($conn, "SELECT rombel_ipa12 FROM profil_sekolah");
+  $ubah_ips12excel = mysqli_query($conn, "SELECT rombel_ips12 FROM profil_sekolah");
+
+  // export pdf
+  $ubah_ipa10pdf = mysqli_query($conn, "SELECT rombel_ipa10 FROM profil_sekolah");
+  $ubah_ips10pdf = mysqli_query($conn, "SELECT rombel_ips10 FROM profil_sekolah");
+  $ubah_ipa11pdf = mysqli_query($conn, "SELECT rombel_ipa11 FROM profil_sekolah");
+  $ubah_ips11pdf = mysqli_query($conn, "SELECT rombel_ips11 FROM profil_sekolah");
+  $ubah_ipa12pdf = mysqli_query($conn, "SELECT rombel_ipa12 FROM profil_sekolah");
+  $ubah_ips12pdf = mysqli_query($conn, "SELECT rombel_ips12 FROM profil_sekolah");
 }

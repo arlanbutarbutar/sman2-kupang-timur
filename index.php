@@ -81,6 +81,59 @@
                 <p class="text-dark">Website sekolah yang kita miliki ini diharapkan ikut memberi warna dalam upaya menggerakan geliat literasi di sekolah kita. Oleh karena itu, saya harapkan agar semua warga sekolah terutama bapak dan ibu guru serta para murid dapat memanfaatkan keberadaan website ini untuk mempublikasi berbagai tulisannya seperti artikel/opini, esay, cerita pendek, puisi, renungan, catatan perjalanan, dan karya semacamnya.</p>
               </div>
             </div>
+            <div class="col-md-12 mt-3">
+              <h5 class="font-weight-bold">Visi SMA Negeri 2 Kupang Timur</h5>
+              <p class="text-justify">“Mampu menghasilkan lulusan yang beriman, cerdas, terampil, menguasai ipteks, melalui layanan optimal sesuai standar nasional pendidikan”</p>
+              <h5 class="font-weight-bold mt-3">Misi SMA Negeri 2 Kupang Timur</h5>
+              <p class="text-justify">Untuk mewujudkan cita-cita dan harapan ke depan sebagaimana yang tertuang dalam visi SMA Negeri 2 Kupang Timur diatas, maka dirumuskan misi sebagai berikut :</p>
+              <ol type="A">
+                <li>
+                  <p class="text-justify">A. Menumbuhkembangkan keimanan, kemadirian berdasarkan penghayatan agama dan budaya masyarakat setempat </p>
+                </li>
+                <li>
+                  <p class="text-justify">B. Menjalankan manajemen pendidikan berbasis sekolah (MBS)</p>
+                </li>
+                <li>
+                  <p class="text-justify">C. Menerapkan pendidikan respontif gender</p>
+                </li>
+                <li>
+                  <p class="text-justify">D. Menigkatkan ketersediaan dokumen kurikulum menjadi 100%</p>
+                </li>
+                <li>
+                  <p class="text-justify">E. Meningkatkan kriteria ketuntasan minimal (KKM) semua mata pelajaran mencapai kriteria ketuntasan minimal ideal, yaitu 78</p>
+                </li>
+                <li>
+                  <p class="text-justify">F. Meningkatkan prosentasi lulusan menjadi 100%</p>
+                </li>
+                <li>
+                  <p class="text-justify">G. Mengembangkan kecakapan hidup (life skill) yang berbasis keunggulan lokal</p>
+                </li>
+                <li>
+                  <p class="text-justify">H. Meningkatkan layanan pendidikan berbasis IT menjadi 100%</p>
+                </li>
+                <li>
+                  <p class="text-justify">I. Meningkatkan profesionalisme pendidik dan tenaga kependidikan</p>
+                </li>
+                <li>
+                  <p class="text-justify">J. Meningkatkan disiplin pendidik, tenaga kependidikan dan peserta didik</p>
+                </li>
+                <li>
+                  <p class="text-justify">K. Menumbuhkembangkan sikap kompetitif semua warga sekolah</p>
+                </li>
+                <li>
+                  <p class="text-justify">L. Meningkatkan sarana prasarana kebutuhan dasar peserta didik</p>
+                </li>
+                <li>
+                  <p class="text-justify">M. Mengembangkan sarana perpustakan dengan rasio satu buku : 1 peserta didik per mata pelajaran</p>
+                </li>
+                <li>
+                  <p class="text-justify">N. Menerapkan sistem informasi manajemen (SIM)</p>
+                </li>
+                <li>
+                  <p class="text-justify">O. Meningkatkan hubungan kemitraan dengan lembaga pemerintah maupun non pemerintah</p>
+                </li>
+              </ol>
+            </div>
           </div>
         </div>
         <div class="col-lg-6">

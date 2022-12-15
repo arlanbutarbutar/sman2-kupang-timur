@@ -65,7 +65,6 @@
                         <div class="text-bg">
                           <h1><?= $row_sekolah['judul'] ?></h1>
                           <p><?= $row_sekolah['judul'] ?>, merupakan salah satu Sekolah Menengah Atas Negeri yang ada di Provinsi Nusa Tenggara Timur, Indonesia.</p>
-                          <a href="#learn">Lihat Jadwal</a>
                         </div>
                       </div>
                       <div class="col-xl-7 col-lg-7 col-md-7 col-sm-12">
@@ -85,7 +84,6 @@
                         <div class="text-bg">
                           <h1><?= $row_sekolah['judul'] ?></h1>
                           <p><?= $row_sekolah['judul'] ?>, merupakan salah satu Sekolah Menengah Atas Negeri yang ada di Provinsi Nusa Tenggara Timur, Indonesia.</p>
-                          <a href="#learn">Lihat Jadwal</a>
                         </div>
                       </div>
                       <div class="col-xl-7 col-lg-7 col-md-7 col-sm-12">
@@ -109,7 +107,7 @@
       <div class="row mt-5">
         <div class="col-md-12">
           <div class="titlepage">
-            <h2><strong class="yellow">Jadwal Belajar</strong></h2>
+            <h2 class="text-center"><strong class="yellow">Jadwal Belajar</strong></h2>
             <?php if (mysqli_num_rows($jadwal_belajar) > 0) { ?>
               <div class="table-responsive mt-4">
                 <table class="table table-striped table-hover table-borderless table-sm text-center">

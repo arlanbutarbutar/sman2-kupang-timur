@@ -1,13 +1,16 @@
 <?php require_once("../controller/script.php");
 require_once("redirect.php");
-$_SESSION['page-name'] = "Kelola Pengguna";
-$_SESSION['page-url'] = "users";
+$_SESSION['page-name'] = "Ekstrakulikuler";
+$_SESSION['page-url'] = "ekstrakulikuler";
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 
-<head><?php require_once("../resources/dash-header.php") ?></head>
+<head>
+  <?php require_once("../resources/dash-header.php") ?>
+  <script src="../assets/ckeditor/ckeditor.js"></script>
+</head>
 
 <body style="font-family: 'Montserrat', sans-serif;">
   <?php if (isset($_SESSION['message-success'])) { ?>
@@ -39,7 +42,7 @@ $_SESSION['page-url'] = "users";
                   </ul>
                   <div>
                     <div class="btn-wrapper">
-                      <a href="#" class="btn btn-primary text-white me-0" data-bs-toggle="modal" data-bs-target="#tambah-pengguna">Tambah</a>
+                      <a href="#" class="btn btn-primary text-white me-0" data-bs-toggle="modal" data-bs-target="#tambah-ekstra">Tambah</a>
                     </div>
                   </div>
                 </div>
@@ -50,26 +53,31 @@ $_SESSION['page-url'] = "users";
                         <tr>
                           <th scope="col">#</th>
                           <th scope="col">Nama</th>
-                          <th scope="col">Email</th>
-                          <th scope="col">Role</th>
+                          <th scope="col">Deskripsi</th>
                           <th scope="col">Tgl Buat</th>
                           <th scope="col">Tgl Ubah</th>
                           <th scope="col" colspan="2">Aksi</th>
                         </tr>
                       </thead>
                       <tbody id="search-page">
-                        <?php if (mysqli_num_rows($users) == 0) { ?>
+                        <?php if (mysqli_num_rows($ekstra) == 0) { ?>
                           <tr>
-                            <th scope="row" colspan="7">belum ada data pengguna</th>
+                            <th scope="row" colspan="7">belum ada data ekstrakulikuler</th>
                           </tr>
-                          <?php } else if (mysqli_num_rows($users) > 0) {
+                          <?php } else if (mysqli_num_rows($ekstra) > 0) {
                           $no = 1;
-                          while ($row = mysqli_fetch_assoc($users)) { ?>
+                          while ($row = mysqli_fetch_assoc($ekstra)) { ?>
                             <tr>
                               <th scope="row"><?= $no; ?></th>
-                              <td><?= $row['username'] ?></td>
-                              <td><?= $row['email'] ?></td>
-                              <td><?= $row['role'] ?></td>
+                              <td>
+                                <div class="d-flex">
+                                  <img src="../assets/images/ekstra/<?= $row['image_ekstra'] ?>" alt="">
+                                  <div class="my-auto">
+                                    <h6><?= $row['nama_ekstra'] ?></h6>
+                                  </div>
+                                </div>
+                              </td>
+                              <td><?= $row['deskripsi_ekstra'] ?></td>
                               <td>
                                 <div class="badge badge-opacity-success">
                                   <?php $dateCreate = date_create($row['created_at']);
@@ -83,42 +91,39 @@ $_SESSION['page-url'] = "users";
                                 </div>
                               </td>
                               <td>
-                                <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#ubah<?= $row['id_user'] ?>">
+                                <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#ubah<?= $row['id_ekstra'] ?>">
                                   <i class="bi bi-pencil-square"></i>
                                 </button>
-                                <div class="modal fade" id="ubah<?= $row['id_user'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal fade" id="ubah<?= $row['id_ekstra'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                   <div class="modal-dialog">
                                     <div class="modal-content">
                                       <div class="modal-header border-bottom-0 shadow">
-                                        <h5 class="modal-title" id="exampleModalLabel">Ubah data <?= $row['username'] ?></h5>
+                                        <h5 class="modal-title" id="exampleModalLabel">Ubah data</h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                       </div>
-                                      <form action="" method="POST">
+                                      <form action="" method="POST" enctype="multipart/form-data">
                                         <div class="modal-body">
                                           <div class="mb-3">
-                                            <label for="username" class="form-label">Nama <small class="text-danger">*</small></label>
-                                            <input type="text" name="username" value="<?= $row['username'] ?>" class="form-control" id="username" minlength="3" placeholder="Nama" required>
+                                            <label for="image" class="form-label">Gambar</label>
+                                            <input type="file" name="image" class="form-control" id="image" placeholder="Gambar">
                                           </div>
                                           <div class="mb-3">
-                                            <label for="email" class="form-label">Email <small class="text-danger">*</small></label>
-                                            <input type="email" name="email" value="<?= $row['email'] ?>" class="form-control" id="email" placeholder="Email" required>
+                                            <label for="nama" class="form-label">Nama <small class="text-danger">*</small></label>
+                                            <input type="text" name="nama" value="<?= $row['nama_ekstra'] ?>" class="form-control" id="nama" minlength="3" placeholder="Nama" required>
                                           </div>
                                           <div class="mb-3">
-                                            <label for="role" class="form-label">Role <small class="text-danger">*</small></label>
-                                            <select name="id-role" id="role" class="form-select" aria-label="Default select example" required>
-                                              <option selected value="">Pilih Role</option>
-                                              <?php foreach ($users_role as $row_ur) : ?>
-                                                <option value="<?= $row_ur['id_role'] ?>"><?= $row_ur['role'] ?></option>
-                                              <?php endforeach; ?>
-                                            </select>
+                                            <label for="deskripsi" class="form-label">Deskripsi <small class="text-danger">*</small></label>
+                                            <textarea name="deskripsi" class="form-control" id="deskripsi<?= $row['id_ekstra'] ?>" rows="3" style="height: 100px;"><?= $row['deskripsi_ekstra'] ?></textarea>
+                                            <script>
+                                              CKEDITOR.replace('deskripsi<?= $row['id_ekstra'] ?>');
+                                            </script>
                                           </div>
                                         </div>
                                         <div class="modal-footer justify-content-center border-top-0">
-                                          <input type="hidden" name="id-user" value="<?= $row['id_user'] ?>">
-                                          <input type="hidden" name="username" value="<?= $row['username'] ?>">
-                                          <input type="hidden" name="emailOld" value="<?= $row['email'] ?>">
+                                          <input type="hidden" name="id-ekstra" value="<?= $row['id_ekstra'] ?>">
+                                          <input type="hidden" name="imageOld" value="<?= $row['image_ekstra'] ?>">
                                           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                                          <button type="submit" name="ubah-user" class="btn btn-warning">Ubah</button>
+                                          <button type="submit" name="ubah-ekstra" class="btn btn-warning">Ubah</button>
                                         </div>
                                       </form>
                                     </div>
@@ -126,25 +131,25 @@ $_SESSION['page-url'] = "users";
                                 </div>
                               </td>
                               <td>
-                                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#hapus<?= $row['id_user'] ?>">
+                                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#hapus<?= $row['id_ekstra'] ?>">
                                   <i class="bi bi-trash3"></i>
                                 </button>
-                                <div class="modal fade" id="hapus<?= $row['id_user'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal fade" id="hapus<?= $row['id_ekstra'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                   <div class="modal-dialog">
                                     <div class="modal-content">
                                       <div class="modal-header border-bottom-0 shadow">
-                                        <h5 class="modal-title" id="exampleModalLabel">Hapus data <?= $row['username'] ?></h5>
+                                        <h5 class="modal-title" id="exampleModalLabel">Hapus data</h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                       </div>
                                       <div class="modal-body">
-                                        Anda yakin ingin menghapus <?= $row['username'] ?> ini?
+                                        Anda yakin ingin menghapus data <?= $row['nama_ekstra'] ?> ini?
                                       </div>
                                       <div class="modal-footer justify-content-center border-top-0">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
                                         <form action="" method="POST">
-                                          <input type="hidden" name="id-user" value="<?= $row['id_user'] ?>">
-                                          <input type="hidden" name="username" value="<?= $row['username'] ?>">
-                                          <button type="submit" name="hapus-user" class="btn btn-danger">Hapus</button>
+                                          <input type="hidden" name="id-ekstra" value="<?= $row['id_ekstra'] ?>">
+                                          <input type="hidden" name="imageOld" value="<?= $row['image_ekstra'] ?>">
+                                          <button type="submit" name="hapus-ekstra" class="btn btn-danger">Hapus</button>
                                         </form>
                                       </div>
                                     </div>
@@ -157,19 +162,19 @@ $_SESSION['page-url'] = "users";
                         } ?>
                       </tbody>
                     </table>
-                    <?php if ($total_role1 > $data_role1) { ?>
+                    <?php if ($total_role7 > $data_role7) { ?>
                       <div class="d-flex justify-content-between mt-4 flex-wrap">
-                        <p class="text-muted">Showing 1 to <?= $data_role1 ?> of <?= $total_role1 ?> entries</p>
+                        <p class="text-muted">Showing 1 to <?= $data_role7 ?> of <?= $total_role7 ?> entries</p>
                         <nav class="ml-auto">
                           <ul class="pagination separated pagination-info">
-                            <?php if (isset($page_role1)) {
-                              if (isset($total_page_role1)) {
-                                if ($page_role1 > 1) : ?>
+                            <?php if (isset($page_role7)) {
+                              if (isset($total_page_role7)) {
+                                if ($page_role7 > 1) : ?>
                                   <li class="page-item">
-                                    <a href="<?= $_SESSION['page-url'] ?>?page=<?= $page_role1 - 1; ?>/" class="btn btn-primary btn-sm rounded-0"><i class="bi bi-arrow-bar-left text-white"></i></a>
+                                    <a href="<?= $_SESSION['page-url'] ?>?page=<?= $page_role7 - 1; ?>/" class="btn btn-primary btn-sm rounded-0"><i class="bi bi-arrow-bar-left text-white"></i></a>
                                   </li>
                                   <?php endif;
-                                for ($i = 1; $i <= $total_page_role1; $i++) : if ($i <= 4) : if ($i == $page_role1) : ?>
+                                for ($i = 1; $i <= $total_page_role7; $i++) : if ($i <= 4) : if ($i == $page_role7) : ?>
                                       <li class="page-item active">
                                         <a href="<?= $_SESSION['page-url'] ?>?page=<?= $i; ?>/" class="btn btn-primary btn-sm rounded-0 text-white"><?= $i; ?></a>
                                       </li>
@@ -180,24 +185,24 @@ $_SESSION['page-url'] = "users";
                                   <?php endif;
                                   endif;
                                 endfor;
-                                if ($total_page_role1 >= 4) : ?>
+                                if ($total_page_role7 >= 4) : ?>
                                   <li class="page-item">
-                                    <a href="<?= $_SESSION['page-url'] ?>?page=<?php if ($page_role1 > 4) {
-                                                                                  echo $page_role1;
-                                                                                } else if ($page_role1 <= 4) {
+                                    <a href="<?= $_SESSION['page-url'] ?>?page=<?php if ($page_role7 > 4) {
+                                                                                  echo $page_role7;
+                                                                                } else if ($page_role7 <= 4) {
                                                                                   echo '5';
-                                                                                } ?>/" class="btn btn-<?php if ($page_role1 <= 4) {
+                                                                                } ?>/" class="btn btn-<?php if ($page_role7 <= 4) {
                                                                                                         echo 'outline-';
-                                                                                                      } ?>primary btn-sm rounded-0"><?php if ($page_role1 > 4) {
-                                                                                                                                      echo $page_role1;
-                                                                                                                                    } else if ($page_role1 <= 4) {
+                                                                                                      } ?>primary btn-sm rounded-0"><?php if ($page_role7 > 4) {
+                                                                                                                                      echo $page_role7;
+                                                                                                                                    } else if ($page_role7 <= 4) {
                                                                                                                                       echo '5';
                                                                                                                                     } ?></a>
                                   </li>
                                 <?php endif;
-                                if ($page_role1 < $total_page_role1 && $total_page_role1 >= 4) : ?>
+                                if ($page_role7 < $total_page_role7 && $total_page_role7 >= 4) : ?>
                                   <li class="page-item">
-                                    <a href="<?= $_SESSION['page-url'] ?>?page=<?= $page_role1 + 1; ?>/" class="btn btn-primary btn-sm rounded-0"><i class="bi bi-arrow-bar-right"></i></a>
+                                    <a href="<?= $_SESSION['page-url'] ?>?page=<?= $page_role7 + 1; ?>/" class="btn btn-primary btn-sm rounded-0"><i class="bi bi-arrow-bar-right"></i></a>
                                   </li>
                             <?php endif;
                               }
@@ -213,59 +218,40 @@ $_SESSION['page-url'] = "users";
           </div>
         </div>
 
-        <div class="modal fade" id="tambah-pengguna" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="tambah-ekstra" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-header border-bottom-0 shadow">
-                <h5 class="modal-title" id="exampleModalLabel">Tambah Pengguna</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Tambah Ekstrakuliker</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
-              <form action="" method="post" name="random_form">
+              <form action="" method="post" enctype="multipart/form-data">
                 <div class="modal-body text-center">
                   <div class="mb-3">
-                    <label for="username" class="form-label">Nama <small class="text-danger">*</small></label>
-                    <input type="text" name="username" class="form-control" id="username" minlength="3" placeholder="Nama" required>
+                    <label for="image" class="form-label">Gambar <small class="text-danger">*</small></label>
+                    <input type="file" name="image" class="form-control" id="image" placeholder="Gambar" required>
                   </div>
                   <div class="mb-3">
-                    <label for="email" class="form-label">Email <small class="text-danger">*</small></label>
-                    <input type="email" name="email" class="form-control" id="email" placeholder="Email" required>
+                    <label for="nama" class="form-label">Nama <small class="text-danger">*</small></label>
+                    <input type="text" name="nama" class="form-control" id="nama" minlength="3" placeholder="Nama" required>
                   </div>
                   <div class="mb-3">
-                    <label for="password" class="form-label">Password <small class="text-danger">*</small></label>
-                    <input type="text" name="password" class="form-control" id="kata-sandi" minlength="8" placeholder="Password" required>
-                    <input type="button" value="Generate Password" class="btn btn-link btn-sm text-decoration-none" onclick="random_all();">
-                  </div>
-                  <div class="mb-3">
-                    <label for="role" class="form-label">Role <small class="text-danger">*</small></label>
-                    <select name="id-role" id="role" class="form-select" aria-label="Default select example" required>
-                      <option selected value="">Pilih Role</option>
-                      <?php foreach ($users_role as $row_ur) : ?>
-                        <option value="<?= $row_ur['id_role'] ?>"><?= $row_ur['role'] ?></option>
-                      <?php endforeach; ?>
-                    </select>
+                    <label for="deskripsi" class="form-label">Deskripsi <small class="text-danger">*</small></label>
+                    <textarea name="deskripsi" class="form-control" id="deskripsi" rows="3" style="height: 100px;"></textarea>
                   </div>
                 </div>
                 <div class="modal-footer border-top-0 justify-content-center">
                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                  <button type="submit" name="tambah-user" class="btn btn-primary">Simpan</button>
+                  <button type="submit" name="tambah-ekstra" class="btn btn-primary">Simpan</button>
                 </div>
               </form>
             </div>
           </div>
         </div>
-        <?php require_once("../resources/dash-footer.php") ?>
-        <script type="text/javascript">
-          function random_all() {
-            var campur = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz";
-            var panjang = 9;
-            var random_all = '';
-            for (var i = 0; i < panjang; i++) {
-              var hasil = Math.floor(Math.random() * campur.length);
-              random_all += campur.substring(hasil, hasil + 1);
-            }
-            document.random_form.password.value = random_all;
-          }
+        <script>
+          CKEDITOR.replace('deskripsi');
         </script>
+        <?php require_once("../resources/dash-footer.php") ?>
 </body>
 
 </html>
