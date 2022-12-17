@@ -107,9 +107,10 @@
       <div class="row mt-5">
         <div class="col-md-12">
           <div class="titlepage">
-            <h2 class="text-center mb-4"><strong class="yellow">Ekstrakuliker</strong></h2>
+            <h2 class="text-center mb-4"><strong class="yellow">Ekstrakulikuler</strong></h2>
             <?php if (mysqli_num_rows($ekstraView) > 0) {
-              while ($row = mysqli_fetch_assoc($ekstraView)) { ?> <div class="card" style="width: 18rem;">
+              while ($row = mysqli_fetch_assoc($ekstraView)) { ?>
+                <div class="card" style="width: 18rem;">
                   <img src="assets/images/ekstra/<?= $row['image_ekstra'] ?>" class="card-img-top" alt="Image Ekstra">
                   <div class="card-body">
                     <h3 class="card-title font-weight-bold"><?= $row['nama_ekstra'] ?></h3>

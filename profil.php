@@ -103,7 +103,7 @@
   </header>
 
   <!-- about  -->
-  <div id="sekolah" class="sekolah">
+  <div id="sekolah" class="sekolah mb-5">
     <div class="container">
       <div class="row mt-5">
         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12" style="margin-top: 100px;">
@@ -127,8 +127,32 @@
           </div>
         </div>
         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12" style="margin-top: 100px;">
-          <div class="about-box">
-            <figure><img src="assets/images/profil.jpeg" alt="#" /></figure>
+          <div class="about-box shadow">
+            <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
+              <div class="carousel-inner">
+                <div class="carousel-item active">
+                  <figure><img src="assets/images/profil1.jpeg" alt="#" /></figure>
+                </div>
+                <div class="carousel-item">
+                  <figure><img src="assets/images/profil2.jpeg" alt="#" /></figure>
+                </div>
+                <div class="carousel-item">
+                  <figure><img src="assets/images/profil3.jpeg" alt="#" /></figure>
+                </div>
+                <div class="carousel-item">
+                  <figure><img src="assets/images/profil4.jpeg" alt="#" /></figure>
+                </div>
+                <div class="carousel-item">
+                  <figure><img src="assets/images/profil5.jpeg" alt="#" /></figure>
+                </div>
+                <div class="carousel-item">
+                  <figure><img src="assets/images/profil6.jpeg" alt="#" /></figure>
+                </div>
+                <div class="carousel-item">
+                  <figure><img src="assets/images/profil7.jpeg" alt="#" /></figure>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>

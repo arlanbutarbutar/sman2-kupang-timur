@@ -116,6 +116,7 @@
                       <th scope="col">#</th>
                       <th scope="col">NIP</th>
                       <th scope="col">Nama</th>
+                      <th scope="col">Mapel</th>
                       <th scope="col">TTL</th>
                       <th scope="col">Status</th>
                       <th scope="col">Jenis Kelamin</th>
@@ -133,6 +134,7 @@
                               echo $row['nip'];
                             } ?></td>
                         <td><?= $row['nama'] ?></td>
+                        <td><?= $row['mapel'] ?></td>
                         <td><?= $row['tempat_lahir'] . ", " . $row['tgl_lahir'] ?></td>
                         <td><?= $row['status'] ?></td>
                         <td><?= $row['jenis_kelamin'] ?></td>
