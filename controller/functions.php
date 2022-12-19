@@ -19,6 +19,7 @@ if (!isset($_SESSION['data-user'])) {
           'id' => $row['id_user'],
           'username' => $row['username'],
           'email' => $row['email'],
+          'role' => $row['id_role'],
         ];
       } else {
         $_SESSION['message-danger'] = "Maaf, kata sandi yang anda masukan salah.";

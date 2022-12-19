@@ -54,7 +54,9 @@ $_SESSION['page-url'] = "users";
                           <th scope="col">Role</th>
                           <th scope="col">Tgl Buat</th>
                           <th scope="col">Tgl Ubah</th>
-                          <th scope="col" colspan="2">Aksi</th>
+                          <?php if ($_SESSION['data-user']['role'] == 1) { ?>
+                            <th scope="col" colspan="2">Aksi</th>
+                          <?php } ?>
                         </tr>
                       </thead>
                       <tbody id="search-page">
@@ -82,75 +84,77 @@ $_SESSION['page-url'] = "users";
                                   echo date_format($dateUpdate, "l, d M Y h:i a"); ?>
                                 </div>
                               </td>
-                              <td>
-                                <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#ubah<?= $row['id_user'] ?>">
-                                  <i class="bi bi-pencil-square"></i>
-                                </button>
-                                <div class="modal fade" id="ubah<?= $row['id_user'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                  <div class="modal-dialog">
-                                    <div class="modal-content">
-                                      <div class="modal-header border-bottom-0 shadow">
-                                        <h5 class="modal-title" id="exampleModalLabel">Ubah data <?= $row['username'] ?></h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                      </div>
-                                      <form action="" method="POST">
-                                        <div class="modal-body">
-                                          <div class="mb-3">
-                                            <label for="username" class="form-label">Nama <small class="text-danger">*</small></label>
-                                            <input type="text" name="username" value="<?= $row['username'] ?>" class="form-control" id="username" minlength="3" placeholder="Nama" required>
-                                          </div>
-                                          <div class="mb-3">
-                                            <label for="email" class="form-label">Email <small class="text-danger">*</small></label>
-                                            <input type="email" name="email" value="<?= $row['email'] ?>" class="form-control" id="email" placeholder="Email" required>
-                                          </div>
-                                          <div class="mb-3">
-                                            <label for="role" class="form-label">Role <small class="text-danger">*</small></label>
-                                            <select name="id-role" id="role" class="form-select" aria-label="Default select example" required>
-                                              <option selected value="">Pilih Role</option>
-                                              <?php foreach ($users_role as $row_ur) : ?>
-                                                <option value="<?= $row_ur['id_role'] ?>"><?= $row_ur['role'] ?></option>
-                                              <?php endforeach; ?>
-                                            </select>
-                                          </div>
+                              <?php if ($_SESSION['data-user']['role'] == 1) { ?>
+                                <td>
+                                  <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#ubah<?= $row['id_user'] ?>">
+                                    <i class="bi bi-pencil-square"></i>
+                                  </button>
+                                  <div class="modal fade" id="ubah<?= $row['id_user'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                      <div class="modal-content">
+                                        <div class="modal-header border-bottom-0 shadow">
+                                          <h5 class="modal-title" id="exampleModalLabel">Ubah data <?= $row['username'] ?></h5>
+                                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
-                                        <div class="modal-footer justify-content-center border-top-0">
-                                          <input type="hidden" name="id-user" value="<?= $row['id_user'] ?>">
-                                          <input type="hidden" name="username" value="<?= $row['username'] ?>">
-                                          <input type="hidden" name="emailOld" value="<?= $row['email'] ?>">
-                                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                                          <button type="submit" name="ubah-user" class="btn btn-warning">Ubah</button>
-                                        </div>
-                                      </form>
-                                    </div>
-                                  </div>
-                                </div>
-                              </td>
-                              <td>
-                                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#hapus<?= $row['id_user'] ?>">
-                                  <i class="bi bi-trash3"></i>
-                                </button>
-                                <div class="modal fade" id="hapus<?= $row['id_user'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                  <div class="modal-dialog">
-                                    <div class="modal-content">
-                                      <div class="modal-header border-bottom-0 shadow">
-                                        <h5 class="modal-title" id="exampleModalLabel">Hapus data <?= $row['username'] ?></h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                      </div>
-                                      <div class="modal-body">
-                                        Anda yakin ingin menghapus <?= $row['username'] ?> ini?
-                                      </div>
-                                      <div class="modal-footer justify-content-center border-top-0">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
                                         <form action="" method="POST">
-                                          <input type="hidden" name="id-user" value="<?= $row['id_user'] ?>">
-                                          <input type="hidden" name="username" value="<?= $row['username'] ?>">
-                                          <button type="submit" name="hapus-user" class="btn btn-danger">Hapus</button>
+                                          <div class="modal-body">
+                                            <div class="mb-3">
+                                              <label for="username" class="form-label">Nama <small class="text-danger">*</small></label>
+                                              <input type="text" name="username" value="<?= $row['username'] ?>" class="form-control" id="username" minlength="3" placeholder="Nama" required>
+                                            </div>
+                                            <div class="mb-3">
+                                              <label for="email" class="form-label">Email <small class="text-danger">*</small></label>
+                                              <input type="email" name="email" value="<?= $row['email'] ?>" class="form-control" id="email" placeholder="Email" required>
+                                            </div>
+                                            <div class="mb-3">
+                                              <label for="role" class="form-label">Role <small class="text-danger">*</small></label>
+                                              <select name="id-role" id="role" class="form-select" aria-label="Default select example" required>
+                                                <option selected value="">Pilih Role</option>
+                                                <?php foreach ($users_role as $row_ur) : ?>
+                                                  <option value="<?= $row_ur['id_role'] ?>"><?= $row_ur['role'] ?></option>
+                                                <?php endforeach; ?>
+                                              </select>
+                                            </div>
+                                          </div>
+                                          <div class="modal-footer justify-content-center border-top-0">
+                                            <input type="hidden" name="id-user" value="<?= $row['id_user'] ?>">
+                                            <input type="hidden" name="username" value="<?= $row['username'] ?>">
+                                            <input type="hidden" name="emailOld" value="<?= $row['email'] ?>">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                                            <button type="submit" name="ubah-user" class="btn btn-warning">Ubah</button>
+                                          </div>
                                         </form>
                                       </div>
                                     </div>
                                   </div>
-                                </div>
-                              </td>
+                                </td>
+                                <td>
+                                  <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#hapus<?= $row['id_user'] ?>">
+                                    <i class="bi bi-trash3"></i>
+                                  </button>
+                                  <div class="modal fade" id="hapus<?= $row['id_user'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                      <div class="modal-content">
+                                        <div class="modal-header border-bottom-0 shadow">
+                                          <h5 class="modal-title" id="exampleModalLabel">Hapus data <?= $row['username'] ?></h5>
+                                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                          Anda yakin ingin menghapus <?= $row['username'] ?> ini?
+                                        </div>
+                                        <div class="modal-footer justify-content-center border-top-0">
+                                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                                          <form action="" method="POST">
+                                            <input type="hidden" name="id-user" value="<?= $row['id_user'] ?>">
+                                            <input type="hidden" name="username" value="<?= $row['username'] ?>">
+                                            <button type="submit" name="hapus-user" class="btn btn-danger">Hapus</button>
+                                          </form>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </td>
+                              <?php } ?>
                             </tr>
                         <?php $no++;
                           }

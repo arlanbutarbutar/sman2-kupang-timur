@@ -87,7 +87,9 @@ $_SESSION['page-url'] = "pegawai";
                           <th scope="col">Jenis Kelamin</th>
                           <th scope="col">Tgl Buat</th>
                           <th scope="col">Tgl Ubah</th>
-                          <th scope="col" colspan="2">Aksi</th>
+                          <?php if ($_SESSION['data-user']['role'] == 1) { ?>
+                            <th scope="col" colspan="2">Aksi</th>
+                          <?php } ?>
                         </tr>
                       </thead>
                       <tbody id="search-page">
@@ -121,82 +123,84 @@ $_SESSION['page-url'] = "pegawai";
                                   echo date_format($dateUpdate, "l, d M Y h:i a"); ?>
                                 </div>
                               </td>
-                              <td>
-                                <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#ubah<?= $row['id_pegawai'] ?>">
-                                  <i class="bi bi-pencil-square"></i>
-                                </button>
-                                <div class="modal fade" id="ubah<?= $row['id_pegawai'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                  <div class="modal-dialog">
-                                    <div class="modal-content">
-                                      <div class="modal-header border-bottom-0 shadow">
-                                        <h5 class="modal-title" id="exampleModalLabel">Ubah data <?= $row['nama_pegawai'] ?></h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                      </div>
-                                      <form action="" method="POST">
-                                        <div class="modal-body">
-                                          <div class="mb-3">
-                                            <label for="nip" class="form-label">NIP</label>
-                                            <input type="number" name="nip" value="<?= $row['nip'] ?>" class="form-control" id="nip" minlength="5" placeholder="NIP">
-                                          </div>
-                                          <div class="mb-3">
-                                            <label for="nama" class="form-label">Nama <small class="text-danger">*</small></label>
-                                            <input type="text" name="nama" value="<?= $row['nama_pegawai'] ?>" class="form-control" id="nama" minlength="3" placeholder="Nama" required>
-                                          </div>
-                                          <div class="mb-3">
-                                            <label for="alamat" class="form-label">Alamat <small class="text-danger">*</small></label>
-                                            <input type="text" name="alamat" value="<?= $row['alamat_pegawai'] ?>" class="form-control" id="alamat" minlength="3" placeholder="Alamat" required>
-                                          </div>
-                                          <div class="mb-3">
-                                            <label for="jabatan" class="form-label">Jabatan <small class="text-danger">*</small></label>
-                                            <input type="text" name="jabatan" value="<?= $row['jabatan_pegawai'] ?>" class="form-control" id="jabatan" placeholder="Jabatan" required>
-                                          </div>
-                                          <div class="mb-3">
-                                            <label for="jenis-kelamin" class="form-label">Jenis Kelamin <small class="text-danger">*</small></label>
-                                            <select name="jk" id="jenis-kelamin" class="form-select" aria-label="Default select example" required>
-                                              <option selected value="">Pilih Jenis Kelamin</option>
-                                              <option value="Laki-Laki">Laki-Laki</option>
-                                              <option value="Perempuan">Perempuan</option>
-                                            </select>
-                                          </div>
+                              <?php if ($_SESSION['data-user']['role'] == 1) { ?>
+                                <td>
+                                  <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#ubah<?= $row['id_pegawai'] ?>">
+                                    <i class="bi bi-pencil-square"></i>
+                                  </button>
+                                  <div class="modal fade" id="ubah<?= $row['id_pegawai'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                      <div class="modal-content">
+                                        <div class="modal-header border-bottom-0 shadow">
+                                          <h5 class="modal-title" id="exampleModalLabel">Ubah data <?= $row['nama_pegawai'] ?></h5>
+                                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
-                                        <div class="modal-footer justify-content-center border-top-0">
-                                          <input type="hidden" name="id-pegawai" value="<?= $row['id_pegawai'] ?>">
-                                          <input type="hidden" name="namaOld" value="<?= $row['nama_pegawai'] ?>">
-                                          <input type="hidden" name="nipOld" value="<?= $row['nip'] ?>">
-                                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                                          <button type="submit" name="ubah-pegawai" class="btn btn-warning">Ubah</button>
-                                        </div>
-                                      </form>
-                                    </div>
-                                  </div>
-                                </div>
-                              </td>
-                              <td>
-                                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#hapus<?= $row['id_pegawai'] ?>">
-                                  <i class="bi bi-trash3"></i>
-                                </button>
-                                <div class="modal fade" id="hapus<?= $row['id_pegawai'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                  <div class="modal-dialog">
-                                    <div class="modal-content">
-                                      <div class="modal-header border-bottom-0 shadow">
-                                        <h5 class="modal-title" id="exampleModalLabel">Hapus data <?= $row['nama_pegawai'] ?></h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                      </div>
-                                      <div class="modal-body">
-                                        Anda yakin ingin menghapus data <?= $row['nama_pegawai'] ?> ini?
-                                      </div>
-                                      <div class="modal-footer justify-content-center border-top-0">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
                                         <form action="" method="POST">
-                                          <input type="hidden" name="id-pegawai" value="<?= $row['id_pegawai'] ?>">
-                                          <input type="hidden" name="nama" value="<?= $row['nama_pegawai'] ?>">
-                                          <button type="submit" name="hapus-pegawai" class="btn btn-danger">Hapus</button>
+                                          <div class="modal-body">
+                                            <div class="mb-3">
+                                              <label for="nip" class="form-label">NIP</label>
+                                              <input type="number" name="nip" value="<?= $row['nip'] ?>" class="form-control" id="nip" minlength="5" placeholder="NIP">
+                                            </div>
+                                            <div class="mb-3">
+                                              <label for="nama" class="form-label">Nama <small class="text-danger">*</small></label>
+                                              <input type="text" name="nama" value="<?= $row['nama_pegawai'] ?>" class="form-control" id="nama" minlength="3" placeholder="Nama" required>
+                                            </div>
+                                            <div class="mb-3">
+                                              <label for="alamat" class="form-label">Alamat <small class="text-danger">*</small></label>
+                                              <input type="text" name="alamat" value="<?= $row['alamat_pegawai'] ?>" class="form-control" id="alamat" minlength="3" placeholder="Alamat" required>
+                                            </div>
+                                            <div class="mb-3">
+                                              <label for="jabatan" class="form-label">Jabatan <small class="text-danger">*</small></label>
+                                              <input type="text" name="jabatan" value="<?= $row['jabatan_pegawai'] ?>" class="form-control" id="jabatan" placeholder="Jabatan" required>
+                                            </div>
+                                            <div class="mb-3">
+                                              <label for="jenis-kelamin" class="form-label">Jenis Kelamin <small class="text-danger">*</small></label>
+                                              <select name="jk" id="jenis-kelamin" class="form-select" aria-label="Default select example" required>
+                                                <option selected value="">Pilih Jenis Kelamin</option>
+                                                <option value="Laki-Laki">Laki-Laki</option>
+                                                <option value="Perempuan">Perempuan</option>
+                                              </select>
+                                            </div>
+                                          </div>
+                                          <div class="modal-footer justify-content-center border-top-0">
+                                            <input type="hidden" name="id-pegawai" value="<?= $row['id_pegawai'] ?>">
+                                            <input type="hidden" name="namaOld" value="<?= $row['nama_pegawai'] ?>">
+                                            <input type="hidden" name="nipOld" value="<?= $row['nip'] ?>">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                                            <button type="submit" name="ubah-pegawai" class="btn btn-warning">Ubah</button>
+                                          </div>
                                         </form>
                                       </div>
                                     </div>
                                   </div>
-                                </div>
-                              </td>
+                                </td>
+                                <td>
+                                  <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#hapus<?= $row['id_pegawai'] ?>">
+                                    <i class="bi bi-trash3"></i>
+                                  </button>
+                                  <div class="modal fade" id="hapus<?= $row['id_pegawai'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                      <div class="modal-content">
+                                        <div class="modal-header border-bottom-0 shadow">
+                                          <h5 class="modal-title" id="exampleModalLabel">Hapus data <?= $row['nama_pegawai'] ?></h5>
+                                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                          Anda yakin ingin menghapus data <?= $row['nama_pegawai'] ?> ini?
+                                        </div>
+                                        <div class="modal-footer justify-content-center border-top-0">
+                                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                                          <form action="" method="POST">
+                                            <input type="hidden" name="id-pegawai" value="<?= $row['id_pegawai'] ?>">
+                                            <input type="hidden" name="nama" value="<?= $row['nama_pegawai'] ?>">
+                                            <button type="submit" name="hapus-pegawai" class="btn btn-danger">Hapus</button>
+                                          </form>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </td>
+                              <?php } ?>
                             </tr>
                         <?php $no++;
                           }
