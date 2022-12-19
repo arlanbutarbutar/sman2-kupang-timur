@@ -107,7 +107,7 @@
       <div class="row mt-5">
         <div class="col-md-12">
           <div class="titlepage">
-            <h2 class="text-center mb-4"><strong class="yellow">Ekstrakulikuler</strong></h2>
+            <h2 class="text-center mb-4"><strong class="yellow">Ekstrakurikuler</strong></h2>
             <?php if (mysqli_num_rows($ekstraView) > 0) {
               while ($row = mysqli_fetch_assoc($ekstraView)) { ?>
                 <div class="card" style="width: 18rem;">
